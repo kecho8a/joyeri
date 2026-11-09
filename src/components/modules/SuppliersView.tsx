@@ -49,8 +49,7 @@ export const SuppliersView: React.FC = () => {
       return;
     }
 
-    const newSupplier: Supplier = {
-      id: `PRV-${Date.now().toString().slice(-4)}`,
+    erpDb.createSupplier({
       nit: formData.nit,
       companyName: formData.companyName,
       contactName: formData.contactName,
@@ -59,10 +58,7 @@ export const SuppliersView: React.FC = () => {
       city: formData.city,
       category: formData.category,
       balancePendingCOP: formData.balancePendingCOP,
-    };
-
-    state.suppliers.unshift(newSupplier);
-    erpDb.addAudit('CREAR_PROVEEDOR', 'Proveedores', `Registrado proveedor ${newSupplier.companyName} (NIT ${newSupplier.nit})`);
+    });
     setIsNewModalOpen(false);
     alert('Proveedor guardado exitosamente.');
   };

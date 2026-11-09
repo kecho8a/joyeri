@@ -63,8 +63,7 @@ export const CustomersView: React.FC = () => {
       return;
     }
 
-    const newCustomer: Customer = {
-      id: `CLI-${Date.now().toString().slice(-4)}`,
+    erpDb.createCustomer({
       docType: formData.docType,
       docNumber: formData.docNumber,
       name: formData.name,
@@ -77,12 +76,7 @@ export const CustomersView: React.FC = () => {
       birthday: formData.birthday || undefined,
       preferredMetal: formData.preferredMetal,
       notes: formData.notes,
-      totalPurchasesCOP: 0,
-      createdAt: new Date().toISOString(),
-    };
-
-    state.customers.unshift(newCustomer);
-    erpDb.addAudit('CREAR_CLIENTE', 'Clientes', `Registrado cliente ${newCustomer.name} (${newCustomer.docType} ${newCustomer.docNumber})`);
+    });
     setIsNewModalOpen(false);
     alert('Cliente registrado exitosamente en la base de datos.');
   };

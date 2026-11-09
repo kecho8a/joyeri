@@ -192,7 +192,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     }
   };
 
-  const categories = ['TODAS', 'Anillos', 'Cadenas', 'Pulseras', 'Aretes', 'Dijes', 'Relojes de Lujo', 'Lingotes y Monedas'];
+  const categories = ['TODAS', 'Anillos', 'Cadenas', 'Pulseras', 'Aretes', 'Dijes', 'Gargantillas', 'Relojes de Lujo', 'Lingotes y Monedas', 'Gemas Certificadas'];
 
   return (
     <div className="space-y-4">
@@ -604,8 +604,10 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                     <option value="Pulseras">Pulseras</option>
                     <option value="Aretes">Aretes</option>
                     <option value="Dijes">Dijes</option>
+                    <option value="Gargantillas">Gargantillas</option>
                     <option value="Relojes de Lujo">Relojes de Lujo</option>
-                    <option value="Lingotes y Monedas">Lingotes 24K</option>
+                    <option value="Lingotes y Monedas">Lingotes y Monedas</option>
+                    <option value="Gemas Certificadas">Gemas Certificadas</option>
                   </select>
                 </div>
                 <div>

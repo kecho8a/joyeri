@@ -38,19 +38,14 @@ export const BranchesView: React.FC = () => {
       return;
     }
 
-    const newBranch: Branch = {
-      id: `SED-${Date.now().toString().slice(-4)}`,
+    erpDb.createBranch({
       code: formData.code,
       name: formData.name,
       city: formData.city,
       address: formData.address,
       phone: formData.phone,
       managerName: formData.managerName,
-      isMain: false,
-    };
-
-    state.branches.push(newBranch);
-    erpDb.addAudit('CREAR_SUCURSAL', 'Sucursales', `Creada sucursal ${newBranch.name}`);
+    });
     setIsNewModalOpen(false);
     alert('Nueva sucursal creada exitosamente.');
   };

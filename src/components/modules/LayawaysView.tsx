@@ -102,10 +102,12 @@ export const LayawaysView: React.FC = () => {
   };
 
   const handleDeliver = (layawayId: string) => {
-    if (confirm('¿Confirmar entrega definitiva de la joya al cliente?')) {
+    if (confirm('¿Confirmar entrega definitiva de la joya al cliente? Se generará la factura y garantía de la venta.')) {
       try {
-        erpDb.deliverLayaway(layawayId);
-        alert('Joya entregada al cliente con pase automático a estado VENDIDO.');
+        const sale = erpDb.deliverLayaway(layawayId);
+        alert(
+          `Joya entregada. Factura ${sale.invoiceNumber} emitida por ${formatCOP(sale.totalCOP)} con garantía ${sale.warrantyCode}.`
+        );
       } catch (err: any) {
         alert(err.message);
       }
@@ -204,6 +206,11 @@ export const LayawaysView: React.FC = () => {
                     {lay.status}
                   </span>
                 </div>
+                {isDelivered && lay.invoiceNumber && (
+                  <p className="text-[10px] font-mono text-[#21865B] mt-1">
+                    Factura: {lay.invoiceNumber}
+                  </p>
+                )}
 
                 <h3 className="font-bold text-sm sm:text-base text-[#20242B] leading-snug">
                   {lay.productName}

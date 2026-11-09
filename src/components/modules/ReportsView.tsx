@@ -40,6 +40,11 @@ import {
   METAL_DEFINITIONS,
 } from '../../utils/jewelryCalculations';
 import { getDefaultJewelryImage } from '../../utils/jewelryImages';
+import {
+  calculateProfitAndLoss,
+  calculateSellerPerformance,
+  matchesTimeFilter,
+} from '../../utils/financials';
 
 type ReportTab = 'pyg' | 'metals' | 'sellers' | 'payments' | 'workshop' | 'inventory';
 type TimeFilter = 'TODAY' | 'WEEK' | 'MONTH' | 'YEAR' | 'ALL';
@@ -57,67 +62,52 @@ export const ReportsView: React.FC = () => {
     return state.sales.filter((sale) => {
       const matchBranch = selectedBranchId === 'ALL' || sale.branchId === selectedBranchId;
       if (!matchBranch) return false;
-
-      if (timeFilter === 'ALL') return true;
-
-      const saleDate = new Date(sale.createdAt);
-      const now = new Date();
-
-      if (timeFilter === 'TODAY') {
-        return (
-          saleDate.getDate() === now.getDate() &&
-          saleDate.getMonth() === now.getMonth() &&
-          saleDate.getFullYear() === now.getFullYear()
-        );
-      }
-      if (timeFilter === 'WEEK') {
-        const diffDays = (now.getTime() - saleDate.getTime()) / (1000 * 3600 * 24);
-        return diffDays <= 7;
-      }
-      if (timeFilter === 'MONTH') {
-        return (
-          saleDate.getMonth() === now.getMonth() &&
-          saleDate.getFullYear() === now.getFullYear()
-        );
-      }
-      if (timeFilter === 'YEAR') {
-        return saleDate.getFullYear() === now.getFullYear();
-      }
-      return true;
+      return matchesTimeFilter(sale.createdAt, timeFilter);
     });
   }, [state.sales, selectedBranchId, timeFilter]);
 
-  // Financial calculations
-  const totalGrossSalesCOP = filteredSales.reduce((acc, s) => acc + s.totalCOP, 0);
-  const totalDiscountsCOP = filteredSales.reduce((acc, s) => acc + s.discountTotalCOP, 0);
-  const totalSubtotalNetCOP = filteredSales.reduce((acc, s) => acc + s.subtotalCOP, 0);
-  const totalVatCOP = filteredSales.reduce((acc, s) => acc + s.vatCOP, 0);
-
-  // Exact COGS: calculate true cost from product database or items
-  const totalCostCOP = useMemo(() => {
-    return filteredSales.reduce((acc, s) => {
-      return (
-        acc +
-        s.items.reduce((sum, item) => {
-          const prod = state.products.find((p) => p.id === item.productId || p.sku === item.sku);
-          return sum + (prod ? prod.totalCostCOP : item.finalPriceCOP * 0.65);
-        }, 0)
-      );
-    }, 0);
-  }, [filteredSales, state.products]);
-
-  const grossProfitCOP = totalGrossSalesCOP - totalCostCOP;
-  const grossMarginPercent = totalGrossSalesCOP > 0 ? ((grossProfitCOP / totalGrossSalesCOP) * 100).toFixed(1) : '0';
+  const filteredReturns = useMemo(() => {
+    return state.saleReturns.filter((ret) => {
+      const matchBranch = selectedBranchId === 'ALL' || ret.branchId === selectedBranchId;
+      if (!matchBranch) return false;
+      return matchesTimeFilter(ret.createdAt, timeFilter);
+    });
+  }, [state.saleReturns, selectedBranchId, timeFilter]);
 
   // Filter expenses
   const filteredExpenses = useMemo(() => {
-    return state.expenses.filter((e) => {
-      return selectedBranchId === 'ALL' || e.branchId === selectedBranchId;
+    return state.expenses.filter((expense) => {
+      const matchBranch = selectedBranchId === 'ALL' || expense.branchId === selectedBranchId;
+      if (!matchBranch) return false;
+      return matchesTimeFilter(expense.date, timeFilter);
     });
-  }, [state.expenses, selectedBranchId]);
+  }, [state.expenses, selectedBranchId, timeFilter]);
 
-  const totalExpensesCOP = filteredExpenses.reduce((acc, e) => acc + e.amountCOP, 0);
-  const netOperatingIncomeCOP = grossProfitCOP - totalExpensesCOP;
+  // Financial calculations (VAT-exclusive revenue, net of returns)
+  const pnl = useMemo(
+    () =>
+      calculateProfitAndLoss({
+        sales: filteredSales,
+        returns: filteredReturns,
+        products: state.products,
+        employees: state.employees,
+        expenses: filteredExpenses,
+      }),
+    [filteredSales, filteredReturns, state.products, state.employees, filteredExpenses]
+  );
+
+  const totalGrossSalesCOP = pnl.grossSalesCOP;
+  const totalDiscountsCOP = pnl.discountsCOP;
+  const totalVatCOP = pnl.vatCOP;
+  const totalCostCOP = pnl.cogsCOP;
+  const grossProfitCOP = pnl.grossProfitCOP;
+  const grossMarginPercent = pnl.grossMarginPercent.toFixed(1);
+  const totalExpensesCOP = pnl.expensesCOP;
+  const totalCommissionsCOP = pnl.commissionsCOP;
+  const netOperatingIncomeCOP = pnl.netOperatingIncomeCOP;
+  const totalBilledCOP = filteredSales
+    .filter((sale) => sale.status !== 'ANULADA')
+    .reduce((acc, sale) => acc + sale.totalCOP, 0);
 
   // Inventory & Metals calculations
   const filteredProducts = useMemo(() => {
@@ -147,50 +137,16 @@ export const ReportsView: React.FC = () => {
     totalFineGold24KGrams * priceGold24K + totalFineSilverGrams * priceSilver
   );
 
-  // Sellers Performance Breakdown
-  const sellerStats = useMemo(() => {
-    const map = new Map<string, {
-      name: string;
-      salesCount: number;
-      totalSalesCOP: number;
-      itemsCount: number;
-      commissionEarnedCOP: number;
-    }>();
-
-    // Default employees
-    state.employees.forEach((emp) => {
-      map.set(emp.name, {
-        name: emp.name,
-        salesCount: 0,
-        totalSalesCOP: 0,
-        itemsCount: 0,
-        commissionEarnedCOP: 0,
-      });
-    });
-
-    filteredSales.forEach((sale) => {
-      const seller = sale.sellerName || 'Asesor General';
-      const existing = map.get(seller) || {
-        name: seller,
-        salesCount: 0,
-        totalSalesCOP: 0,
-        itemsCount: 0,
-        commissionEarnedCOP: 0,
-      };
-
-      existing.salesCount += 1;
-      existing.totalSalesCOP += sale.totalCOP;
-      existing.itemsCount += sale.items.length;
-
-      const emp = state.employees.find((e) => e.name === seller);
-      const rate = emp ? emp.commissionRatePercent / 100 : 0.02;
-      existing.commissionEarnedCOP += Math.round(sale.totalCOP * rate);
-
-      map.set(seller, existing);
-    });
-
-    return Array.from(map.values()).filter((s) => s.totalSalesCOP > 0 || s.name.includes('Diana') || s.name.includes('Carlos'));
-  }, [filteredSales, state.employees]);
+  // Sellers Performance Breakdown (commission on net revenue before VAT)
+  const sellerStats = useMemo(
+    () =>
+      calculateSellerPerformance({
+        sales: filteredSales,
+        returns: filteredReturns,
+        employees: state.employees,
+      }),
+    [filteredSales, filteredReturns, state.employees]
+  );
 
   // Payment Methods Breakdown
   const paymentStats = useMemo(() => {
@@ -445,7 +401,7 @@ export const ReportsView: React.FC = () => {
                 </span>
               </div>
               <p className="text-xl font-bold text-[#20242B] font-mono mt-2 tabular-nums">
-                {formatCOP(totalGrossSalesCOP)}
+                {formatCOP(totalBilledCOP)}
               </p>
               <div className="flex justify-between items-center text-[10px] text-[#727985] mt-1 pt-2 border-t border-[#EAECEF]">
                 <span>{filteredSales.length} transacciones</span>
@@ -519,16 +475,20 @@ export const ReportsView: React.FC = () => {
 
             <div className="divide-y divide-[#EAECEF] text-xs">
               <div className="py-2.5 flex justify-between items-center font-medium">
-                <span className="text-[#20242B] pl-2">(+) Ingresos Brutos por Venta de Joyería</span>
+                <span className="text-[#20242B] pl-2">(+) Ingresos Brutos por Venta de Joyería (base sin IVA)</span>
                 <span className="font-mono font-bold text-base text-[#20242B]">{formatCOP(totalGrossSalesCOP)}</span>
               </div>
               <div className="py-2 flex justify-between items-center text-[#727985]">
-                <span className="pl-6">(-) Descuentos Comerciales en Vitrina Otorgados</span>
-                <span className="font-mono text-[#D64545]">-{formatCOP(totalDiscountsCOP)}</span>
+                <span className="pl-6">(i) Descuentos comerciales otorgados (ya incluidos en la base)</span>
+                <span className="font-mono">{formatCOP(totalDiscountsCOP)}</span>
+              </div>
+              <div className="py-2 flex justify-between items-center text-[#727985]">
+                <span className="pl-6">(-) Devoluciones y Notas Crédito</span>
+                <span className="font-mono text-[#D64545]">-{formatCOP(pnl.returnsCOP)}</span>
               </div>
               <div className="py-2.5 flex justify-between items-center font-bold bg-[#F8F9FA] px-2 rounded-lg text-[#20242B]">
                 <span>(=) Ingresos Operacionales Netos</span>
-                <span className="font-mono">{formatCOP(totalGrossSalesCOP - totalDiscountsCOP)}</span>
+                <span className="font-mono">{formatCOP(pnl.netRevenueCOP)}</span>
               </div>
               <div className="py-2 flex justify-between items-center text-[#727985]">
                 <span className="pl-6">(-) Costo de Venta Mercancía (Oro Fino, Montura y Piedras Preciosas)</span>
@@ -543,10 +503,8 @@ export const ReportsView: React.FC = () => {
                 <span className="font-mono text-[#D64545]">-{formatCOP(totalExpensesCOP)}</span>
               </div>
               <div className="py-2 flex justify-between items-center text-[#727985]">
-                <span className="pl-6">(-) Liquidación de Comisiones Comerciales de Venta</span>
-                <span className="font-mono text-[#D64545]">
-                  -{formatCOP(sellerStats.reduce((acc, s) => acc + s.commissionEarnedCOP, 0))}
-                </span>
+                <span className="pl-6">(-) Liquidación de Comisiones Comerciales de Venta (sobre ingreso neto sin IVA)</span>
+                <span className="font-mono text-[#D64545]">-{formatCOP(totalCommissionsCOP)}</span>
               </div>
               <div className="py-3 flex justify-between items-center font-bold bg-[#9B7028]/15 px-3 rounded-xl text-[#7F581A] text-sm">
                 <span>(=) RESULTADO INTEGRAL OPERATIVO ANTES DE IMPUESTOS</span>
@@ -562,7 +520,7 @@ export const ReportsView: React.FC = () => {
                 Registro Detallado de Facturación ({filteredSales.length} comprobantes)
               </h3>
               <span className="text-xs text-[#727985]">
-                Total: <strong className="font-mono text-[#7F581A]">{formatCOP(totalGrossSalesCOP)}</strong>
+                Total: <strong className="font-mono text-[#7F581A]">{formatCOP(totalBilledCOP)}</strong>
               </span>
             </div>
             <div className="overflow-x-auto">
@@ -833,7 +791,7 @@ export const ReportsView: React.FC = () => {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(paymentStats).map(([method, data]) => {
-              const percent = totalGrossSalesCOP > 0 ? ((data.totalCOP / totalGrossSalesCOP) * 100).toFixed(1) : '0';
+              const percent = totalBilledCOP > 0 ? ((data.totalCOP / totalBilledCOP) * 100).toFixed(1) : '0';
               return (
                 <div
                   key={method}

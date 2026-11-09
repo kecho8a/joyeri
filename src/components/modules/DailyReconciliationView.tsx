@@ -229,8 +229,8 @@ export const DailyReconciliationView: React.FC = () => {
 
       alert(
         overallMatches
-          ? 'Cuadre diario registrado: inventario de oro, piedras y efectivo coinciden con el sistema.'
-          : 'Cuadre diario registrado con diferencias documentadas. Consulte el historial.'
+          ? 'Cuadre diario registrado y turno cerrado: inventario, piedras y efectivo coinciden con el sistema.'
+          : 'Cuadre diario registrado y turno cerrado con diferencias documentadas. Consulte el historial.'
       );
 
       setGoldCounts({});
@@ -257,8 +257,8 @@ export const DailyReconciliationView: React.FC = () => {
             <ClipboardCheck className="w-5 h-5 text-[#9B7028]" />
             Cuadre Diario de Inventario & Caja
           </h1>
-          <p className="text-xs text-[#727985]">
-            Verificación física de joyas de oro y piedras contra el inventario del sistema, y arqueo del efectivo esperado en caja
+            <p className="text-xs text-[#727985]">
+            Cierre oficial del día: verificación física de joyas y piedras contra el inventario, arqueo de efectivo y cierre del turno de caja en un solo registro
           </p>
         </div>
 
@@ -627,6 +627,12 @@ export const DailyReconciliationView: React.FC = () => {
                   -{formatCOP(shift ? shift.cashExpensesCOP : 0)}
                 </span>
               </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#727985]">Devoluciones en efectivo</span>
+                <span className="font-mono font-semibold text-[#D64545]">
+                  -{formatCOP(shift ? shift.cashRefundsCOP : 0)}
+                </span>
+              </div>
               <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-between">
                 <span className="font-semibold text-[#20242B]">
                   Efectivo esperado en gaveta
@@ -723,14 +729,14 @@ export const DailyReconciliationView: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <p className="text-[10px] text-[#727985]">
-              Se excluyen joyas vendidas, en taller o en consignación. El registro queda guardado con auditoría.
+              Se excluyen joyas vendidas, en taller o en consignación. Al registrar, se cierra el turno de caja abierto con el efectivo contado.
             </p>
             <button
               type="submit"
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-sm transition-colors"
             >
               <Save className="w-4 h-4" />
-              Registrar Cuadre Diario
+              Registrar Cuadre y Cerrar Turno
             </button>
           </div>
         </div>

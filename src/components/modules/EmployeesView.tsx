@@ -36,21 +36,14 @@ export const EmployeesView: React.FC = () => {
       return;
     }
 
-    const newEmp: Employee = {
-      id: `EMP-${Date.now().toString().slice(-4)}`,
+    erpDb.createEmployee({
       docNumber: formData.docNumber,
       name: formData.name,
       roleTitle: formData.roleTitle,
       branchId: state.activeBranchId,
       baseSalaryCOP: formData.baseSalaryCOP,
       commissionRatePercent: formData.commissionRatePercent,
-      salesCurrentMonthCOP: 0,
-      commissionEarnedCOP: 0,
-      active: true,
-    };
-
-    state.employees.unshift(newEmp);
-    erpDb.addAudit('CREAR_EMPLEADO', 'Personal', `Registrado empleado ${newEmp.name}`);
+    });
     setIsNewModalOpen(false);
     alert('Empleado registrado exitosamente.');
   };

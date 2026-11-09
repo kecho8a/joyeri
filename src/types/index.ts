@@ -227,10 +227,44 @@ export interface Sale {
   vatCOP: number;
   totalCOP: number;
   payments: PaymentRecord[];
-  status: 'PAGADA' | 'ANULADA';
+  status: 'PAGADA' | 'ANULADA' | 'DEVUELTA_PARCIAL' | 'DEVUELTA_TOTAL';
   accountingEntryId: string;
   warrantyCode: string;
   notes?: string;
+  returnedTotalCOP?: number;
+  returnedVatCOP?: number;
+  createdAt: string;
+}
+
+export interface SaleReturnItem {
+  productId: string;
+  sku: string;
+  name: string;
+  quantity: number;
+  refundBaseCOP: number;
+  refundVatCOP: number;
+  refundTotalCOP: number;
+  costCOP: number;
+}
+
+export interface SaleReturn {
+  id: string;
+  creditNoteNumber: string;
+  saleId: string;
+  invoiceNumber: string;
+  branchId: string;
+  customerId: string;
+  customerName: string;
+  customerDoc: string;
+  items: SaleReturnItem[];
+  subtotalCOP: number;
+  vatCOP: number;
+  totalCOP: number;
+  costCOP: number;
+  reason: string;
+  refundMethod: PaymentMethod;
+  accountingEntryId: string;
+  createdBy: string;
   createdAt: string;
 }
 
@@ -269,6 +303,9 @@ export interface Layaway {
   installments: LayawayInstallment[];
   status: LayawayStatus;
   sellerName: string;
+  saleId?: string;
+  invoiceNumber?: string;
+  deliveredAt?: string;
   createdAt: string;
 }
 
@@ -280,6 +317,16 @@ export type RepairStatus =
   | 'LISTO_ENTREGA'
   | 'ENTREGADO'
   | 'CANCELADO';
+
+export interface RepairPayment {
+  id: string;
+  date: string;
+  amountCOP: number;
+  method: PaymentMethod;
+  receiptNumber: string;
+  cashierName: string;
+  notes?: string;
+}
 
 export interface RepairOrder {
   id: string;
@@ -308,7 +355,10 @@ export interface RepairOrder {
   partsCostCOP: number;
   laborCostCOP: number;
   quotedPriceCOP: number;
+  vatRate: number;
   advancePaymentCOP: number;
+  advancePaymentMethod: PaymentMethod;
+  payments: RepairPayment[];
   balanceCOP: number;
   
   promiseDate: string;
@@ -366,7 +416,10 @@ export interface CashShift {
   transferSalesCOP: number;
   layawayCashCOP: number;
   repairCashCOP: number;
+  repairCardCOP: number;
+  repairTransferCOP: number;
   cashExpensesCOP: number;
+  cashRefundsCOP: number;
   
   expectedCashCOP: number;
   actualCountedCashCOP?: number;
@@ -401,7 +454,7 @@ export interface AccountingEntry {
   voucherNumber: string; // 'CC-2026-0156'
   date: string;
   concept: string;
-  sourceModule: 'VENTAS' | 'COMPRAS' | 'CAJA' | 'REPARACION' | 'NOMINA' | 'AJUSTE_INVENTARIO' | 'GASTOS';
+  sourceModule: 'VENTAS' | 'COMPRAS' | 'CAJA' | 'REPARACION' | 'NOMINA' | 'AJUSTE_INVENTARIO' | 'GASTOS' | 'DEVOLUCION';
   rows: JournalRow[];
   totalDebitCOP: number;
   totalCreditCOP: number;
@@ -434,7 +487,7 @@ export interface WarrantyRecord {
   startDate: string;
   endDate: string;
   coverageSummary: string;
-  status: 'VIGENTE' | 'RECLAMADA' | 'VENCIDA';
+  status: 'VIGENTE' | 'RECLAMADA' | 'VENCIDA' | 'ANULADA';
 }
 
 export interface AuditLogItem {

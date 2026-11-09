@@ -18,7 +18,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { erpDb } from '../../services/store';
-import { RepairOrder } from '../../types';
+import { PaymentMethod, RepairOrder } from '../../types';
 import {
   formatCOP,
   formatGrams,
@@ -40,6 +40,9 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
   const [statusFilter, setStatusFilter] = useState<string>('TODOS');
   const [isNewModalOpen, setIsNewModalOpen] = useState(isNewModalOpenInitial || false);
   const [selectedOrderDetails, setSelectedOrderDetails] = useState<RepairOrder | null>(null);
+  const [paymentOrder, setPaymentOrder] = useState<RepairOrder | null>(null);
+  const [paymentAmount, setPaymentAmount] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('EFECTIVO');
 
   // Form state
   const [formData, setFormData] = useState({
@@ -53,6 +56,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
     partsCostCOP: 50000,
     laborCostCOP: 150000,
     advancePaymentCOP: 100000,
+    advancePaymentMethod: 'EFECTIVO' as PaymentMethod,
     promiseDate: '2026-03-20',
   });
 
@@ -89,6 +93,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
         partsCostCOP: formData.partsCostCOP,
         laborCostCOP: formData.laborCostCOP,
         advancePaymentCOP: formData.advancePaymentCOP,
+        advancePaymentMethod: formData.advancePaymentMethod,
         promiseDate: formData.promiseDate,
       });
 
@@ -98,6 +103,12 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
     } catch (err: any) {
       alert(`Error: ${err.message}`);
     }
+  };
+
+  const openPaymentModal = (r: RepairOrder) => {
+    setPaymentOrder(r);
+    setPaymentAmount(r.balanceCOP);
+    setPaymentMethod('EFECTIVO');
   };
 
   const handleAdvanceStatus = (r: RepairOrder) => {
@@ -115,6 +126,13 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
       let finalWeight: number | undefined;
 
       if (nextStatus === 'ENTREGADO') {
+        if (r.balanceCOP > 0.01) {
+          openPaymentModal(r);
+          alert(
+            `La orden tiene un saldo pendiente de $${r.balanceCOP.toLocaleString('es-CO')}. Registre el pago antes de entregar.`
+          );
+          return;
+        }
         const input = prompt(
           `Entrega de joya al cliente.\nPeso inicial en balanza: ${r.initialWeightGrams}g\n\nIngrese el peso verificado de salida en balanza (g):`,
           r.initialWeightGrams.toString()
@@ -123,7 +141,23 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
         finalWeight = parseFloat(input) || r.initialWeightGrams;
       }
 
-      erpDb.updateRepairStatus(r.id, nextStatus, finalWeight);
+      try {
+        erpDb.updateRepairStatus(r.id, nextStatus, finalWeight);
+      } catch (err: any) {
+        alert(`Error: ${err.message}`);
+      }
+    }
+  };
+
+  const handlePaymentSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!paymentOrder) return;
+    try {
+      erpDb.addRepairPayment(paymentOrder.id, paymentAmount, paymentMethod);
+      setPaymentOrder(null);
+      alert('Pago registrado y aplicado al saldo de la orden.');
+    } catch (err: any) {
+      alert(`Error: ${err.message}`);
     }
   };
 
@@ -268,29 +302,42 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
                   <span className={`font-mono font-bold ${r.balanceCOP > 0 ? 'text-[#D64545]' : 'text-[#21865B]'}`}>
                     {formatCOP(r.balanceCOP)}
                   </span>
+                  <span className="text-[10px] text-[#727985] block mt-0.5">
+                    {r.payments.length} pago(s) registrado(s)
+                  </span>
                 </div>
 
-                {!isFinished && (
-                  <button
-                    onClick={() => handleAdvanceStatus(r)}
-                    className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 active:scale-95 transition-all shadow-xs ${
-                      isReady
-                        ? 'bg-[#21865B] hover:bg-emerald-700 text-white'
-                        : 'bg-[#9B7028] hover:bg-[#7F581A] text-white'
-                    }`}
-                  >
-                    <span>
-                      {isReady
-                        ? 'Entregar al Cliente'
-                        : r.status === 'RECIBIDO'
-                        ? 'Iniciar en Taller'
-                        : r.status === 'EN_PROCESO'
-                        ? 'Control de Calidad'
-                        : 'Avanzar Estado'}
-                    </span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                )}
+                <div className="flex items-center gap-1.5">
+                  {!isFinished && r.balanceCOP > 0 && (
+                    <button
+                      onClick={() => openPaymentModal(r)}
+                      className="px-3 py-1.5 rounded-xl font-bold text-xs bg-[#F4F5F7] border border-[#EAECEF] text-[#20242B] hover:bg-[#EAECEF] active:scale-95 transition-all"
+                    >
+                      Registrar pago
+                    </button>
+                  )}
+                  {!isFinished && (
+                    <button
+                      onClick={() => handleAdvanceStatus(r)}
+                      className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 active:scale-95 transition-all shadow-xs ${
+                        isReady
+                          ? 'bg-[#21865B] hover:bg-emerald-700 text-white'
+                          : 'bg-[#9B7028] hover:bg-[#7F581A] text-white'
+                      }`}
+                    >
+                      <span>
+                        {isReady
+                          ? 'Entregar al Cliente'
+                          : r.status === 'RECIBIDO'
+                          ? 'Iniciar en Taller'
+                          : r.status === 'EN_PROCESO'
+                          ? 'Control de Calidad'
+                          : 'Avanzar Estado'}
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           );
@@ -407,6 +454,25 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
                     className="w-full bg-white border border-[#EAECEF] rounded-lg px-2.5 py-1 font-mono font-bold text-[#21865B]"
                   />
                 </div>
+                <div>
+                  <label className="font-semibold text-[#20242B] block mb-1">Método del Anticipo</label>
+                  <select
+                    value={formData.advancePaymentMethod}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        advancePaymentMethod: e.target.value as PaymentMethod,
+                      })
+                    }
+                    className="w-full bg-white border border-[#EAECEF] rounded-lg px-2.5 py-1 font-medium"
+                  >
+                    <option value="EFECTIVO">Efectivo</option>
+                    <option value="TARJETA_DEBITO">Tarjeta débito</option>
+                    <option value="TARJETA_CREDITO">Tarjeta crédito</option>
+                    <option value="TRANSFERENCIA_BANCOLOMBIA">Transferencia</option>
+                    <option value="NEQUI_DAVIPLATA">Nequi / Daviplata</option>
+                  </select>
+                </div>
               </div>
 
               <div>
@@ -432,6 +498,82 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
                   className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-xl font-bold"
                 >
                   Recibir en Custodia
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: REGISTRAR PAGO DE TALLER */}
+      {paymentOrder && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl border border-[#EAECEF] shadow-2xl w-full max-w-md p-5 sm:p-7 space-y-4 text-xs">
+            <div className="flex justify-between items-center pb-3 border-b border-[#EAECEF]">
+              <div>
+                <h2 className="text-base font-bold text-[#20242B]">Registrar pago de taller</h2>
+                <p className="text-xs text-[#727985]">
+                  {paymentOrder.orderNumber} · {paymentOrder.customerName}
+                </p>
+              </div>
+              <button onClick={() => setPaymentOrder(null)} className="p-1.5 text-[#727985]">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="bg-[#F8F9FA] rounded-xl p-3 flex justify-between items-center">
+              <span className="text-[#727985]">Saldo pendiente</span>
+              <span className="font-mono font-bold text-[#D64545]">
+                {formatCOP(paymentOrder.balanceCOP)}
+              </span>
+            </div>
+
+            <form onSubmit={handlePaymentSubmit} className="space-y-4">
+              <div>
+                <label className="font-semibold text-[#20242B] block mb-1">Monto a pagar *</label>
+                <input
+                  type="number"
+                  required
+                  min={1}
+                  max={paymentOrder.balanceCOP}
+                  value={paymentAmount}
+                  onChange={(e) => setPaymentAmount(parseFloat(e.target.value) || 0)}
+                  className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl px-3 py-2 font-mono font-bold text-[#20242B]"
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold text-[#20242B] block mb-1">Método de pago *</label>
+                <select
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
+                  className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl px-3 py-2 font-medium"
+                >
+                  <option value="EFECTIVO">Efectivo</option>
+                  <option value="TARJETA_DEBITO">Tarjeta débito</option>
+                  <option value="TARJETA_CREDITO">Tarjeta crédito</option>
+                  <option value="TRANSFERENCIA_BANCOLOMBIA">Transferencia</option>
+                  <option value="NEQUI_DAVIPLATA">Nequi / Daviplata</option>
+                </select>
+              </div>
+
+              <p className="text-[11px] text-[#727985]">
+                Los pagos en efectivo afectan el arqueo del turno de caja abierto.
+              </p>
+
+              <div className="pt-2 border-t border-[#EAECEF] flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPaymentOrder(null)}
+                  className="px-4 py-2 text-[#727985]"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-[#21865B] hover:bg-emerald-700 text-white rounded-xl font-bold"
+                >
+                  Aplicar pago
                 </button>
               </div>
             </form>

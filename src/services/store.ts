@@ -12,8 +12,11 @@ import {
   Customer,
   Supplier,
   Sale,
+  SaleReturn,
+  SaleReturnItem,
   Layaway,
   RepairOrder,
+  RepairPayment,
   ManufacturingOrder,
   CashShift,
   Expense,
@@ -421,7 +424,7 @@ const INITIAL_PRODUCTS: Product[] = [
     vatRate: 0.19,
     branchId: 'SED-01',
     locationInStore: 'Vitrina Cadenas B-01',
-    status: 'DISPONIBLE',
+    status: 'VENDIDO',
     isConsignment: false,
     serialNumber: 'JOY-2026-0114',
     createdAt: '2026-02-12T14:00:00Z',
@@ -465,7 +468,7 @@ const INITIAL_PRODUCTS: Product[] = [
     vatRate: 0.19,
     branchId: 'SED-01',
     locationInStore: 'Vitrina Pulseras C-01',
-    status: 'DISPONIBLE',
+    status: 'RESERVADO',
     isConsignment: false,
     serialNumber: 'JOY-2026-0120',
     createdAt: '2026-02-15T16:00:00Z',
@@ -510,7 +513,7 @@ const INITIAL_PRODUCTS: Product[] = [
     vatRate: 0.19,
     branchId: 'SED-02',
     locationInStore: 'Vitrina Medellín Aretes M-01',
-    status: 'DISPONIBLE',
+    status: 'VENDIDO',
     isConsignment: false,
     serialNumber: 'JOY-2026-0145',
     createdAt: '2026-02-20T11:00:00Z',
@@ -574,7 +577,7 @@ const INITIAL_PRODUCTS: Product[] = [
     vatRate: 0.19,
     branchId: 'SED-03',
     locationInStore: 'Vitrina Plata P-02',
-    status: 'DISPONIBLE',
+    status: 'VENDIDO',
     isConsignment: false,
     serialNumber: 'JOY-PLA-049',
     createdAt: '2026-02-25T14:30:00Z',
@@ -606,13 +609,56 @@ const INITIAL_PRODUCTS: Product[] = [
     vatRate: 0.19,
     branchId: 'SED-01',
     locationInStore: 'Vitrina Bóveda Relojería',
-    status: 'DISPONIBLE',
+    status: 'CONSIGNADO',
     isConsignment: true,
     consignmentOwner: 'Dr. Fernando Echeverri (Consignación Cliente)',
     consignmentCommissionRate: 0.12,
     serialNumber: '82M94012',
     createdAt: '2026-02-28T16:00:00Z',
     updatedAt: '2026-02-28T16:00:00Z',
+  },
+  {
+    id: 'PRD-001-HIST',
+    sku: 'ANI-ORO18-RUB-HIST',
+    barcode: '770999000199',
+    reference: 'REF-RUB-HIST',
+    name: 'Anillo Oro 18K con Rubí Birmano 1.10 ct',
+    description: 'Pieza histórica vendida. Se conserva para trazabilidad de factura, costo y garantía.',
+    category: 'Anillos',
+    metalType: 'ORO_18K_NACIONAL',
+    metalColor: 'Amarillo',
+    fineness: 0.750,
+    grossWeightGrams: 5.02,
+    stoneWeightCarats: 1.10,
+    stoneWeightGrams: 0.22,
+    otherComponentsWeightGrams: 0,
+    netMetalWeightGrams: 4.80,
+    fineMetalContentGrams: 3.60,
+    stones: [
+      {
+        id: 'GEM-HIST-01',
+        type: 'Rubí',
+        carats: 1.10,
+        quantity: 1,
+        cut: 'Oval',
+        color: 'Rojo Birmano',
+        clarity: 'Calidad Gema',
+        estimatedValueCOP: 1800000,
+      },
+    ],
+    costPriceCOP: 4800000,
+    additionalCostsCOP: 0,
+    totalCostCOP: 4800000,
+    salePriceCOP: 7800000,
+    minAllowedPriceCOP: 7500000,
+    vatRate: 0.19,
+    branchId: 'SED-01',
+    locationInStore: 'Vendido - Histórico',
+    status: 'VENDIDO',
+    isConsignment: false,
+    serialNumber: 'JOY-HIST-0104',
+    createdAt: '2026-03-01T14:22:00Z',
+    updatedAt: '2026-03-01T14:22:00Z',
   },
 ];
 
@@ -780,6 +826,8 @@ const INITIAL_SALES: Sale[] = [
   },
 ];
 
+const INITIAL_SALE_RETURNS: SaleReturn[] = [];
+
 const INITIAL_CASH_SHIFT: CashShift = {
   id: 'CSH-2026-0308-01',
   shiftNumber: 'TURNO-2026-0084',
@@ -793,7 +841,10 @@ const INITIAL_CASH_SHIFT: CashShift = {
   transferSalesCOP: 0,
   layawayCashCOP: 0,
   repairCashCOP: 0,
+  repairCardCOP: 0,
+  repairTransferCOP: 0,
   cashExpensesCOP: 0,
+  cashRefundsCOP: 0,
   expectedCashCOP: 1500000,
   status: 'ABIERTA',
 };
@@ -848,7 +899,19 @@ const INITIAL_REPAIRS: RepairOrder[] = [
     partsCostCOP: 140000,
     laborCostCOP: 280000,
     quotedPriceCOP: 420000,
+    vatRate: 0.19,
     advancePaymentCOP: 200000,
+    advancePaymentMethod: 'EFECTIVO',
+    payments: [
+      {
+        id: 'RPAY-01',
+        date: '2026-03-02T11:00:00Z',
+        amountCOP: 200000,
+        method: 'EFECTIVO',
+        receiptNumber: 'REC-REP-0078-1',
+        cashierName: 'Carlos Mendoza',
+      },
+    ],
     balanceCOP: 220000,
     promiseDate: '2026-03-12',
     status: 'EN_PROCESO',
@@ -871,7 +934,19 @@ const INITIAL_REPAIRS: RepairOrder[] = [
     partsCostCOP: 80000,
     laborCostCOP: 160000,
     quotedPriceCOP: 240000,
+    vatRate: 0.19,
     advancePaymentCOP: 240000, // Pagado total
+    advancePaymentMethod: 'EFECTIVO',
+    payments: [
+      {
+        id: 'RPAY-02',
+        date: '2026-03-03T15:30:00Z',
+        amountCOP: 240000,
+        method: 'EFECTIVO',
+        receiptNumber: 'REC-REP-0079-1',
+        cashierName: 'Carlos Mendoza',
+      },
+    ],
     balanceCOP: 0,
     promiseDate: '2026-03-09',
     status: 'LISTO_ENTREGA',
@@ -1048,6 +1123,7 @@ export interface DatabaseState {
   suppliers: Supplier[];
   products: Product[];
   sales: Sale[];
+  saleReturns: SaleReturn[];
   currentCashShift: CashShift;
   cashShiftsHistory: CashShift[];
   layaways: Layaway[];
@@ -1077,14 +1153,107 @@ class ERPDatabaseService {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed.products)) {
-          parsed.products = parsed.products.map((p: Product) => ({
-            ...p,
-            imageUrl: p.imageUrl || getDefaultJewelryImage(p.category, p.name),
-          }));
+        const products: Product[] = Array.isArray(parsed.products)
+          ? parsed.products.map((p: Product) => ({
+              ...p,
+              imageUrl: p.imageUrl || getDefaultJewelryImage(p.category, p.name),
+            }))
+          : INITIAL_PRODUCTS;
+        const sales: Sale[] = Array.isArray(parsed.sales) ? parsed.sales : INITIAL_SALES;
+        const saleReturns: SaleReturn[] = Array.isArray(parsed.saleReturns)
+          ? parsed.saleReturns
+          : [];
+        const repairs: RepairOrder[] = Array.isArray(parsed.repairs)
+          ? parsed.repairs.map((r: RepairOrder) => ({
+              ...r,
+              vatRate: typeof r.vatRate === 'number' ? r.vatRate : 0.19,
+              advancePaymentMethod: r.advancePaymentMethod || 'EFECTIVO',
+              payments: Array.isArray(r.payments)
+                ? r.payments
+                : r.advancePaymentCOP > 0
+                  ? [
+                      {
+                        id: `RPAY-MIG-${r.id}`,
+                        date: r.createdAt,
+                        amountCOP: r.advancePaymentCOP,
+                        method: 'EFECTIVO' as const,
+                        receiptNumber: `REC-${r.orderNumber}-1`,
+                        cashierName: 'Migración',
+                      },
+                    ]
+                  : [],
+            }))
+          : INITIAL_REPAIRS;
+
+        const returnedProductIds = new Set<string>();
+        saleReturns.forEach((ret) => {
+          ret.items.forEach((item) => returnedProductIds.add(item.productId));
+        });
+        const soldProductIds = new Set<string>();
+        sales
+          .filter((sale) => sale.status !== 'ANULADA')
+          .forEach((sale) => {
+            sale.items.forEach((item) => soldProductIds.add(item.productId));
+          });
+
+        products.forEach((product) => {
+          if (
+            product.status === 'DISPONIBLE' &&
+            soldProductIds.has(product.id) &&
+            !returnedProductIds.has(product.id) &&
+            !product.isConsignment
+          ) {
+            product.status = 'VENDIDO';
+          }
+          if (product.isConsignment && product.status === 'DISPONIBLE') {
+            product.status = 'CONSIGNADO';
+          }
+        });
+
+        if (
+          sales.some((sale) => sale.id === 'SAL-001') &&
+          !products.some((product) => product.id === 'PRD-001-HIST')
+        ) {
+          const historical = INITIAL_PRODUCTS.find((p) => p.id === 'PRD-001-HIST');
+          if (historical) products.push(historical);
         }
+
+        const baseShift = parsed.currentCashShift || INITIAL_CASH_SHIFT;
+        const currentCashShift: CashShift = {
+          ...baseShift,
+          repairCardCOP: baseShift.repairCardCOP ?? 0,
+          repairTransferCOP: baseShift.repairTransferCOP ?? 0,
+          cashRefundsCOP: baseShift.cashRefundsCOP ?? 0,
+        };
+        const cashShiftsHistory: CashShift[] = Array.isArray(parsed.cashShiftsHistory)
+          ? parsed.cashShiftsHistory.map((shift: CashShift) => ({
+              ...shift,
+              repairCardCOP: shift.repairCardCOP ?? 0,
+              repairTransferCOP: shift.repairTransferCOP ?? 0,
+              cashRefundsCOP: shift.cashRefundsCOP ?? 0,
+            }))
+          : [];
+
         return {
-          ...parsed,
+          branches: parsed.branches || INITIAL_BRANCHES,
+          users: parsed.users || INITIAL_USERS,
+          metalPrices: parsed.metalPrices || INITIAL_METAL_PRICES,
+          customers: parsed.customers || INITIAL_CUSTOMERS,
+          suppliers: parsed.suppliers || INITIAL_SUPPLIERS,
+          products,
+          sales,
+          saleReturns,
+          currentCashShift,
+          cashShiftsHistory,
+          layaways: parsed.layaways || INITIAL_LAYAWAYS,
+          repairs,
+          manufacturingOrders: parsed.manufacturingOrders || INITIAL_MANUFACTURING,
+          expenses: parsed.expenses || INITIAL_EXPENSES,
+          accountingEntries: parsed.accountingEntries || INITIAL_ACCOUNTING,
+          warranties: parsed.warranties || INITIAL_WARRANTIES,
+          stockMovements: parsed.stockMovements || [],
+          employees: parsed.employees || INITIAL_EMPLOYEES,
+          auditLogs: parsed.auditLogs || INITIAL_AUDIT,
           dailyReconciliations: Array.isArray(parsed.dailyReconciliations)
             ? parsed.dailyReconciliations
             : [],
@@ -1104,6 +1273,7 @@ class ERPDatabaseService {
       suppliers: INITIAL_SUPPLIERS,
       products: INITIAL_PRODUCTS,
       sales: INITIAL_SALES,
+      saleReturns: INITIAL_SALE_RETURNS,
       currentCashShift: INITIAL_CASH_SHIFT,
       cashShiftsHistory: [],
       layaways: INITIAL_LAYAWAYS,
@@ -1158,6 +1328,16 @@ class ERPDatabaseService {
     );
   }
 
+  private getPaymentAccount(method: PaymentRecord['method']): { code: string; name: string } {
+    if (method === 'EFECTIVO') {
+      return { code: '110505', name: 'Caja General Sede' };
+    }
+    if (method === 'TARJETA_DEBITO' || method === 'TARJETA_CREDITO') {
+      return { code: '111005', name: 'Bancos Cta Cte Tarjetas Datafono' };
+    }
+    return { code: '111001', name: 'Bancos Transferencias' };
+  }
+
   public setActiveBranch(branchId: string) {
     this.state.activeBranchId = branchId;
     this.addAudit('CAMBIO_SUCURSAL', 'Sesión', `Cambio de sucursal activa a ${branchId}`);
@@ -1168,6 +1348,67 @@ class ERPDatabaseService {
     this.state.activeUserId = userId;
     this.addAudit('CAMBIO_USUARIO', 'Sesión', `Cambio de usuario activo a ${userId}`);
     this.saveState();
+  }
+
+  // MASTER DATA (ALTAS PERSISTIDAS)
+  public createCustomer(data: Omit<Customer, 'id' | 'totalPurchasesCOP' | 'createdAt'>): Customer {
+    const customer: Customer = {
+      ...data,
+      id: `CLI-${Date.now()}`,
+      totalPurchasesCOP: 0,
+      createdAt: new Date().toISOString(),
+    };
+    this.state.customers.unshift(customer);
+    this.addAudit(
+      'CREAR_CLIENTE',
+      'Clientes',
+      `Registrado cliente ${customer.name} (${customer.docType} ${customer.docNumber})`
+    );
+    this.saveState();
+    return customer;
+  }
+
+  public createEmployee(
+    data: Omit<Employee, 'id' | 'salesCurrentMonthCOP' | 'commissionEarnedCOP' | 'active'>
+  ): Employee {
+    const employee: Employee = {
+      ...data,
+      id: `EMP-${Date.now()}`,
+      salesCurrentMonthCOP: 0,
+      commissionEarnedCOP: 0,
+      active: true,
+    };
+    this.state.employees.unshift(employee);
+    this.addAudit('CREAR_EMPLEADO', 'Personal', `Registrado empleado ${employee.name}`);
+    this.saveState();
+    return employee;
+  }
+
+  public createSupplier(data: Omit<Supplier, 'id'>): Supplier {
+    const supplier: Supplier = {
+      ...data,
+      id: `PRV-${Date.now()}`,
+    };
+    this.state.suppliers.unshift(supplier);
+    this.addAudit(
+      'CREAR_PROVEEDOR',
+      'Proveedores',
+      `Registrado proveedor ${supplier.companyName} (NIT ${supplier.nit})`
+    );
+    this.saveState();
+    return supplier;
+  }
+
+  public createBranch(data: Omit<Branch, 'id' | 'isMain'>): Branch {
+    const branch: Branch = {
+      ...data,
+      id: `SED-${Date.now()}`,
+      isMain: false,
+    };
+    this.state.branches.push(branch);
+    this.addAudit('CREAR_SUCURSAL', 'Sucursales', `Creada sucursal ${branch.name}`);
+    this.saveState();
+    return branch;
   }
 
   // AUDIT LOG
@@ -1346,7 +1587,7 @@ class ERPDatabaseService {
     for (const pid of saleInput.productIds) {
       const p = this.state.products.find((item) => item.id === pid);
       if (!p) throw new Error(`Producto ${pid} no encontrado en base de datos`);
-      if (p.status !== 'DISPONIBLE' && p.status !== 'RESERVADO') {
+      if (p.status !== 'DISPONIBLE') {
         throw new Error(`El producto ${p.sku} (${p.name}) no está disponible para venta. Estado actual: ${p.status}`);
       }
       productsToSell.push(p);
@@ -1576,6 +1817,251 @@ class ERPDatabaseService {
     return newSale;
   }
 
+  // SALE RETURNS / CREDIT NOTES / VOID
+  public registerSaleReturn(input: {
+    saleId: string;
+    productIds: string[];
+    reason: string;
+    refundMethod: PaymentRecord['method'];
+    stockCondition?: ProductStatus;
+    markAnulada?: boolean;
+    notes?: string;
+  }): SaleReturn {
+    const sale = this.state.sales.find((s) => s.id === input.saleId);
+    if (!sale) throw new Error('Venta no encontrada');
+    if (sale.status === 'ANULADA') throw new Error('La venta ya está anulada');
+    if (sale.status === 'DEVUELTA_TOTAL') throw new Error('La venta ya fue devuelta en su totalidad');
+
+    const requestedIds = Array.from(new Set(input.productIds));
+    if (requestedIds.length === 0) throw new Error('Debe seleccionar al menos una joya para devolver');
+
+    const priorReturns = this.state.saleReturns.filter((ret) => ret.saleId === sale.id);
+    const alreadyReturned = new Set(
+      priorReturns.flatMap((ret) => ret.items.map((item) => item.productId))
+    );
+
+    const saleItemMap = new Map(sale.items.map((item) => [item.productId, item]));
+    const implicitVatRate =
+      sale.subtotalCOP > 0 ? sale.vatCOP / sale.subtotalCOP : 0;
+
+    const items: SaleReturnItem[] = requestedIds.map((productId) => {
+      if (alreadyReturned.has(productId)) {
+        throw new Error(`La joya ${productId} ya fue devuelta en una nota crédito anterior`);
+      }
+      const saleItem = saleItemMap.get(productId);
+      if (!saleItem) {
+        throw new Error(`La joya ${productId} no pertenece a la factura ${sale.invoiceNumber}`);
+      }
+
+      const product = this.state.products.find((p) => p.id === productId);
+      const vatRate = product ? product.vatRate || 0 : implicitVatRate;
+      const refundBaseCOP =
+        vatRate > 0
+          ? Math.round(saleItem.finalPriceCOP / (1 + vatRate))
+          : saleItem.finalPriceCOP;
+      const refundVatCOP = saleItem.finalPriceCOP - refundBaseCOP;
+
+      return {
+        productId: saleItem.productId,
+        sku: saleItem.sku,
+        name: saleItem.name,
+        quantity: saleItem.quantity,
+        refundBaseCOP,
+        refundVatCOP,
+        refundTotalCOP: saleItem.finalPriceCOP,
+        costCOP: product ? product.totalCostCOP : 0,
+      };
+    });
+
+    const subtotalCOP = items.reduce((acc, item) => acc + item.refundBaseCOP, 0);
+    const vatCOP = items.reduce((acc, item) => acc + item.refundVatCOP, 0);
+    const totalCOP = items.reduce((acc, item) => acc + item.refundTotalCOP, 0);
+    const costCOP = items.reduce((acc, item) => acc + item.costCOP, 0);
+
+    const shift = this.state.currentCashShift;
+    if (input.refundMethod === 'EFECTIVO' && (!shift || shift.status !== 'ABIERTA')) {
+      throw new Error('Debe abrir un turno de caja para registrar un reembolso en efectivo');
+    }
+
+    const user = this.getActiveUser();
+    const now = new Date().toISOString();
+    const creditNoteNumber = `NC-2026-${String(this.state.saleReturns.length + 1).padStart(4, '0')}`;
+    const entryVoucher = `CC-2026-${String(this.state.accountingEntries.length + 42).padStart(4, '0')}`;
+    const paymentAccount = this.getPaymentAccount(input.refundMethod);
+
+    const journalRows = [
+      {
+        accountCode: '417505',
+        accountName: 'Devoluciones en Ventas Joyería',
+        debitCOP: subtotalCOP,
+        creditCOP: 0,
+      },
+      ...(vatCOP > 0
+        ? [
+            {
+              accountCode: '240805',
+              accountName: 'Impuesto sobre las Ventas por Pagar (IVA)',
+              debitCOP: vatCOP,
+              creditCOP: 0,
+            },
+          ]
+        : []),
+      {
+        accountCode: '143505',
+        accountName: 'Inventario de Mercancías Joyería',
+        debitCOP: costCOP,
+        creditCOP: 0,
+      },
+      {
+        accountCode: paymentAccount.code,
+        accountName: paymentAccount.name,
+        debitCOP: 0,
+        creditCOP: totalCOP,
+      },
+      {
+        accountCode: '613535',
+        accountName: 'Costo de Ventas Joyería y Metales Preciosos',
+        debitCOP: 0,
+        creditCOP: costCOP,
+      },
+    ];
+
+    const sumDebits = journalRows.reduce((acc, row) => acc + row.debitCOP, 0);
+    const sumCredits = journalRows.reduce((acc, row) => acc + row.creditCOP, 0);
+
+    this.state.accountingEntries.unshift({
+      id: `ACC-${Date.now()}`,
+      voucherNumber: entryVoucher,
+      date: now.split('T')[0],
+      concept: `Nota Crédito ${creditNoteNumber} - Factura ${sale.invoiceNumber} - ${sale.customerName}`,
+      sourceModule: 'DEVOLUCION',
+      rows: journalRows,
+      totalDebitCOP: sumDebits,
+      totalCreditCOP: sumCredits,
+      isBalanced: sumDebits === sumCredits,
+      createdBy: user.name,
+    });
+
+    for (const item of items) {
+      const product = this.state.products.find((p) => p.id === item.productId);
+      if (product) {
+        product.status = input.stockCondition || 'DISPONIBLE';
+        product.updatedAt = now;
+      }
+
+      this.state.stockMovements.unshift({
+        id: `MOV-${Date.now()}-${item.productId}`,
+        timestamp: now,
+        productId: item.productId,
+        productSku: item.sku,
+        productName: item.name,
+        type: 'DEVOLUCION',
+        quantity: item.quantity,
+        toBranchId: sale.branchId,
+        reason: `Devolución Nota Crédito ${creditNoteNumber} - Factura ${sale.invoiceNumber}`,
+        userId: user.id,
+        userName: user.name,
+      });
+    }
+
+    this.state.warranties.forEach((warranty) => {
+      if (
+        warranty.invoiceNumber === sale.invoiceNumber &&
+        items.some((item) => item.sku === warranty.productSku)
+      ) {
+        warranty.status = 'ANULADA';
+      }
+    });
+
+    if (input.refundMethod === 'EFECTIVO' && shift) {
+      shift.cashRefundsCOP += totalCOP;
+      shift.expectedCashCOP -= totalCOP;
+    }
+
+    sale.returnedTotalCOP = (sale.returnedTotalCOP || 0) + totalCOP;
+    sale.returnedVatCOP = (sale.returnedVatCOP || 0) + vatCOP;
+
+    const allReturnedIds = new Set([
+      ...alreadyReturned,
+      ...requestedIds,
+    ]);
+    if (input.markAnulada) {
+      sale.status = 'ANULADA';
+    } else {
+      sale.status =
+        allReturnedIds.size >= sale.items.length
+          ? 'DEVUELTA_TOTAL'
+          : 'DEVUELTA_PARCIAL';
+    }
+
+    const customer = this.state.customers.find((c) => c.id === sale.customerId);
+    if (customer) {
+      customer.totalPurchasesCOP = Math.max(0, customer.totalPurchasesCOP - totalCOP);
+    }
+
+    const saleReturn: SaleReturn = {
+      id: `RET-${Date.now()}`,
+      creditNoteNumber,
+      saleId: sale.id,
+      invoiceNumber: sale.invoiceNumber,
+      branchId: sale.branchId,
+      customerId: sale.customerId,
+      customerName: sale.customerName,
+      customerDoc: sale.customerDoc,
+      items,
+      subtotalCOP,
+      vatCOP,
+      totalCOP,
+      costCOP,
+      reason: input.reason,
+      refundMethod: input.refundMethod,
+      accountingEntryId: entryVoucher,
+      createdBy: user.name,
+      createdAt: now,
+    };
+    this.state.saleReturns.unshift(saleReturn);
+
+    this.addAudit(
+      'DEVOLUCION_VENTA',
+      'Ventas',
+      `Nota Crédito ${creditNoteNumber} sobre Factura ${sale.invoiceNumber}: ${items.length} joya(s), reembolso $${totalCOP.toLocaleString('es-CO')} (${input.refundMethod}).`
+    );
+
+    this.saveState();
+    return saleReturn;
+  }
+
+  public voidSale(
+    saleId: string,
+    reason: string,
+    refundMethod: PaymentRecord['method']
+  ): SaleReturn {
+    const sale = this.state.sales.find((s) => s.id === saleId);
+    if (!sale) throw new Error('Venta no encontrada');
+    if (sale.status === 'ANULADA') throw new Error('La venta ya está anulada');
+    if (sale.status === 'DEVUELTA_TOTAL') throw new Error('La venta ya fue devuelta en su totalidad');
+
+    const priorReturns = this.state.saleReturns.filter((ret) => ret.saleId === sale.id);
+    const alreadyReturned = new Set(
+      priorReturns.flatMap((ret) => ret.items.map((item) => item.productId))
+    );
+    const remainingProductIds = sale.items
+      .filter((item) => !alreadyReturned.has(item.productId))
+      .map((item) => item.productId);
+
+    if (remainingProductIds.length === 0) {
+      throw new Error('La venta ya fue devuelta en su totalidad');
+    }
+
+    return this.registerSaleReturn({
+      saleId,
+      productIds: remainingProductIds,
+      reason,
+      refundMethod,
+      markAnulada: true,
+    });
+  }
+
   // LAYAWAYS (APARTADOS)
   public createLayaway(input: {
     customerId: string;
@@ -1696,29 +2182,279 @@ class ERPDatabaseService {
     return layaway;
   }
 
-  public deliverLayaway(layawayId: string) {
+  public deliverLayaway(layawayId: string): Sale {
     const layaway = this.state.layaways.find((l) => l.id === layawayId);
     if (!layaway) throw new Error('Apartado no encontrado');
+    if (layaway.status === 'ENTREGADO') {
+      throw new Error('El apartado ya fue entregado');
+    }
     if (layaway.balanceCOP > 0) {
       throw new Error(`No se puede entregar la joya: queda un saldo pendiente de $${layaway.balanceCOP.toLocaleString('es-CO')}`);
     }
 
-    layaway.status = 'ENTREGADO';
-    const prod = this.state.products.find((p) => p.id === layaway.productId);
-    if (prod) {
-      prod.status = 'VENDIDO';
+    const product = this.state.products.find((p) => p.id === layaway.productId);
+    if (!product) throw new Error('La joya del apartado no existe en inventario');
+    if (product.status === 'VENDIDO') throw new Error('La joya ya figura como vendida');
+
+    const customer = this.state.customers.find((c) => c.id === layaway.customerId);
+    const user = this.getActiveUser();
+    const now = new Date().toISOString();
+    const totalCOP = layaway.totalAmountCOP;
+    const vatRate = product.vatRate || 0;
+    const subtotalCOP = Math.round(totalCOP / (1 + vatRate));
+    const vatCOP = totalCOP - subtotalCOP;
+
+    const invoiceNum = `FAC-2026-${String(this.state.sales.length + 105).padStart(4, '0')}`;
+    const entryVoucher = `CC-2026-${String(this.state.accountingEntries.length + 42).padStart(4, '0')}`;
+    const warrantyCode = `GAR-2026-${String(this.state.warranties.length + 105).padStart(4, '0')}`;
+
+    const saleItems: Sale['items'] = [
+      {
+        productId: product.id,
+        sku: product.sku,
+        name: product.name,
+        category: product.category,
+        metalType: product.metalType,
+        metalColor: product.metalColor,
+        netMetalWeightGrams: product.netMetalWeightGrams,
+        fineMetalContentGrams: product.fineMetalContentGrams,
+        unitPriceCOP: product.salePriceCOP,
+        discountCOP: 0,
+        finalPriceCOP: product.salePriceCOP,
+        quantity: 1,
+        imageUrl: product.imageUrl,
+      },
+    ];
+
+    const payments: PaymentRecord[] = layaway.installments.map((installment, index) => ({
+      id: `PAY-LAY-${layaway.id}-${index + 1}`,
+      method: installment.method,
+      amountCOP: installment.amountCOP,
+      referenceNumber: installment.receiptNumber,
+    }));
+    const paid = payments.reduce((acc, payment) => acc + payment.amountCOP, 0);
+    if (payments.length > 0 && paid !== totalCOP) {
+      payments[payments.length - 1].amountCOP += totalCOP - paid;
     }
+
+    const journalRows = payments.map((payment) => {
+      const account = this.getPaymentAccount(payment.method);
+      return {
+        accountCode: account.code,
+        accountName: account.name,
+        debitCOP: payment.amountCOP,
+        creditCOP: 0,
+      };
+    });
+    journalRows.push({
+      accountCode: '413535',
+      accountName: 'Comercio al por mayor y menor - Joyería Fina',
+      debitCOP: 0,
+      creditCOP: subtotalCOP,
+    });
+    if (vatCOP > 0) {
+      journalRows.push({
+        accountCode: '240805',
+        accountName: 'Impuesto sobre las Ventas por Pagar (IVA)',
+        debitCOP: 0,
+        creditCOP: vatCOP,
+      });
+    }
+    journalRows.push({
+      accountCode: '613535',
+      accountName: 'Costo de Ventas Joyería y Metales Preciosos',
+      debitCOP: product.totalCostCOP,
+      creditCOP: 0,
+    });
+    journalRows.push({
+      accountCode: '143505',
+      accountName: 'Inventario de Mercancías Joyería',
+      debitCOP: 0,
+      creditCOP: product.totalCostCOP,
+    });
+
+    const sumDebits = journalRows.reduce((acc, row) => acc + row.debitCOP, 0);
+    const sumCredits = journalRows.reduce((acc, row) => acc + row.creditCOP, 0);
+
+    this.state.accountingEntries.unshift({
+      id: `ACC-${Date.now()}`,
+      voucherNumber: entryVoucher,
+      date: now.split('T')[0],
+      concept: `Venta Factura ${invoiceNum} - Entrega apartado ${layaway.code} - ${layaway.customerName}`,
+      sourceModule: 'VENTAS',
+      rows: journalRows,
+      totalDebitCOP: sumDebits,
+      totalCreditCOP: sumCredits,
+      isBalanced: sumDebits === sumCredits,
+      createdBy: user.name,
+    });
+
+    this.state.stockMovements.unshift({
+      id: `MOV-${Date.now()}-${product.id}`,
+      timestamp: now,
+      productId: product.id,
+      productSku: product.sku,
+      productName: product.name,
+      type: 'VENTA',
+      quantity: 1,
+      fromBranchId: product.branchId,
+      reason: `Venta por entrega de apartado ${layaway.code} - Factura ${invoiceNum}`,
+      userId: user.id,
+      userName: user.name,
+    });
+
+    this.state.warranties.unshift({
+      id: `WAR-${Date.now()}`,
+      warrantyCode,
+      invoiceNumber: invoiceNum,
+      customerName: layaway.customerName,
+      customerDoc: layaway.customerDoc,
+      productSku: product.sku,
+      productName: product.name,
+      validityMonths: 36,
+      startDate: now.split('T')[0],
+      endDate: new Date(Date.now() + 36 * 30 * 24 * 3600 * 1000).toISOString().split('T')[0],
+      coverageSummary: `Garantía legal y comercial sobre autenticidad de metal ${product.metalType} y gemas de por vida. Limpieza y revisión semestral en taller oficial.`,
+      status: 'VIGENTE',
+    });
+
+    const newSale: Sale = {
+      id: `SAL-${Date.now()}`,
+      invoiceNumber: invoiceNum,
+      branchId: layaway.branchId,
+      customerId: layaway.customerId,
+      customerName: layaway.customerName,
+      customerDoc: layaway.customerDoc,
+      sellerId: user.id,
+      sellerName: layaway.sellerName || user.name,
+      items: saleItems,
+      subtotalCOP,
+      discountTotalCOP: 0,
+      vatCOP,
+      totalCOP,
+      payments,
+      status: 'PAGADA',
+      accountingEntryId: entryVoucher,
+      warrantyCode,
+      notes: `Venta generada al entregar el apartado ${layaway.code}.`,
+      createdAt: now,
+    };
+
+    this.state.sales.unshift(newSale);
+    if (customer) customer.totalPurchasesCOP += totalCOP;
+
+    product.status = 'VENDIDO';
+    product.updatedAt = now;
+
+    layaway.status = 'ENTREGADO';
+    layaway.saleId = newSale.id;
+    layaway.invoiceNumber = invoiceNum;
+    layaway.deliveredAt = now;
 
     this.addAudit(
       'ENTREGA_APARTADO',
       'Apartados',
-      `Joya ${layaway.productSku} entregada al cliente ${layaway.customerName} tras liquidación total.`
+      `Joya ${layaway.productSku} entregada a ${layaway.customerName}. Factura ${invoiceNum} por $${totalCOP.toLocaleString('es-CO')}.`
     );
 
     this.saveState();
+    return newSale;
   }
 
   // REPAIR ORDERS (TALLER Y CUSTODIA)
+  private registerRepairPaymentInternal(
+    repair: RepairOrder,
+    amountCOP: number,
+    method: PaymentRecord['method'],
+    notes?: string
+  ): RepairPayment {
+    if (amountCOP <= 0) throw new Error('El pago debe ser mayor a cero');
+    if (amountCOP > repair.balanceCOP + 0.01) {
+      throw new Error(
+        `El pago excede el saldo pendiente ($${repair.balanceCOP.toLocaleString('es-CO')})`
+      );
+    }
+
+    const user = this.getActiveUser();
+    const payment: RepairPayment = {
+      id: `RPAY-${Date.now()}-${repair.payments.length + 1}`,
+      date: new Date().toISOString(),
+      amountCOP,
+      method,
+      receiptNumber: `REC-${repair.orderNumber}-${repair.payments.length + 1}`,
+      cashierName: user.name,
+      notes,
+    };
+
+    repair.payments.push(payment);
+    repair.balanceCOP = Math.max(
+      0,
+      Math.round((repair.balanceCOP - amountCOP) * 100) / 100
+    );
+
+    const shift = this.state.currentCashShift;
+    if (shift && shift.status === 'ABIERTA') {
+      if (method === 'EFECTIVO') {
+        shift.repairCashCOP += amountCOP;
+        shift.expectedCashCOP += amountCOP;
+      } else if (method === 'TARJETA_DEBITO' || method === 'TARJETA_CREDITO') {
+        shift.repairCardCOP += amountCOP;
+      } else {
+        shift.repairTransferCOP += amountCOP;
+      }
+    }
+
+    const vatRate = repair.vatRate || 0.19;
+    const base = Math.round(amountCOP / (1 + vatRate));
+    const vat = amountCOP - base;
+    const debitAccount =
+      method === 'EFECTIVO'
+        ? { code: '110505', name: 'Caja General Sede' }
+        : method === 'TARJETA_DEBITO' || method === 'TARJETA_CREDITO'
+          ? { code: '111005', name: 'Bancos Cta Cte Tarjetas Datafono' }
+          : { code: '111001', name: 'Bancos Transferencias' };
+
+    const rows = [
+      {
+        accountCode: debitAccount.code,
+        accountName: debitAccount.name,
+        debitCOP: amountCOP,
+        creditCOP: 0,
+      },
+      {
+        accountCode: '413540',
+        accountName: 'Ingresos Servicios de Taller y Reparaciones',
+        debitCOP: 0,
+        creditCOP: base,
+      },
+      ...(vat > 0
+        ? [
+            {
+              accountCode: '240805',
+              accountName: 'Impuesto sobre las Ventas por Pagar (IVA)',
+              debitCOP: 0,
+              creditCOP: vat,
+            },
+          ]
+        : []),
+    ];
+
+    this.state.accountingEntries.unshift({
+      id: `ACC-REP-${Date.now()}-${repair.payments.length}`,
+      voucherNumber: `CC-REP-${repair.orderNumber}-${repair.payments.length}`,
+      date: new Date().toISOString().split('T')[0],
+      concept: `Abono orden de taller ${repair.orderNumber} - ${repair.customerName}`,
+      sourceModule: 'REPARACION',
+      rows,
+      totalDebitCOP: amountCOP,
+      totalCreditCOP: base + vat,
+      isBalanced: base + vat === amountCOP,
+      createdBy: user.name,
+    });
+
+    return payment;
+  }
+
   public createRepairOrder(data: {
     customerId: string;
     itemDescription: string;
@@ -1730,6 +2466,8 @@ class ERPDatabaseService {
     partsCostCOP: number;
     laborCostCOP: number;
     advancePaymentCOP: number;
+    advancePaymentMethod: PaymentRecord['method'];
+    vatRate?: number;
     promiseDate: string;
   }): RepairOrder {
     const customer = this.state.customers.find((c) => c.id === data.customerId);
@@ -1737,7 +2475,6 @@ class ERPDatabaseService {
 
     const branch = this.getActiveBranch();
     const quoted = data.partsCostCOP + data.laborCostCOP;
-    const balance = Math.max(0, quoted - data.advancePaymentCOP);
     const orderNumber = `REP-2026-${String(this.state.repairs.length + 80).padStart(4, '0')}`;
 
     const newRepair: RepairOrder = {
@@ -1757,8 +2494,11 @@ class ERPDatabaseService {
       partsCostCOP: data.partsCostCOP,
       laborCostCOP: data.laborCostCOP,
       quotedPriceCOP: quoted,
+      vatRate: data.vatRate ?? 0.19,
       advancePaymentCOP: data.advancePaymentCOP,
-      balanceCOP: balance,
+      advancePaymentMethod: data.advancePaymentMethod,
+      payments: [],
+      balanceCOP: quoted,
       promiseDate: data.promiseDate,
       status: 'RECIBIDO',
       createdAt: new Date().toISOString(),
@@ -1766,9 +2506,13 @@ class ERPDatabaseService {
 
     this.state.repairs.unshift(newRepair);
 
-    if (data.advancePaymentCOP > 0 && this.state.currentCashShift && this.state.currentCashShift.status === 'ABIERTA') {
-      this.state.currentCashShift.repairCashCOP += data.advancePaymentCOP;
-      this.state.currentCashShift.expectedCashCOP += data.advancePaymentCOP;
+    if (data.advancePaymentCOP > 0) {
+      this.registerRepairPaymentInternal(
+        newRepair,
+        data.advancePaymentCOP,
+        data.advancePaymentMethod,
+        'Anticipo inicial'
+      );
     }
 
     this.addAudit(
@@ -1781,9 +2525,42 @@ class ERPDatabaseService {
     return newRepair;
   }
 
+  public addRepairPayment(
+    orderId: string,
+    amountCOP: number,
+    method: PaymentRecord['method'],
+    notes?: string
+  ): RepairOrder {
+    const repair = this.state.repairs.find((r) => r.id === orderId);
+    if (!repair) throw new Error('Orden no encontrada');
+    if (repair.status === 'ENTREGADO' || repair.status === 'CANCELADO') {
+      throw new Error(`La orden ya está en estado ${repair.status}`);
+    }
+
+    this.registerRepairPaymentInternal(repair, amountCOP, method, notes);
+    this.addAudit(
+      'ABONO_TALLER',
+      'Taller de Reparaciones',
+      `Abono de $${amountCOP.toLocaleString('es-CO')} en orden ${repair.orderNumber}. Saldo: $${repair.balanceCOP.toLocaleString('es-CO')}`
+    );
+    this.saveState();
+    return repair;
+  }
+
   public updateRepairStatus(orderId: string, status: RepairOrder['status'], finalWeight?: number) {
     const repair = this.state.repairs.find((r) => r.id === orderId);
     if (!repair) throw new Error('Orden no encontrada');
+
+    if (status === 'ENTREGADO' && repair.balanceCOP > 0.01) {
+      throw new Error(
+        `No se puede entregar la orden: saldo pendiente de $${repair.balanceCOP.toLocaleString('es-CO')}`
+      );
+    }
+    if (status === 'CANCELADO' && repair.payments.length > 0) {
+      throw new Error(
+        'No se puede cancelar una orden con pagos registrados; primero registre la devolución del anticipo.'
+      );
+    }
 
     repair.status = status;
     if (finalWeight !== undefined) {
@@ -1791,8 +2568,6 @@ class ERPDatabaseService {
     }
     if (status === 'ENTREGADO') {
       repair.deliveredDate = new Date().toISOString();
-      // If there was balance, clear it
-      repair.balanceCOP = 0;
     }
 
     this.addAudit(
@@ -1947,32 +2722,7 @@ class ERPDatabaseService {
     return newExpense;
   }
 
-  // CASH SHIFTS (ARQUEO Y CIERRE)
-  public closeCashShift(actualCountedCash: number, reason?: string, notes?: string) {
-    const shift = this.state.currentCashShift;
-    if (!shift || shift.status === 'CERRADA') {
-      throw new Error('No hay un turno de caja abierto');
-    }
-
-    const difference = actualCountedCash - shift.expectedCashCOP;
-    shift.actualCountedCashCOP = actualCountedCash;
-    shift.differenceCOP = difference;
-    shift.differenceReason = reason;
-    shift.notes = notes;
-    shift.closedAt = new Date().toISOString();
-    shift.status = 'CERRADA';
-
-    this.state.cashShiftsHistory.unshift({ ...shift });
-
-    this.addAudit(
-      'CIERRE_CAJA',
-      'Caja y Bancos',
-      `Cierre de turno ${shift.shiftNumber}. Efectivo esperado: $${shift.expectedCashCOP.toLocaleString('es-CO')}, Efectivo contado: $${actualCountedCash.toLocaleString('es-CO')}, Diferencia: $${difference.toLocaleString('es-CO')}`
-    );
-
-    this.saveState();
-  }
-
+  // CASH SHIFTS (APERTURA)
   public openCashShift(initialCashCOP: number): CashShift {
     const branch = this.getActiveBranch();
     const user = this.getActiveUser();
@@ -1990,7 +2740,10 @@ class ERPDatabaseService {
       transferSalesCOP: 0,
       layawayCashCOP: 0,
       repairCashCOP: 0,
+      repairCardCOP: 0,
+      repairTransferCOP: 0,
       cashExpensesCOP: 0,
+      cashRefundsCOP: 0,
       expectedCashCOP: initialCashCOP,
       status: 'ABIERTA',
     };
@@ -2013,10 +2766,12 @@ class ERPDatabaseService {
     countedStones: Record<string, { quantity: number; carats: number }>;
     countedCashCOP: number;
     notes?: string;
+    differenceReason?: string;
   }): DailyReconciliation {
     const branch = this.getActiveBranch();
     const user = this.getActiveUser();
     const shift = this.state.currentCashShift;
+    const shiftWasOpen = !!shift && shift.status === 'ABIERTA';
 
     const expectedGold = getExpectedGoldLines(this.state.products, branch.id);
     const expectedStones = getExpectedStoneLines(this.state.products, branch.id);
@@ -2081,7 +2836,7 @@ class ERPDatabaseService {
       responsibleUserName: user.name,
       shiftId: shift?.id,
       shiftNumber: shift?.shiftNumber,
-      shiftStatus: shift?.status,
+      shiftStatus: shiftWasOpen ? 'CERRADA' : shift?.status,
       goldLines,
       expectedGoldPieces: goldLines.reduce((acc, line) => acc + line.pieces, 0),
       countedGoldPieces: goldLines.reduce(
@@ -2133,6 +2888,22 @@ class ERPDatabaseService {
       `Cuadre ${reconciliation.date} sede ${branch.name}. Oro: ${reconciliation.countedGoldPieces}/${reconciliation.expectedGoldPieces} piezas, ${reconciliation.countedGoldGrossGrams}g contados vs ${reconciliation.expectedGoldGrossGrams}g sistema. Piedras: ${reconciliation.countedStoneCarats}ct contados vs ${reconciliation.expectedStoneCarats}ct sistema. Caja: ${reconciliation.countedCashCOP.toLocaleString('es-CO')} contados vs ${reconciliation.expectedCashCOP.toLocaleString('es-CO')} esperados (diferencia ${reconciliation.cashDifferenceCOP.toLocaleString('es-CO')}). Estado: ${status}`
     );
 
+    if (shiftWasOpen && shift) {
+      shift.actualCountedCashCOP = input.countedCashCOP;
+      shift.differenceCOP = cashDifferenceCOP;
+      shift.differenceReason = input.differenceReason || input.notes;
+      shift.notes = input.notes;
+      shift.closedAt = new Date().toISOString();
+      shift.status = 'CERRADA';
+      this.state.cashShiftsHistory.unshift({ ...shift });
+
+      this.addAudit(
+        'CIERRE_CAJA',
+        'Caja y Bancos',
+        `Cierre de turno ${shift.shiftNumber} desde Cuadre Diario. Efectivo esperado: $${shift.expectedCashCOP.toLocaleString('es-CO')}, contado: $${input.countedCashCOP.toLocaleString('es-CO')}, diferencia: $${cashDifferenceCOP.toLocaleString('es-CO')}.`
+      );
+    }
+
     this.saveState();
     return reconciliation;
   }
@@ -2167,13 +2938,9 @@ class ERPDatabaseService {
       if (!parsed.products || !parsed.sales) {
         throw new Error('Estructura de copia de seguridad inválida');
       }
-      this.state = {
-        ...parsed,
-        dailyReconciliations: Array.isArray(parsed.dailyReconciliations)
-          ? parsed.dailyReconciliations
-          : [],
-      };
+      this.state = parsed;
       this.saveState();
+      this.state = this.loadState();
     } catch (err: any) {
       throw new Error(`Error al importar respaldo: ${err.message}`);
     }
