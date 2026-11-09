@@ -29,6 +29,19 @@ import {
 } from '../../utils/jewelryCalculations';
 import { getDefaultJewelryImage } from '../../utils/jewelryImages';
 import { MetalRatesLabel } from '../common/MetalRatesLabel';
+import type { PaymentMethod } from '../../types';
+
+const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {
+  EFECTIVO: 'Efectivo',
+  TARJETA_DEBITO: 'Débito',
+  TARJETA_CREDITO: 'Crédito',
+  TRANSFERENCIA_BANCOLOMBIA: 'Transferencia',
+  NEQUI_DAVIPLATA: 'Nequi/Daviplata',
+  ANTICIPO_APARTADO: 'Anticipo',
+};
+
+const paymentLabel = (method: PaymentMethod): string =>
+  PAYMENT_METHOD_LABELS[method] ?? method;
 
 interface DashboardViewProps {
   onNavigate: (module: string) => void;
@@ -355,29 +368,29 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               const itemImg = sale.items[0]?.imageUrl || getDefaultJewelryImage(sale.items[0]?.category, sale.items[0]?.name);
               return (
                 <div key={sale.id} className="py-2.5 flex items-center justify-between text-xs gap-2">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2.5 min-w-0">
                     <img
                       src={itemImg}
                       alt=""
                       className="w-9 h-9 rounded-lg object-cover border border-[#EAECEF] shrink-0"
                     />
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-bold text-[#7F581A]">{sale.invoiceNumber}</span>
-                        <span className="text-[#727985]">·</span>
-                        <span className="font-medium text-[#20242B]">{sale.customerName}</span>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <span className="font-mono font-bold text-[#7F581A] shrink-0">{sale.invoiceNumber}</span>
+                        <span className="text-[#727985] shrink-0">·</span>
+                        <span className="font-medium text-[#20242B] truncate">{sale.customerName}</span>
                       </div>
-                      <p className="text-[11px] text-[#727985] mt-0.5">
+                      <p className="text-[11px] text-[#727985] mt-0.5 truncate">
                         {formatDateTime(sale.createdAt)} · {sale.items.length} joya(s)
                       </p>
                     </div>
                   </div>
-                  <div className="text-right shrink-0">
-                    <span className="font-mono font-bold text-[#20242B] tabular-nums">
+                  <div className="text-right shrink-0 max-w-[45%]">
+                    <span className="font-mono font-bold text-[#20242B] tabular-nums block truncate">
                       {formatCOP(sale.totalCOP)}
                     </span>
-                    <span className="text-[10px] block text-[#21865B] font-semibold">
-                      {sale.payments.map((p) => p.method).join(', ')}
+                    <span className="text-[10px] block text-[#21865B] font-semibold truncate">
+                      {sale.payments.map((p) => paymentLabel(p.method)).join(', ')}
                     </span>
                   </div>
                 </div>
