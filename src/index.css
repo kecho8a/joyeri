@@ -34,7 +34,10 @@
   background: #9CA3AF;
 }
 
-/* Etiqueta deslizante de tasas de metales (Banco de la República) */
+/* Etiqueta deslizante de tasas de metales (Banco de la República)
+   gap/padding se controlan con utilidades Tailwind en el componente
+   para poder variarlos en móvil (este CSS va sin capa y ganaría
+   a las utilidades si se declarara aquí). */
 .metal-rates-label {
   position: absolute;
   top: 0;
@@ -42,9 +45,6 @@
   height: 100%;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0 1rem;
-  border-radius: 9999px;
   white-space: nowrap;
   will-change: left, transform;
   animation: metal-rates-slide 18s ease-in-out infinite alternate;
