@@ -254,7 +254,7 @@ export const DailyReconciliationView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B] flex items-center gap-2">
             <ClipboardCheck className="w-5 h-5 text-[#10B981]" />
@@ -284,7 +284,7 @@ export const DailyReconciliationView: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* GOLD INVENTORY */}
-        <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+        <div className="card-float overflow-hidden">
           <div className="p-4 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h2 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
@@ -439,7 +439,7 @@ export const DailyReconciliationView: React.FC = () => {
         </div>
 
         {/* STONES INVENTORY */}
-        <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+        <div className="card-float overflow-hidden">
           <div className="p-4 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h2 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
@@ -587,7 +587,7 @@ export const DailyReconciliationView: React.FC = () => {
         </div>
 
         {/* CASH RECONCILIATION */}
-        <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+        <div className="card-float overflow-hidden">
           <div className="p-4 border-b border-[#E5E7EB]">
             <h2 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
               <Landmark className="w-4 h-4 text-[#10B981]" />
@@ -716,7 +716,7 @@ export const DailyReconciliationView: React.FC = () => {
         </div>
 
         {/* NOTES & SUBMIT */}
-        <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm space-y-3">
+        <div className="card-float p-4 space-y-3">
           <div>
             <label className="font-semibold text-xs text-[#20242B] block mb-1">
               Observaciones del cuadre
@@ -746,7 +746,7 @@ export const DailyReconciliationView: React.FC = () => {
       </form>
 
       {/* REFERENCE: GOLD PIECES IN STORE */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+      <div className="card-float overflow-hidden">
         <div className="p-4 border-b border-[#E5E7EB]">
           <h2 className="font-bold text-sm text-[#20242B]">
             Detalle de piezas de metal precioso que el sistema espera en la sede
@@ -814,7 +814,7 @@ export const DailyReconciliationView: React.FC = () => {
       </div>
 
       {/* HISTORY */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-3">
+      <div className="card-float p-5 space-y-3">
         <h3 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
           <History className="w-4 h-4 text-[#727985]" />
           Historial de Cuadres Diarios

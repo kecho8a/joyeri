@@ -51,7 +51,7 @@ export const EmployeesView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Empleados & Liquidación de Comisiones Comerciales
@@ -77,7 +77,7 @@ export const EmployeesView: React.FC = () => {
           return (
             <div
               key={emp.id}
-              className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm space-y-3"
+              className="card-float p-4 space-y-3"
             >
               <div className="flex items-center justify-between">
                 <div>

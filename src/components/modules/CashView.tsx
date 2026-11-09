@@ -34,7 +34,7 @@ export const CashView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Caja, Tesorería & Arqueos de Turno
@@ -64,7 +64,7 @@ export const CashView: React.FC = () => {
 
       {/* Active Shift Dashboard */}
       {currentShift && currentShift.status === 'ABIERTA' ? (
-        <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-4">
+        <div className="card-float p-5 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E5E7EB]">
             <div>
               <span className="text-[10px] font-mono font-bold text-[#21865B] bg-[#21865B]/10 px-2 py-0.5 rounded">
@@ -138,7 +138,7 @@ export const CashView: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-[#E5E7EB] p-8 text-center space-y-3 shadow-sm">
+        <div className="card-float p-8 text-center space-y-3">
           <Lock className="w-8 h-8 text-[#727985] mx-auto" />
           <h2 className="text-base font-bold text-[#20242B]">La Caja se encuentra actualmente cerrada</h2>
           <p className="text-xs text-[#727985] max-w-md mx-auto">
@@ -155,7 +155,7 @@ export const CashView: React.FC = () => {
       )}
 
       {/* Historical Shifts Table */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-3">
+      <div className="card-float p-5 space-y-3">
         <h3 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
           <History className="w-4 h-4 text-[#727985]" />
           Historial de Turnos & Arqueos Cerrados

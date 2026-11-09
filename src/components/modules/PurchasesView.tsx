@@ -280,7 +280,7 @@ export const PurchasesView: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 sm:p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Compras, Materia Prima & Cuentas por Pagar
@@ -341,7 +341,7 @@ export const PurchasesView: React.FC = () => {
         />
       </div>
 
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-3 shadow-[0_8px_30px_rgba(15,23,42,0.06)] flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+      <div className="card-float p-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
         <div className="flex items-center gap-1 bg-[#F4F5F7] p-1 rounded-xl">
           {(
             [
@@ -386,7 +386,7 @@ export const PurchasesView: React.FC = () => {
           {filteredPurchases.map((purchase) => (
             <div
               key={purchase.id}
-              className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(15,23,42,0.10)] transition-all"
+              className="card-float p-4 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(15,23,42,0.10)] transition-all"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-start gap-3">
@@ -466,7 +466,7 @@ export const PurchasesView: React.FC = () => {
             return (
               <div
                 key={material.id}
-                className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(15,23,42,0.10)] transition-all flex flex-col justify-between"
+                className="card-float p-4 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(15,23,42,0.10)] transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
@@ -547,7 +547,7 @@ export const PurchasesView: React.FC = () => {
           {filteredSuppliers.map((supplier) => (
             <div
               key={supplier.id}
-              className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_8px_30px_rgba(15,23,42,0.06)] flex items-center justify-between gap-3"
+              className="card-float p-4 flex items-center justify-between gap-3"
             >
               <div className="min-w-0">
                 <h3 className="font-bold text-sm text-[#20242B] truncate">
@@ -1127,7 +1127,7 @@ const EmptyState: React.FC<{ title: string; text: string }> = ({
   title,
   text,
 }) => (
-  <div className="bg-white rounded-2xl border border-dashed border-[#D1D5DB] p-8 text-center">
+  <div className="card-float border-dashed border-[#D1D5DB] p-8 text-center">
     <Package className="w-8 h-8 text-[#C9CDD3] mx-auto" />
     <h3 className="font-bold text-sm text-[#20242B] mt-2">{title}</h3>
     <p className="text-xs text-[#727985] mt-1">{text}</p>
@@ -1148,7 +1148,7 @@ const KpiCard: React.FC<{
       ? 'text-[#21865B] bg-[#21865B]/10'
       : 'text-[#059669] bg-[#10B981]/10';
   return (
-    <div className="bg-white rounded-2xl border border-[#EAECEF] p-3.5 shadow-[0_8px_30px_rgba(15,23,42,0.06)]">
+    <div className="card-float p-3.5">
       <div className="flex items-center justify-between">
         <span className={`w-8 h-8 rounded-xl flex items-center justify-center ${toneClass}`}>
           {icon}

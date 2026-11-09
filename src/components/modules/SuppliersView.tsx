@@ -66,7 +66,7 @@ export const SuppliersView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Proveedores de Metales, Gemas & Talleres Externos
@@ -86,7 +86,7 @@ export const SuppliersView: React.FC = () => {
       </div>
 
       {/* Filter bar */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-3 shadow-sm flex items-center gap-3 text-xs">
+      <div className="card-float p-3 flex items-center gap-3 text-xs">
         <div className="flex-1 max-w-sm relative">
           <Search className="w-3.5 h-3.5 text-[#727985] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -104,7 +104,7 @@ export const SuppliersView: React.FC = () => {
         {filteredSuppliers.map((s) => (
           <div
             key={s.id}
-            className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
+            className="card-float p-4 hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
           >
             <div>
               <div className="flex items-center justify-between">

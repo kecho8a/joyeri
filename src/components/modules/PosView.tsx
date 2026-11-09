@@ -167,7 +167,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-base sm:text-lg font-bold text-[#20242B] tracking-tight">
             Punto de Venta (POS) & Mostrador
@@ -215,7 +215,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
         {/* Left Column: Jewelry Picker (Visible on desktop or when mobileTab === 'catalog') */}
         <div className={`lg:col-span-7 space-y-3 ${mobileTab === 'cart' ? 'hidden lg:block' : 'block'}`}>
           {/* Quick Search & Category Pills */}
-          <div className="bg-white rounded-2xl border border-[#EAECEF] p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-2.5">
+          <div className="card-float p-3.5 space-y-2.5">
             <div className="relative">
               <Search className="w-4 h-4 text-[#727985] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -253,7 +253,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
               return (
                 <div
                   key={j.id}
-                  className="bg-white rounded-2xl border border-[#EAECEF] p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:border-[#10B981] transition-all flex flex-col justify-between space-y-2.5 group text-left"
+                  className="card-float p-3.5 hover:border-[#10B981] transition-all flex flex-col justify-between space-y-2.5 group text-left"
                 >
                   <div>
                     {/* Jewel Image */}
@@ -314,7 +314,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
             })}
 
             {availableJewels.length === 0 && (
-              <div className="col-span-full bg-white rounded-2xl border border-[#EAECEF] p-10 text-center text-xs text-[#727985]">
+              <div className="col-span-full card-float p-10 text-center text-xs text-[#727985]">
                 No hay joyas disponibles en esta categoría o con este término de búsqueda.
               </div>
             )}
@@ -322,7 +322,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
         </div>
 
         {/* Right Column: Order Cart & Checkout (Visible on desktop or when mobileTab === 'cart') */}
-        <div className={`lg:col-span-5 bg-white rounded-2xl border border-[#EAECEF] p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4 ${mobileTab === 'catalog' ? 'hidden lg:block' : 'block'}`}>
+        <div className={`lg:col-span-5 card-float p-4 sm:p-5 space-y-4 ${mobileTab === 'catalog' ? 'hidden lg:block' : 'block'}`}>
           <div className="flex items-center justify-between pb-3 border-b border-[#EAECEF]">
             <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">
               <ShoppingBag className="w-4 h-4 text-[#10B981]" />

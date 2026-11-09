@@ -8,6 +8,7 @@ import {
   TrendingUp,
   Package,
   Coins,
+  Disc,
   Landmark,
   BookmarkCheck,
   Wrench,
@@ -29,6 +30,7 @@ import {
 } from '../../utils/jewelryCalculations';
 import { getDefaultJewelryImage } from '../../utils/jewelryImages';
 import { MetalRatesLabel } from '../common/MetalRatesLabel';
+import { useMetalRates } from '../../services/metalRates';
 import type { PaymentMethod } from '../../types';
 
 const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {
@@ -58,6 +60,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 }) => {
   const state = erpDb.getState();
   const activeBranch = erpDb.getActiveBranch();
+  const { rates: officialRates, oficial: ratesAreOfficial } = useMetalRates();
 
   // Metrics computation
   const availableProducts = state.products.filter(
@@ -106,17 +109,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   return (
     <div className="space-y-5 sm:space-y-6">
       {/* 1. Quick Daily Action Strip (Súper fácil e intuitivo) */}
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3">
+      <div className="card-float p-3.5 sm:p-5 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <h1 className="text-base sm:text-lg font-bold text-[#20242B] tracking-tight">
+          <div className="min-w-0">
+            <h1 className="text-sm sm:text-lg font-bold text-[#20242B] tracking-tight leading-snug">
               ¿Qué deseas realizar hoy en {activeBranch.name}?
             </h1>
-            <p className="text-xs text-[#727985]">
+            <p className="text-[11px] sm:text-xs text-[#727985]">
               Acciones operativas directas con un solo clic
             </p>
           </div>
-          <span className="text-xs font-semibold text-[#059669] bg-[#10B981]/10 px-2.5 py-1 rounded-lg self-start sm:self-auto">
+          <span className="text-[11px] sm:text-xs font-semibold text-[#059669] bg-[#10B981]/10 px-2.5 py-1 rounded-lg self-start sm:self-auto shrink-0">
             Sede: {activeBranch.city}
           </span>
         </div>
@@ -126,84 +129,106 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
         {/* Action cards grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-1">
-          {/* Action 1: Venta POS */}
+          {/* Action 1: Venta POS (destacada) */}
           <button
             onClick={onOpenSale}
-            className="p-3 sm:p-4 rounded-xl border border-[#10B981]/30 bg-[#10B981]/5 hover:bg-[#10B981]/15 active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="card-float group flex flex-col gap-2 p-3 sm:p-4 text-left min-h-[100px] sm:min-h-[116px] bg-gradient-to-br from-[#10B981] to-[#059669] border-[#059669] text-white shadow-[0_12px_26px_-16px_rgba(5,150,105,0.95)] active:scale-[0.97] transition-all"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#10B981] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <span className="card-icon bg-white/25 text-white group-hover:scale-110 transition-transform">
               <ShoppingBag className="w-4 h-4" />
-            </div>
-            <div className="mt-2">
-              <p className="font-bold text-xs sm:text-sm text-[#20242B]">Nueva Venta POS</p>
-              <p className="text-[10px] text-[#727985] hidden sm:block">Facturar joya en mostrador</p>
-            </div>
+            </span>
+            <span className="block min-w-0">
+              <span className="block font-bold text-xs sm:text-sm leading-snug">
+                Nueva Venta POS
+              </span>
+              <span className="hidden sm:block text-[10px] text-white/85 mt-0.5">
+                Facturar joya en mostrador
+              </span>
+            </span>
           </button>
 
           {/* Action 2: Nueva Joya */}
           <button
             onClick={onOpenProduct}
-            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#10B981] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="card-float group flex flex-col gap-2 p-3 sm:p-4 text-left min-h-[100px] sm:min-h-[116px] active:scale-[0.97] transition-all"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#10B981]/10 group-hover:text-[#059669]">
+            <span className="card-icon bg-[#10B981]/10 text-[#059669] group-hover:scale-110 transition-transform">
               <Package className="w-4 h-4" />
-            </div>
-            <div className="mt-2">
-              <p className="font-bold text-xs sm:text-sm text-[#20242B]">+ Ingresar Joya</p>
-              <p className="text-[10px] text-[#727985] hidden sm:block">Con cálculo de oro fino</p>
-            </div>
+            </span>
+            <span className="block min-w-0">
+              <span className="block font-bold text-xs sm:text-sm text-[#20242B] leading-snug">
+                + Ingresar Joya
+              </span>
+              <span className="hidden sm:block text-[10px] text-[#727985] mt-0.5">
+                Con cálculo de oro fino
+              </span>
+            </span>
           </button>
 
           {/* Action 3: Recibir en Taller */}
           <button
             onClick={onOpenRepair}
-            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#10B981] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="card-float group flex flex-col gap-2 p-3 sm:p-4 text-left min-h-[100px] sm:min-h-[116px] active:scale-[0.97] transition-all"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#10B981]/10 group-hover:text-[#059669]">
+            <span className="card-icon bg-[#3478C6]/10 text-[#3478C6] group-hover:scale-110 transition-transform">
               <Wrench className="w-4 h-4" />
-            </div>
-            <div className="mt-2">
-              <p className="font-bold text-xs sm:text-sm text-[#20242B]">Recibir en Taller</p>
-              <p className="text-[10px] text-[#727985] hidden sm:block">Custodia y pesaje balanza</p>
-            </div>
+            </span>
+            <span className="block min-w-0">
+              <span className="block font-bold text-xs sm:text-sm text-[#20242B] leading-snug">
+                Recibir en Taller
+              </span>
+              <span className="hidden sm:block text-[10px] text-[#727985] mt-0.5">
+                Custodia y pesaje balanza
+              </span>
+            </span>
           </button>
 
           {/* Action 4: Separados */}
           <button
             onClick={() => onNavigate('layaways')}
-            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#10B981] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="card-float group flex flex-col gap-2 p-3 sm:p-4 text-left min-h-[100px] sm:min-h-[116px] active:scale-[0.97] transition-all"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#10B981]/10 group-hover:text-[#059669]">
+            <span className="card-icon bg-[#D99032]/10 text-[#A66A1C] group-hover:scale-110 transition-transform">
               <BookmarkCheck className="w-4 h-4" />
-            </div>
-            <div className="mt-2">
-              <p className="font-bold text-xs sm:text-sm text-[#20242B]">Ver Separados</p>
-              <p className="text-[10px] text-[#727985] hidden sm:block">Cobrar abonos a clientes</p>
-            </div>
+            </span>
+            <span className="block min-w-0">
+              <span className="block font-bold text-xs sm:text-sm text-[#20242B] leading-snug">
+                Ver Separados
+              </span>
+              <span className="hidden sm:block text-[10px] text-[#727985] mt-0.5">
+                Cobrar abonos a clientes
+              </span>
+            </span>
           </button>
         </div>
       </div>
 
-      {/* 2. Core Financial & Stock KPIs Grid (Clean floating cards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      {/* 2. Core Financial & Stock KPIs Grid (cards flotantes compactas en móvil) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         {/* KPI 1: Total Ventas */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between text-xs text-[#727985]">
-              <span className="font-semibold uppercase tracking-wider text-[11px]">Ventas de Hoy</span>
-              <div className="w-7 h-7 rounded-lg bg-[#21865B]/10 text-[#21865B] flex items-center justify-center">
-                <TrendingUp className="w-3.5 h-3.5" />
-              </div>
-            </div>
-            <p className="text-xl sm:text-2xl font-bold text-[#20242B] font-mono mt-2 tabular-nums">
-              {formatCOP(todaySalesCOP)}
-            </p>
+        <div className="card-float p-3 sm:p-4 lg:p-5 flex flex-col gap-1.5 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#727985] leading-tight min-w-0">
+              Ventas de Hoy
+            </span>
+            <span className="card-icon-sm bg-[#10B981]/10 text-[#059669]">
+              <TrendingUp className="w-3.5 h-3.5" />
+            </span>
           </div>
-          <div className="mt-3 pt-2.5 border-t border-[#EAECEF] flex items-center justify-between text-xs text-[#727985]">
-            <span>{todaySales.length} facturas hoy · Hist. {formatCOP(totalSalesCOP)}</span>
+          <p className="text-[15px] sm:text-xl lg:text-2xl font-bold text-[#059669] font-mono tabular-nums truncate">
+            {formatCOP(todaySalesCOP)}
+          </p>
+          <div className="mt-auto pt-2 border-t border-[#EAECEF] flex items-center justify-between gap-1.5 text-[10px] sm:text-[11px] text-[#727985]">
+            <span className="min-w-0 truncate">
+              {todaySales.length} facturas
+              <span className="hidden sm:inline">
+                {' '}
+                · Hist. {formatCOP(totalSalesCOP)}
+              </span>
+            </span>
             <button
               onClick={() => onNavigate('sales')}
-              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
+              className="shrink-0 text-[#059669] font-semibold hover:underline flex items-center gap-0.5"
             >
               Ver <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -211,23 +236,29 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* KPI 2: Inventario Valorizado */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between text-xs text-[#727985]">
-              <span className="font-semibold uppercase tracking-wider text-[11px]">Stock Comercial</span>
-              <div className="w-7 h-7 rounded-lg bg-[#10B981]/15 text-[#059669] flex items-center justify-center">
-                <Package className="w-3.5 h-3.5" />
-              </div>
-            </div>
-            <p className="text-xl sm:text-2xl font-bold text-[#20242B] font-mono mt-2 tabular-nums">
-              {formatCOP(totalInventoryRetail)}
-            </p>
+        <div className="card-float p-3 sm:p-4 lg:p-5 flex flex-col gap-1.5 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#727985] leading-tight min-w-0">
+              Stock Comercial
+            </span>
+            <span className="card-icon-sm bg-[#3478C6]/10 text-[#3478C6]">
+              <Package className="w-3.5 h-3.5" />
+            </span>
           </div>
-          <div className="mt-3 pt-2.5 border-t border-[#EAECEF] flex items-center justify-between text-xs text-[#727985]">
-            <span>Margen: {formatCOP(inventoryMarginCOP)} ({inventoryMarginPct.toFixed(1)}%)</span>
+          <p className="text-[15px] sm:text-xl lg:text-2xl font-bold text-[#20242B] font-mono tabular-nums truncate">
+            {formatCOP(totalInventoryRetail)}
+          </p>
+          <div className="mt-auto pt-2 border-t border-[#EAECEF] flex items-center justify-between gap-1.5 text-[10px] sm:text-[11px] text-[#727985]">
+            <span className="min-w-0 truncate">
+              {inventoryMarginPct.toFixed(1)}% margen
+              <span className="hidden sm:inline">
+                {' '}
+                · {formatCOP(inventoryMarginCOP)}
+              </span>
+            </span>
             <button
               onClick={() => onNavigate('products')}
-              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
+              className="shrink-0 text-[#059669] font-semibold hover:underline flex items-center gap-0.5"
             >
               Catálogo <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -235,23 +266,23 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* KPI 3: Oro Fino Puro */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between text-xs text-[#727985]">
-              <span className="font-semibold uppercase tracking-wider text-[11px]">Oro Fino (24K)</span>
-              <div className="w-7 h-7 rounded-lg bg-[#DC2626]/10 text-[#DC2626] flex items-center justify-center">
-                <Coins className="w-3.5 h-3.5" />
-              </div>
-            </div>
-            <p className="text-xl sm:text-2xl font-bold text-[#059669] font-mono mt-2 tabular-nums">
-              {formatGrams(totalFineGoldGrams)}
-            </p>
+        <div className="card-float p-3 sm:p-4 lg:p-5 flex flex-col gap-1.5 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#727985] leading-tight min-w-0">
+              Oro Fino (24K)
+            </span>
+            <span className="card-icon-sm bg-[#FDE68A] text-[#B45309]">
+              <Coins className="w-3.5 h-3.5" />
+            </span>
           </div>
-          <div className="mt-3 pt-2.5 border-t border-[#EAECEF] flex items-center justify-between text-xs text-[#727985]">
-            <span>Gemas: {formatCarats(totalGemCarats)}</span>
+          <p className="text-[15px] sm:text-xl lg:text-2xl font-bold text-[#20242B] font-mono tabular-nums truncate">
+            {formatGrams(totalFineGoldGrams)}
+          </p>
+          <div className="mt-auto pt-2 border-t border-[#EAECEF] flex items-center justify-between gap-1.5 text-[10px] sm:text-[11px] text-[#727985]">
+            <span className="min-w-0 truncate">Gemas: {formatCarats(totalGemCarats)}</span>
             <button
               onClick={() => onNavigate('metals')}
-              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
+              className="shrink-0 text-[#059669] font-semibold hover:underline flex items-center gap-0.5"
             >
               Cotización <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -259,21 +290,21 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* KPI 4: Efectivo en Caja */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between text-xs text-[#727985]">
-              <span className="font-semibold uppercase tracking-wider text-[11px]">Gaveta de Caja</span>
-              <div className="w-7 h-7 rounded-lg bg-[#3478C6]/10 text-[#3478C6] flex items-center justify-center">
-                <Landmark className="w-3.5 h-3.5" />
-              </div>
-            </div>
-            <p className="text-xl sm:text-2xl font-bold text-[#20242B] font-mono mt-2 tabular-nums">
-              {formatCOP(currentCash)}
-            </p>
+        <div className="card-float p-3 sm:p-4 lg:p-5 flex flex-col gap-1.5 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#727985] leading-tight min-w-0">
+              Gaveta de Caja
+            </span>
+            <span className="card-icon-sm bg-[#21865B]/10 text-[#21865B]">
+              <Landmark className="w-3.5 h-3.5" />
+            </span>
           </div>
-          <div className="mt-3 pt-2.5 border-t border-[#EAECEF] flex items-center justify-between text-xs text-[#727985]">
+          <p className="text-[15px] sm:text-xl lg:text-2xl font-bold text-[#20242B] font-mono tabular-nums truncate">
+            {formatCOP(currentCash)}
+          </p>
+          <div className="mt-auto pt-2 border-t border-[#EAECEF] flex items-center justify-between gap-1.5 text-[10px] sm:text-[11px] text-[#727985]">
             <span
-              className={`font-semibold ${
+              className={`min-w-0 truncate font-semibold ${
                 state.currentCashShift?.status === 'ABIERTA'
                   ? 'text-[#21865B]'
                   : 'text-[#D64545]'
@@ -281,11 +312,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             >
               {state.currentCashShift?.status === 'ABIERTA'
                 ? 'Turno abierto'
-                : 'Sin turno abierto'}
+                : 'Sin turno'}
             </span>
             <button
               onClick={() => onNavigate('cash')}
-              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
+              className="shrink-0 text-[#059669] font-semibold hover:underline flex items-center gap-0.5"
             >
               Arqueo <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -295,23 +326,23 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
       {/* 3. Alerts & Workshop Pickup Notifications */}
       {readyRepairs.length > 0 && (
-        <div className="bg-[#21865B]/10 border border-[#21865B]/20 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#21865B] text-white flex items-center justify-center shrink-0">
+        <div className="bg-[#21865B]/10 border border-[#21865B]/20 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-start sm:items-center gap-2.5 min-w-0 w-full">
+            <span className="card-icon bg-[#21865B] text-white">
               <CheckCircle2 className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-[#20242B]">
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-bold text-[#20242B] leading-snug">
                 {readyRepairs.length} pieza(s) de clientes listas para entrega en taller
               </p>
-              <p className="text-[#727985]">
+              <p className="text-[#727985] truncate">
                 {readyRepairs.map((r) => `${r.customerName} (${r.itemDescription})`).join(', ')}
               </p>
             </div>
           </div>
           <button
             onClick={() => onNavigate('repairs')}
-            className="px-3 py-1.5 bg-[#21865B] text-white rounded-lg font-semibold shrink-0"
+            className="self-start sm:self-auto px-3 py-1.5 bg-[#21865B] text-white rounded-lg font-semibold shrink-0"
           >
             Ver Taller & Entregar
           </button>
@@ -319,67 +350,148 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       )}
 
       {/* 4. Two Column Responsive Split: Precious Metals Board + Recent Sales */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-5">
         {/* Precious Metals Live Board */}
-        <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3">
-          <div className="flex items-center justify-between pb-2.5 border-b border-[#EAECEF]">
-            <div>
-              <h2 className="text-sm font-bold text-[#20242B]">
+        <div className="card-float p-3.5 sm:p-5 space-y-3">
+          <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#EAECEF]">
+            <div className="min-w-0">
+              <h2 className="text-sm font-bold text-[#20242B] truncate">
                 Pizarra de Oro & Metales Preciosos
               </h2>
-              <p className="text-xs text-[#727985]">
-                Valores por gramo para liquidación en mostrador
+              <p className="text-[11px] sm:text-xs text-[#727985] truncate">
+                Tasas oficiales por gramo · liquidación en mostrador
               </p>
             </div>
             <button
               onClick={() => onNavigate('metals')}
-              className="text-xs font-semibold text-[#10B981] hover:underline"
+              className="shrink-0 text-[11px] sm:text-xs font-semibold text-[#059669] hover:underline"
             >
-              Calculadora & Pizarra
+              Calculadora
             </button>
           </div>
 
-          <div className="divide-y divide-[#EAECEF]">
-            {state.metalPrices.slice(0, 5).map((m) => (
-              <div
-                key={m.code}
-                className="py-2.5 flex items-center justify-between text-xs"
-              >
-                <div>
-                  <p className="font-bold text-[#20242B]">{m.name}</p>
-                  <p className="text-[11px] text-[#727985]">Ley {m.fineness} ({m.karatText})</p>
-                </div>
-                <div className="flex items-center gap-3 sm:gap-4 text-right">
-                  <div>
-                    <span className="text-[10px] text-[#727985] block">Compra Retal</span>
-                    <span className="font-mono font-semibold text-[#20242B] tabular-nums">
-                      {formatCOP(m.buyPriceGramCOP)}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-[#059669] block font-semibold">Venta Base</span>
-                    <span className="font-mono font-bold text-[#059669] tabular-nums">
-                      {formatCOP(m.sellPriceGramCOP)}
-                    </span>
-                  </div>
-                </div>
+          {/* Precios REALES de hoy, con color propio que resalta */}
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+            <div className="metal-rate-gold p-2.5 sm:p-3.5 flex flex-col gap-1.5 min-w-0">
+              <div className="flex items-center justify-between gap-1.5">
+                <span className="flex items-center gap-1.5 min-w-0">
+                  <Coins className="w-3.5 h-3.5 shrink-0" />
+                  <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider truncate">
+                    Oro 24K
+                  </span>
+                </span>
+                <span className="shrink-0 text-[8px] sm:text-[9px] font-bold uppercase bg-white/70 border border-[#F59E0B]/50 rounded px-1 py-0.5">
+                  {ratesAreOfficial ? 'BanRep' : 'Ref.'}
+                </span>
               </div>
-            ))}
+              <div className="min-w-0">
+                <span className="block text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide opacity-75">
+                  Venta por gramo
+                </span>
+                <span className="block font-mono font-extrabold text-base sm:text-xl tabular-nums leading-tight truncate">
+                  {formatCOP(officialRates.metales.oro.venta)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-1 border-t border-white/70 pt-1.5 text-[10px] sm:text-[11px] font-semibold">
+                <span className="opacity-75">Compra</span>
+                <span className="font-mono font-bold tabular-nums truncate">
+                  {formatCOP(officialRates.metales.oro.compra)}
+                </span>
+              </div>
+            </div>
+
+            <div className="metal-rate-silver p-2.5 sm:p-3.5 flex flex-col gap-1.5 min-w-0">
+              <div className="flex items-center justify-between gap-1.5">
+                <span className="flex items-center gap-1.5 min-w-0">
+                  <Disc className="w-3.5 h-3.5 shrink-0" />
+                  <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider truncate">
+                    Plata 925
+                  </span>
+                </span>
+                <span className="shrink-0 text-[8px] sm:text-[9px] font-bold uppercase bg-white/70 border border-[#94A3B8]/60 rounded px-1 py-0.5">
+                  {ratesAreOfficial ? 'BanRep' : 'Ref.'}
+                </span>
+              </div>
+              <div className="min-w-0">
+                <span className="block text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide opacity-75">
+                  Venta por gramo
+                </span>
+                <span className="block font-mono font-extrabold text-base sm:text-xl tabular-nums leading-tight truncate">
+                  {formatCOP(officialRates.metales.plata.venta)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-1 border-t border-white/70 pt-1.5 text-[10px] sm:text-[11px] font-semibold">
+                <span className="opacity-75">Compra</span>
+                <span className="font-mono font-bold tabular-nums truncate">
+                  {formatCOP(officialRates.metales.plata.compra)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] sm:text-[11px] text-[#727985]">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#059669] shrink-0" />
+            <span className="font-semibold text-[#20242B]">
+              {ratesAreOfficial
+                ? 'Banco de la República'
+                : officialRates.fuente}
+            </span>
+            {officialRates.vigencia.texto && (
+              <span>· Vig. {officialRates.vigencia.texto}</span>
+            )}
+          </p>
+
+          <div className="divide-y divide-[#EAECEF]">
+            {state.metalPrices
+              .filter((m) => m.code !== 'ORO_24K' && m.code !== 'PLATA_925')
+              .map((m) => (
+                <div
+                  key={m.code}
+                  className="py-2 flex items-center justify-between gap-2 text-xs"
+                >
+                  <div className="min-w-0">
+                    <p className="font-bold text-[#20242B] truncate">{m.name}</p>
+                    <p className="text-[10px] text-[#727985] truncate">
+                      Ley {m.fineness} ({m.karatText})
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0 text-right">
+                    <div>
+                      <span className="text-[9px] text-[#727985] block uppercase font-semibold">
+                        Compra
+                      </span>
+                      <span className="font-mono font-semibold text-[#20242B] tabular-nums text-[11px]">
+                        {formatCOP(m.buyPriceGramCOP)}
+                      </span>
+                    </div>
+                    <div className="bg-[#10B981]/10 rounded-lg px-1.5 py-1">
+                      <span className="text-[9px] text-[#059669] block uppercase font-semibold">
+                        Venta
+                      </span>
+                      <span className="font-mono font-bold text-[#059669] tabular-nums text-[11px]">
+                        {formatCOP(m.sellPriceGramCOP)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
 
         {/* Recent Sales with Quick Receipt View */}
-        <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3">
-          <div className="flex items-center justify-between pb-2.5 border-b border-[#EAECEF]">
-            <div>
-              <h2 className="text-sm font-bold text-[#20242B]">
+        <div className="card-float p-3.5 sm:p-5 space-y-3">
+          <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#EAECEF]">
+            <div className="min-w-0">
+              <h2 className="text-sm font-bold text-[#20242B] truncate">
                 Últimas Facturas Emitidas
               </h2>
-              <p className="text-xs text-[#727985]">Registro transaccional de ventas</p>
+              <p className="text-[11px] sm:text-xs text-[#727985] truncate">
+                Registro transaccional de ventas
+              </p>
             </div>
             <button
               onClick={() => onNavigate('sales')}
-              className="text-xs font-semibold text-[#10B981] hover:underline"
+              className="shrink-0 text-[11px] sm:text-xs font-semibold text-[#059669] hover:underline"
             >
               Ver Todas
             </button>

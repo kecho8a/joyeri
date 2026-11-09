@@ -8,12 +8,10 @@ import {
   Menu,
   X,
   Search,
-  Building2,
   ShoppingBag,
   Package,
   Wrench,
   ChevronDown,
-  Type,
 } from 'lucide-react';
 import { erpDb } from '../../services/store';
 import { JewelLogo } from '../common/JewelLogo';
@@ -36,7 +34,6 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleMobileMenu,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const state = erpDb.getState();
   const activeBranch = erpDb.getActiveBranch();
   const activeUser = erpDb.getActiveUser();
 
@@ -65,36 +62,14 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <JewelLogo size="md" variant="mark-only" />
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-base sm:text-lg font-bold tracking-tight text-[#20242B] group-hover:text-[#059669] transition-colors">
-                JOYERI
-              </span>
-              <span className="text-[10px] font-bold tracking-wider text-[#059669] bg-[#10B981]/10 px-1.5 py-0.5 rounded uppercase">
-                ERP
-              </span>
-            </div>
+            <span className="text-base sm:text-lg font-bold tracking-tight text-[#20242B] group-hover:text-[#059669] transition-colors">
+              JOYERI
+            </span>
             <p className="text-[10px] text-[#727985] font-medium leading-none hidden sm:block">
               Joyerías & Metales Preciosos
             </p>
           </div>
         </button>
-
-        {/* Sede selector (Desktop) */}
-        <div className="hidden xl:flex items-center gap-1.5 pl-4 border-l border-[#EAECEF] text-xs">
-          <Building2 className="w-3.5 h-3.5 text-[#10B981]" />
-          <select
-            value={state.activeBranchId}
-            onChange={(e) => erpDb.setActiveBranch(e.target.value)}
-            className="text-xs font-semibold text-[#20242B] bg-transparent border-0 focus:ring-0 cursor-pointer py-1 pr-6"
-            title="Cambiar sucursal activa"
-          >
-            {state.branches.map((b) => (
-              <option key={b.id} value={b.id}>
-                {b.name} ({b.city})
-              </option>
-            ))}
-          </select>
-        </div>
       </div>
 
       {/* Middle: Global Search Bar */}
@@ -130,21 +105,6 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Package className="w-3.5 h-3.5 text-[#727985]" />
           <span>+ Joya</span>
-        </button>
-
-        {/* Large text toggle */}
-        <button
-          onClick={() => erpDb.toggleLargeText()}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
-            state.largeText
-              ? 'bg-[#10B981] text-white border-[#10B981]'
-              : 'bg-[#F4F5F7] text-[#20242B] border-[#EAECEF] hover:bg-[#EAECEF]'
-          }`}
-          title={state.largeText ? 'Volver a letra normal' : 'Activar letra grande'}
-          aria-pressed={state.largeText}
-        >
-          <Type className="w-3.5 h-3.5" />
-          <span>{state.largeText ? 'A−' : 'A+'}</span>
         </button>
 
         {/* User avatar & role */}

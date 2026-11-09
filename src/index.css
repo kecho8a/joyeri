@@ -99,6 +99,83 @@
   font-size: 15px !important;
 }
 
+/* ============================================================
+   Cards flotantes: contenedor unificado del sistema de diseño
+   ============================================================ */
+@layer components {
+  .card-float {
+    background-color: #ffffff;
+    border: 1px solid #eaecef;
+    border-radius: 1rem;
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.04),
+      0 14px 30px -20px rgba(16, 24, 40, 0.35);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-float:hover {
+      border-color: rgba(16, 185, 129, 0.35);
+      box-shadow:
+        0 2px 4px rgba(16, 24, 40, 0.04),
+        0 22px 40px -22px rgba(16, 24, 40, 0.45);
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Contenedores de icono siempre del mismo tamaño, sin encogerte
+     dentro de filas flex (mejora la alineación en móvil) */
+  .card-icon,
+  .card-icon-sm,
+  .card-icon-lg {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .card-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.75rem;
+  }
+  .card-icon-sm {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.6rem;
+  }
+  .card-icon-lg {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.875rem;
+  }
+
+  /* Precios oficiales de oro y plata: color propio que resalta
+     frente al verde del sistema */
+  .metal-rate-gold,
+  .metal-rate-silver {
+    border-radius: 1rem;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .metal-rate-gold {
+    background: linear-gradient(135deg, #fffbeb 0%, #fde68a 55%, #fcd34d 100%);
+    border: 1px solid #f59e0b;
+    color: #78350f;
+    box-shadow: 0 10px 24px -16px rgba(180, 83, 9, 0.7);
+  }
+
+  .metal-rate-silver {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 55%, #cbd5e1 100%);
+    border: 1px solid #94a3b8;
+    color: #334155;
+    box-shadow: 0 10px 24px -16px rgba(71, 85, 105, 0.6);
+  }
+}
+
 @media print {
   .no-print {
     display: none !important;

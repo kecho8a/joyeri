@@ -73,7 +73,7 @@ export const MetalsBoardView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Pizarra de Cotizaciones de Metales Preciosos & Leyes
@@ -90,7 +90,7 @@ export const MetalsBoardView: React.FC = () => {
       </div>
 
       {/* Main Metal Prices Board */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-4">
+      <div className="card-float p-5 space-y-4">
         <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">
           <Coins className="w-4 h-4 text-[#10B981]" />
           Precios Vigentes en Mostrador
@@ -154,7 +154,7 @@ export const MetalsBoardView: React.FC = () => {
       </div>
 
       {/* Interactive Purity & Weight Valuation Calculator */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-4">
+      <div className="card-float p-5 space-y-4">
         <div>
           <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">
             <Calculator className="w-4 h-4 text-[#3478C6]" />
@@ -215,7 +215,7 @@ export const MetalsBoardView: React.FC = () => {
 
         {/* Valuation outcome */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-          <div className="p-3.5 rounded-xl border border-[#E5E7EB] bg-white flex justify-between items-center">
+          <div className="card-float p-3.5 flex justify-between items-center">
             <div>
               <span className="text-[#727985] block text-[11px]">Valor Compra de Retal / Chatarra:</span>
               <span className="text-base font-bold text-[#20242B] font-mono tabular-nums">
@@ -225,7 +225,7 @@ export const MetalsBoardView: React.FC = () => {
             <span className="text-[11px] text-[#727985]">A liquidar al cliente</span>
           </div>
 
-          <div className="p-3.5 rounded-xl border border-[#E5E7EB] bg-white flex justify-between items-center">
+          <div className="card-float p-3.5 flex justify-between items-center">
             <div>
               <span className="text-[#059669] block font-semibold text-[11px]">Valor Base de Venta:</span>
               <span className="text-base font-bold text-[#059669] font-mono tabular-nums">

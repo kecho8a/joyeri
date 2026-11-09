@@ -241,7 +241,7 @@ export const ReportsView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* 1. Header with Controls */}
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+      <div className="card-float p-4 sm:p-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#21865B] animate-pulse" />
@@ -314,7 +314,7 @@ export const ReportsView: React.FC = () => {
       </div>
 
       {/* 2. Top Navigation Tabs */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-white p-1.5 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.02)] text-xs font-semibold">
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar card-float p-1.5 text-xs font-semibold">
         <button
           onClick={() => setActiveTab('pyg')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${
@@ -393,7 +393,7 @@ export const ReportsView: React.FC = () => {
         <div className="space-y-4">
           {/* Executive KPI Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider">Ventas Brutas Facturadas</span>
                 <span className="p-1.5 rounded-lg bg-[#10B981]/10 text-[#059669]">
@@ -409,7 +409,7 @@ export const ReportsView: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider">Costo Mercancía (COGS)</span>
                 <span className="p-1.5 rounded-lg bg-[#727985]/10 text-[#727985]">
@@ -424,7 +424,7 @@ export const ReportsView: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#21865B] font-bold uppercase tracking-wider">Utilidad Bruta Comercial</span>
                 <span className="p-1.5 rounded-lg bg-[#21865B]/10 text-[#21865B]">
@@ -440,7 +440,7 @@ export const ReportsView: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#10B981] font-bold uppercase tracking-wider">Utilidad Neta (EBITDA)</span>
                 <span className="p-1.5 rounded-lg bg-[#10B981]/10 text-[#059669]">
@@ -458,7 +458,7 @@ export const ReportsView: React.FC = () => {
           </div>
 
           {/* Visual Profit & Loss Breakdown Statement */}
-          <div className="bg-white rounded-2xl border border-[#EAECEF] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4">
+          <div className="card-float p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-[#EAECEF] pb-3">
               <div>
                 <h3 className="font-bold text-sm text-[#20242B]">
@@ -514,7 +514,7 @@ export const ReportsView: React.FC = () => {
           </div>
 
           {/* Sales Transactions Detail */}
-          <div className="bg-white rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] overflow-hidden">
+          <div className="card-float overflow-hidden">
             <div className="p-4 border-b border-[#EAECEF] flex items-center justify-between">
               <h3 className="font-bold text-sm text-[#20242B]">
                 Registro Detallado de Facturación ({filteredSales.length} comprobantes)
@@ -596,7 +596,7 @@ export const ReportsView: React.FC = () => {
         <div className="space-y-4">
           {/* Top Metal Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#059669] font-bold uppercase tracking-wider">Oro Fino Puro 24K en Bóveda</span>
                 <span className="p-1.5 rounded-lg bg-[#10B981]/10 text-[#059669]">
@@ -614,7 +614,7 @@ export const ReportsView: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#3478C6] font-bold uppercase tracking-wider">Plata Fina 925 en Stock</span>
                 <span className="p-1.5 rounded-lg bg-[#3478C6]/10 text-[#3478C6]">
@@ -632,7 +632,7 @@ export const ReportsView: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider">Peso Físico Total en Balanzas</span>
                 <span className="p-1.5 rounded-lg bg-[#F4F5F7] text-[#20242B]">
@@ -647,7 +647,7 @@ export const ReportsView: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="card-float p-4 flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#21865B] font-bold uppercase tracking-wider">Valorización de Metales SPOT</span>
                 <span className="p-1.5 rounded-lg bg-[#21865B]/10 text-[#21865B]">
@@ -665,7 +665,7 @@ export const ReportsView: React.FC = () => {
           </div>
 
           {/* Metal Matrix Table */}
-          <div className="bg-white rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] overflow-hidden">
+          <div className="card-float overflow-hidden">
             <div className="p-4 border-b border-[#EAECEF] flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-sm text-[#20242B]">
@@ -727,7 +727,7 @@ export const ReportsView: React.FC = () => {
       {/* 5. TAB 3: ASESORES Y COMISIONES */}
       {activeTab === 'sellers' && (
         <div className="space-y-4">
-          <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+          <div className="card-float p-4">
             <h3 className="font-bold text-sm text-[#20242B]">
               Rendimiento Comercial & Liquidación de Comisiones de Joyería
             </h3>
@@ -745,7 +745,7 @@ export const ReportsView: React.FC = () => {
               return (
                 <div
                   key={seller.name}
-                  className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3"
+                  className="card-float p-4 space-y-3"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#10B981]/15 text-[#059669] flex items-center justify-center font-bold text-sm">
@@ -795,7 +795,7 @@ export const ReportsView: React.FC = () => {
               return (
                 <div
                   key={method}
-                  className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-2"
+                  className="card-float p-4 space-y-2"
                 >
                   <div className="flex justify-between items-center text-xs">
                     <span className="font-bold text-[#20242B]">{method.replace('_', ' ')}</span>
@@ -819,7 +819,7 @@ export const ReportsView: React.FC = () => {
           </div>
 
           {/* Active Cash Shift Status */}
-          <div className="bg-white rounded-2xl border border-[#EAECEF] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+          <div className="card-float p-5">
             <div className="flex items-center justify-between border-b border-[#EAECEF] pb-3">
               <div>
                 <h4 className="font-bold text-sm text-[#20242B]">
@@ -868,19 +868,19 @@ export const ReportsView: React.FC = () => {
       {activeTab === 'workshop' && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3.5">
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="card-float p-4">
               <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider block">Órdenes de Hechura</span>
               <p className="text-xl font-bold font-mono text-[#20242B] mt-1">{workshopStats.totalOrders}</p>
               <span className="text-[10px] text-[#21865B]">{workshopStats.reconciledOrders} conciliadas con balanza</span>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="card-float p-4">
               <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider block">Materia Prima Entregada</span>
               <p className="text-xl font-bold font-mono text-[#20242B] mt-1">{formatGrams(workshopStats.totalDeliveredGrams)}</p>
               <span className="text-[10px] text-[#727985]">Oro 18K y plata en granalla</span>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="card-float p-4">
               <span className="text-[10px] text-[#21865B] font-bold uppercase tracking-wider block">Joya + Retales Recuperados</span>
               <p className="text-xl font-bold font-mono text-[#21865B] mt-1">
                 {formatGrams(workshopStats.totalFinishedGrams + workshopStats.totalScrapGrams)}
@@ -888,14 +888,14 @@ export const ReportsView: React.FC = () => {
               <span className="text-[10px] text-[#727985]">Retal devuelto: {formatGrams(workshopStats.totalScrapGrams)}</span>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="card-float p-4">
               <span className="text-[10px] text-[#10B981] font-bold uppercase tracking-wider block">Merma Media de Fundición</span>
               <p className="text-xl font-bold font-mono text-[#059669] mt-1">{workshopStats.lossPercentage}%</p>
               <span className="text-[10px] text-[#21865B]">Tolerancia permitida: ≤ 5.0%</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] overflow-hidden">
+          <div className="card-float overflow-hidden">
             <div className="p-4 border-b border-[#EAECEF]">
               <h3 className="font-bold text-sm text-[#20242B]">
                 Trazabilidad Detallada de Órdenes de Fundición y Orfebrería
@@ -958,17 +958,17 @@ export const ReportsView: React.FC = () => {
       {activeTab === 'inventory' && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="card-float p-4">
               <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider block">Total Valor Comercial en Vitrinas</span>
               <p className="text-xl font-bold font-mono text-[#20242B] mt-1">{formatCOP(totalInventoryRetailValueCOP)}</p>
               <span className="text-[10px] text-[#21865B]">Precio venta sugerido con IVA</span>
             </div>
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="card-float p-4">
               <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider block">Costo de Inversión en Stock</span>
               <p className="text-xl font-bold font-mono text-[#727985] mt-1">{formatCOP(totalInventoryCostValueCOP)}</p>
               <span className="text-[10px] text-[#727985]">Costo adquisición metales y orfebrería</span>
             </div>
-            <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="card-float p-4">
               <span className="text-[10px] text-[#10B981] font-bold uppercase tracking-wider block">Margen Potencial Global</span>
               <p className="text-xl font-bold font-mono text-[#059669] mt-1">
                 {totalInventoryRetailValueCOP > 0
@@ -979,7 +979,7 @@ export const ReportsView: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] overflow-hidden">
+          <div className="card-float overflow-hidden">
             <div className="p-4 border-b border-[#EAECEF] flex items-center justify-between">
               <h3 className="font-bold text-sm text-[#20242B]">
                 Kárdex Físico de Joyería ({filteredProducts.length} registros)

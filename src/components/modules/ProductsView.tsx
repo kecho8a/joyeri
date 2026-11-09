@@ -197,7 +197,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-base sm:text-lg font-bold text-[#20242B] tracking-tight">
             Catálogo & Stock de Joyería
@@ -239,7 +239,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3 text-xs">
+      <div className="card-float p-3.5 space-y-3 text-xs">
         {/* Search Input */}
         <div className="relative">
           <Search className="w-4 h-4 text-[#727985] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -310,7 +310,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             return (
               <div
                 key={p.id}
-                className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
+                className="card-float p-4 hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
               >
                 <div>
                   {/* High Quality Jewelry Photo */}
@@ -441,7 +441,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
         </div>
       ) : (
         /* Table View */
-        <div className="bg-white rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] overflow-hidden">
+        <div className="card-float overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className="bg-[#F8F9FA] text-[#727985] font-semibold border-b border-[#EAECEF]">
@@ -731,7 +731,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </div>
                 </div>
 
-                <div className="bg-white p-3 rounded-xl border border-[#EAECEF] flex items-center justify-between">
+                <div className="card-float p-3 flex items-center justify-between">
                   <div>
                     <span className="text-[#727985] block text-[11px]">Peso Neto Metálico:</span>
                     <span className="font-mono font-bold text-sm text-[#20242B]">{formatGrams(netMetalPreview)}</span>

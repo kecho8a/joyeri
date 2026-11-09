@@ -83,7 +83,7 @@ export const SettingsView: React.FC = () => {
   return (
     <div className="space-y-6 max-w-4xl">
       {/* Top Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Configuración del Sistema & Copias de Seguridad
@@ -99,7 +99,7 @@ export const SettingsView: React.FC = () => {
       </div>
 
       {/* Regional Settings Card */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-4">
+      <div className="card-float p-5 space-y-4">
         <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">
           <Globe className="w-4 h-4 text-[#3478C6]" />
           Configuración Regional & Parámetros
@@ -129,7 +129,7 @@ export const SettingsView: React.FC = () => {
       </div>
 
       {/* Database Backup & Recovery Card */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-4">
+      <div className="card-float p-5 space-y-4">
         <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">
           <Database className="w-4 h-4 text-[#10B981]" />
           Procedimiento de Copia de Seguridad & Restauración
@@ -206,7 +206,7 @@ export const SettingsView: React.FC = () => {
       </div>
 
       {/* Automatic Daily Backups Card */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-4">
+      <div className="card-float p-5 space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div>
             <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">

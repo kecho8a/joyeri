@@ -32,7 +32,7 @@ export const AuditView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Bitácora de Auditoría, Trazabilidad & Seguridad
@@ -48,7 +48,7 @@ export const AuditView: React.FC = () => {
       </div>
 
       {/* Filter bar */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-3 shadow-sm flex items-center justify-between gap-3 text-xs">
+      <div className="card-float p-3 flex items-center justify-between gap-3 text-xs">
         <div className="flex-1 max-w-sm relative">
           <Search className="w-3.5 h-3.5 text-[#727985] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -78,7 +78,7 @@ export const AuditView: React.FC = () => {
       </div>
 
       {/* Audit Log Timeline Table */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+      <div className="card-float overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F4F5F7] text-[#727985] font-semibold border-b border-[#E5E7EB]">

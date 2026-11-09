@@ -20,7 +20,6 @@ import {
   Truck,
   TrendingDown,
   ShieldCheck,
-  Building,
   History,
   Settings,
   ChevronLeft,
@@ -77,7 +76,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'purchases', label: 'Compras & Materia Prima', icon: Package },
     { id: 'expenses', label: 'Gastos Operacionales', icon: TrendingDown },
     { id: 'warranties', label: 'Garantías Oficiales', icon: ShieldCheck },
-    { id: 'branches', label: 'Sucursales & Sedes', icon: Building },
     { id: 'audit', label: 'Auditoría & Seguridad', icon: History },
     { id: 'settings', label: 'Configuración & Backup', icon: Settings },
   ];
@@ -115,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <JewelLogo size="xs" variant="mark-only" />
             {(!collapsed || isMobileOpen) && (
               <span className="text-xs font-bold text-[#20242B] tracking-tight">
-                JOYERI ERP
+                JOYERI
               </span>
             )}
           </div>

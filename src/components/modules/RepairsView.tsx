@@ -172,7 +172,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-base sm:text-lg font-bold text-[#20242B] tracking-tight">
             Taller & Reparaciones (Custodia de Clientes)
@@ -192,7 +192,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-2xl border border-[#EAECEF] p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3 text-xs">
+      <div className="card-float p-3.5 space-y-3 text-xs">
         <div className="relative">
           <Search className="w-4 h-4 text-[#727985] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -230,9 +230,9 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
           return (
             <div
               key={r.id}
-              className={`bg-white rounded-2xl border p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between space-y-3 transition-all ${
-                isReady ? 'border-[#21865B] ring-1 ring-[#21865B]/20' : 'border-[#EAECEF]'
-              }`}
+              className={`card-float p-4 flex flex-col justify-between space-y-3 transition-all ${
+ isReady ? 'border-[#21865B] ring-1 ring-[#21865B]/20' : 'border-[#EAECEF]'
+ }`}
             >
               <div>
                 <div className="flex items-center justify-between text-xs mb-1.5">

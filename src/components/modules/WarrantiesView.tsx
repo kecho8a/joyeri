@@ -32,7 +32,7 @@ export const WarrantiesView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Certificados de Garantía Oficial & Autenticidad de Ley
@@ -48,7 +48,7 @@ export const WarrantiesView: React.FC = () => {
       </div>
 
       {/* Filter bar */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-3 shadow-sm flex items-center gap-3 text-xs">
+      <div className="card-float p-3 flex items-center gap-3 text-xs">
         <div className="flex-1 max-w-sm relative">
           <Search className="w-3.5 h-3.5 text-[#727985] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -66,7 +66,7 @@ export const WarrantiesView: React.FC = () => {
         {filtered.map((w) => (
           <div
             key={w.id}
-            className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm space-y-3"
+            className="card-float p-4 space-y-3"
           >
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold text-[#21865B] bg-[#21865B]/10 px-2 py-0.5 rounded">

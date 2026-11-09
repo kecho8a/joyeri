@@ -162,14 +162,9 @@ export const JewelLogo: React.FC<JewelLogoProps> = ({
     <div className={`flex items-center gap-2.5 ${className}`}>
       {iconSvg}
       <div>
-        <div className="flex items-center gap-1.5 leading-none">
-          <span className={`${dim.text} font-bold tracking-tight text-[#20242B]`}>
-            JOYERI
-          </span>
-          <span className="text-[10px] font-bold tracking-wider text-[#059669] bg-[#10B981]/10 px-1.5 py-0.5 rounded uppercase">
-            ERP
-          </span>
-        </div>
+        <span className={`${dim.text} font-bold tracking-tight text-[#20242B]`}>
+          JOYERI
+        </span>
         {showSubtitle && (
           <p className={`${dim.sub} text-[#727985] font-semibold tracking-wide uppercase mt-0.5`}>
             Joyerías & Metales Preciosos

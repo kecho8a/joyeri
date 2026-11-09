@@ -53,7 +53,7 @@ export const BranchesView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="card-float p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
             Gestión Multi-Sede & Sucursales
@@ -82,9 +82,9 @@ export const BranchesView: React.FC = () => {
           return (
             <div
               key={b.id}
-              className={`bg-white rounded-xl border p-4 shadow-sm space-y-3 transition-all ${
-                isCurrent ? 'border-[#10B981] ring-1 ring-[#10B981]/20' : 'border-[#E5E7EB]'
-              }`}
+              className={`card-float p-4 space-y-3 transition-all ${
+ isCurrent ? 'border-[#10B981] ring-1 ring-[#10B981]/20' : 'border-[#E5E7EB]'
+ }`}
             >
               <div className="flex items-start justify-between">
                 <div>
