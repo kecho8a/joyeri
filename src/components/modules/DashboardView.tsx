@@ -28,6 +28,7 @@ import {
   formatDateTime,
 } from '../../utils/jewelryCalculations';
 import { getDefaultJewelryImage } from '../../utils/jewelryImages';
+import { MetalRatesLabel } from '../common/MetalRatesLabel';
 
 interface DashboardViewProps {
   onNavigate: (module: string) => void;
@@ -94,6 +95,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             Sede: {activeBranch.city}
           </span>
         </div>
+
+        {/* Tasas del día (Banco de la República): etiqueta que se desliza */}
+        <MetalRatesLabel />
 
         {/* Action cards grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-1">
