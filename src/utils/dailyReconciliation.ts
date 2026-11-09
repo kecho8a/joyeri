@@ -78,6 +78,49 @@ export function getExpectedGoldLines(
 }
 
 /**
+ * Agrupa TODAS las joyas de metal precioso (oro, plata y platino) que el
+ * sistema registra físicamente en la sede. Se usa para el cuadre diario.
+ */
+export function getExpectedMetalLines(
+  products: Product[],
+  branchId: string
+): GoldInventorySnapshot[] {
+  const grouped = new Map<MetalType, GoldInventorySnapshot>();
+
+  getInStoreProducts(products, branchId).forEach((p) => {
+    const current = grouped.get(p.metalType) || {
+      metalType: p.metalType,
+      pieces: 0,
+      grossWeightGrams: 0,
+      netMetalWeightGrams: 0,
+      fineMetalContentGrams: 0,
+    };
+
+    current.pieces += 1;
+    current.grossWeightGrams = round3(current.grossWeightGrams + p.grossWeightGrams);
+    current.netMetalWeightGrams = round3(
+      current.netMetalWeightGrams + p.netMetalWeightGrams
+    );
+    current.fineMetalContentGrams = round3(
+      current.fineMetalContentGrams + p.fineMetalContentGrams
+    );
+
+    grouped.set(p.metalType, current);
+  });
+
+  return Array.from(grouped.values()).sort((a, b) =>
+    a.metalType.localeCompare(b.metalType)
+  );
+}
+
+/**
+ * Detalle de piezas de metal precioso que el sistema espera encontrar en la sede.
+ */
+export function getInStoreMetalPieces(products: Product[], branchId: string): Product[] {
+  return getInStoreProducts(products, branchId);
+}
+
+/**
  * Agrupa las piedras engastadas en las joyas que el sistema registra en la sede.
  */
 export function getExpectedStoneLines(

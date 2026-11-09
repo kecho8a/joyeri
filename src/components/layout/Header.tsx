@@ -13,6 +13,7 @@ import {
   Package,
   Wrench,
   ChevronDown,
+  Type,
 } from 'lucide-react';
 import { erpDb } from '../../services/store';
 import { JewelLogo } from '../common/JewelLogo';
@@ -65,10 +66,10 @@ export const Header: React.FC<HeaderProps> = ({
           <JewelLogo size="md" variant="mark-only" />
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-base sm:text-lg font-bold tracking-tight text-[#20242B] group-hover:text-[#7F581A] transition-colors">
+              <span className="text-base sm:text-lg font-bold tracking-tight text-[#20242B] group-hover:text-[#059669] transition-colors">
                 JOYERI
               </span>
-              <span className="text-[10px] font-bold tracking-wider text-[#7F581A] bg-[#9B7028]/10 px-1.5 py-0.5 rounded uppercase">
+              <span className="text-[10px] font-bold tracking-wider text-[#059669] bg-[#10B981]/10 px-1.5 py-0.5 rounded uppercase">
                 ERP
               </span>
             </div>
@@ -80,7 +81,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Sede selector (Desktop) */}
         <div className="hidden xl:flex items-center gap-1.5 pl-4 border-l border-[#EAECEF] text-xs">
-          <Building2 className="w-3.5 h-3.5 text-[#9B7028]" />
+          <Building2 className="w-3.5 h-3.5 text-[#10B981]" />
           <select
             value={state.activeBranchId}
             onChange={(e) => erpDb.setActiveBranch(e.target.value)}
@@ -104,7 +105,7 @@ export const Header: React.FC<HeaderProps> = ({
           value={searchTerm}
           onChange={handleSearchChange}
           placeholder="Buscar SKU, cliente, oro 18K, esmeralda o factura..."
-          className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-lg pl-9 pr-4 py-1.5 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#9B7028] focus:bg-white transition-all shadow-inner"
+          className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-lg pl-9 pr-4 py-1.5 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#10B981] focus:bg-white transition-all shadow-inner"
         />
       </div>
 
@@ -113,7 +114,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Quick Sale button */}
         <button
           onClick={onOpenQuickSale}
-          className="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-lg text-xs font-semibold text-white bg-[#9B7028] hover:bg-[#7F581A] active:scale-95 transition-all shadow-sm"
+          className="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-lg text-xs font-semibold text-white bg-[#10B981] hover:bg-[#059669] active:scale-95 transition-all shadow-sm"
           title="Nueva Venta en Punto de Venta"
         >
           <ShoppingBag className="w-3.5 h-3.5" />
@@ -129,6 +130,21 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Package className="w-3.5 h-3.5 text-[#727985]" />
           <span>+ Joya</span>
+        </button>
+
+        {/* Large text toggle */}
+        <button
+          onClick={() => erpDb.toggleLargeText()}
+          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
+            state.largeText
+              ? 'bg-[#10B981] text-white border-[#10B981]'
+              : 'bg-[#F4F5F7] text-[#20242B] border-[#EAECEF] hover:bg-[#EAECEF]'
+          }`}
+          title={state.largeText ? 'Volver a letra normal' : 'Activar letra grande'}
+          aria-pressed={state.largeText}
+        >
+          <Type className="w-3.5 h-3.5" />
+          <span>{state.largeText ? 'A−' : 'A+'}</span>
         </button>
 
         {/* User avatar & role */}

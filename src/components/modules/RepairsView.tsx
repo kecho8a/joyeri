@@ -184,7 +184,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
 
         <button
           onClick={() => setIsNewModalOpen(true)}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-xs active:scale-95 transition-all"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-xs active:scale-95 transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>+ Recibir Joya en Taller</span>
@@ -200,7 +200,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar por cliente, orden REP o descripción de pieza..."
-            className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#9B7028] focus:bg-white transition-colors"
+            className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#10B981] focus:bg-white transition-colors"
           />
         </div>
 
@@ -212,7 +212,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
               onClick={() => setStatusFilter(st.id)}
               className={`px-3 py-1 rounded-lg font-medium whitespace-nowrap transition-colors ${
                 statusFilter === st.id
-                  ? 'bg-[#9B7028] text-white shadow-xs font-semibold'
+                  ? 'bg-[#10B981] text-white shadow-xs font-semibold'
                   : 'bg-[#F4F5F7] text-[#727985] hover:text-[#20242B] border border-[#EAECEF]'
               }`}
             >
@@ -245,7 +245,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
                         ? 'bg-[#21865B]/10 text-[#21865B]'
                         : isReady
                         ? 'bg-[#21865B] text-white font-bold'
-                        : 'bg-[#D99032]/10 text-[#D99032]'
+                        : 'bg-[#DC2626]/10 text-[#DC2626]'
                     }`}
                   >
                     {r.status}
@@ -322,7 +322,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
                       className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 active:scale-95 transition-all shadow-xs ${
                         isReady
                           ? 'bg-[#21865B] hover:bg-emerald-700 text-white'
-                          : 'bg-[#9B7028] hover:bg-[#7F581A] text-white'
+                          : 'bg-[#10B981] hover:bg-[#059669] text-white'
                       }`}
                     >
                       <span>
@@ -421,6 +421,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
                   <option value="Engaste y Reposición de Gema">Engaste y Reposición de Gema</option>
                   <option value="Pulido y Baño de Rodio">Pulido y Baño de Rodio</option>
                   <option value="Soldadura Láser">Soldadura Láser</option>
+                  <option value="Grabado Láser">Grabado Láser</option>
                   <option value="Hechura Personalizada">Hechura Personalizada</option>
                   <option value="Mantenimiento y Ajuste Broche">Mantenimiento y Ajuste Broche</option>
                 </select>
@@ -495,7 +496,7 @@ export const RepairsView: React.FC<RepairsViewProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-xl font-bold"
+                  className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl font-bold"
                 >
                   Recibir en Custodia
                 </button>

@@ -108,7 +108,7 @@ export const ManufacturingView: React.FC = () => {
 
         <button
           onClick={() => setIsNewModalOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-sm transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-sm transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nueva Orden de Hechura
@@ -126,14 +126,14 @@ export const ManufacturingView: React.FC = () => {
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-[#7F581A] bg-[#9B7028]/10 px-2 py-0.5 rounded">
+                  <span className="font-mono text-xs font-bold text-[#059669] bg-[#10B981]/10 px-2 py-0.5 rounded">
                     {ord.code}
                   </span>
                   <span
                     className={`text-[10px] font-semibold px-2 py-0.5 rounded ${
                       ord.status === 'CONCILIADA'
                         ? 'bg-[#21865B]/10 text-[#21865B]'
-                        : 'bg-[#D99032]/10 text-[#D99032]'
+                        : 'bg-[#DC2626]/10 text-[#DC2626]'
                     }`}
                   >
                     {ord.status}
@@ -164,7 +164,7 @@ export const ManufacturingView: React.FC = () => {
                         <span className="text-[#727985]">Retal y Limalla Devuelta:</span>
                         <span className="font-mono font-bold">{formatGrams(ord.scrapReturnedGrams)}</span>
                       </div>
-                      <div className="flex justify-between pt-1 border-t border-[#E5E7EB] text-[#7F581A]">
+                      <div className="flex justify-between pt-1 border-t border-[#E5E7EB] text-[#059669]">
                         <span className="font-semibold">Merma Neta Documentada:</span>
                         <span className="font-mono font-bold">
                           {formatGrams(ord.netWeightDifferenceGrams)} ({((ord.netWeightDifferenceGrams / totalDelivered) * 100).toFixed(1)}%)
@@ -172,7 +172,7 @@ export const ManufacturingView: React.FC = () => {
                       </div>
                     </>
                   ) : (
-                    <div className="text-[11px] text-[#D99032] italic">
+                    <div className="text-[11px] text-[#DC2626] italic">
                       ⏳ En proceso de fundición y hechura en taller. Pendiente de conciliar peso terminado.
                     </div>
                   )}
@@ -190,7 +190,7 @@ export const ManufacturingView: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-[#727985] block text-[10px]">Costo Total Fabricación:</span>
-                    <span className="font-mono font-bold text-[#7F581A]">{formatCOP(ord.totalCostCOP)}</span>
+                    <span className="font-mono font-bold text-[#059669]">{formatCOP(ord.totalCostCOP)}</span>
                   </div>
                 </div>
               </div>
@@ -203,7 +203,7 @@ export const ManufacturingView: React.FC = () => {
                       setFinishedWeight(totalDelivered * 0.9);
                       setScrapReturned(totalDelivered * 0.06);
                     }}
-                    className="px-3 py-1.5 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg text-xs font-semibold shadow-sm flex items-center gap-1.5"
+                    className="px-3 py-1.5 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg text-xs font-semibold shadow-sm flex items-center gap-1.5"
                   >
                     <Scale className="w-3.5 h-3.5" />
                     Conciliar Pesos & Mermas
@@ -319,7 +319,7 @@ export const ManufacturingView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg font-semibold"
+                  className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg font-semibold"
                 >
                   Asignar y Emitir Orden
                 </button>

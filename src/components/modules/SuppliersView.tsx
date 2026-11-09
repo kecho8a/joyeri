@@ -78,7 +78,7 @@ export const SuppliersView: React.FC = () => {
 
         <button
           onClick={() => setIsNewModalOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-sm transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-sm transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nuevo Proveedor
@@ -94,7 +94,7 @@ export const SuppliersView: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar por razón social, NIT o contacto..."
-            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#9B7028] focus:bg-white"
+            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#10B981] focus:bg-white"
           />
         </div>
       </div>
@@ -104,14 +104,14 @@ export const SuppliersView: React.FC = () => {
         {filteredSuppliers.map((s) => (
           <div
             key={s.id}
-            className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm hover:border-[#9B7028] transition-all flex flex-col justify-between space-y-3"
+            className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
           >
             <div>
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] font-bold text-[#727985] bg-[#F4F5F7] px-2 py-0.5 rounded">
                   NIT: {s.nit}
                 </span>
-                <span className="text-[10px] bg-[#9B7028]/10 text-[#7F581A] font-semibold px-2 py-0.5 rounded">
+                <span className="text-[10px] bg-[#10B981]/10 text-[#059669] font-semibold px-2 py-0.5 rounded">
                   {s.category}
                 </span>
               </div>
@@ -222,7 +222,7 @@ export const SuppliersView: React.FC = () => {
                 <button type="button" onClick={() => setIsNewModalOpen(false)} className="px-4 py-2 text-[#727985]">
                   Cancelar
                 </button>
-                <button type="submit" className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg font-semibold">
+                <button type="submit" className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg font-semibold">
                   Guardar Proveedor
                 </button>
               </div>

@@ -230,7 +230,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
 
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-xs active:scale-95 transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-xs active:scale-95 transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Nueva Joya</span>
@@ -248,7 +248,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar por SKU, nombre de joya, corte de gema o referencia..."
-            className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#9B7028] focus:bg-white transition-colors"
+            className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#10B981] focus:bg-white transition-colors"
           />
         </div>
 
@@ -260,7 +260,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1 rounded-lg font-medium whitespace-nowrap transition-colors ${
                 selectedCategory === cat
-                  ? 'bg-[#9B7028] text-white shadow-xs font-semibold'
+                  ? 'bg-[#10B981] text-white shadow-xs font-semibold'
                   : 'bg-[#F4F5F7] text-[#727985] hover:text-[#20242B] border border-[#EAECEF]'
               }`}
             >
@@ -310,7 +310,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             return (
               <div
                 key={p.id}
-                className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:border-[#9B7028] transition-all flex flex-col justify-between space-y-3"
+                className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
               >
                 <div>
                   {/* High Quality Jewelry Photo */}
@@ -322,7 +322,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                       loading="lazy"
                     />
                     <div className="absolute top-2 left-2">
-                      <span className="font-mono font-bold text-[#7F581A] bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded-lg text-[10px] shadow-xs">
+                      <span className="font-mono font-bold text-[#059669] bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded-lg text-[10px] shadow-xs">
                         {p.sku}
                       </span>
                     </div>
@@ -332,7 +332,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                           p.status === 'DISPONIBLE'
                             ? 'bg-[#21865B] text-white'
                             : p.status === 'RESERVADO'
-                            ? 'bg-[#D99032] text-white'
+                            ? 'bg-[#DC2626] text-white'
                             : 'bg-[#727985] text-white'
                         }`}
                       >
@@ -370,8 +370,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                       </span>
                     </div>
                     <div>
-                      <span className="text-[#7F581A] block text-[10px] font-semibold">Oro Fino 24K:</span>
-                      <span className="font-mono font-bold text-[#7F581A]">
+                      <span className="text-[#059669] block text-[10px] font-semibold">Oro Fino 24K:</span>
+                      <span className="font-mono font-bold text-[#059669]">
                         {formatGrams(p.fineMetalContentGrams)}
                       </span>
                     </div>
@@ -399,6 +399,23 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                     <span className="text-[10px] text-[#727985] block">Precio de Venta</span>
                     <span className="font-mono font-bold text-base text-[#20242B] tabular-nums">
                       {formatCOP(p.salePriceCOP)}
+                    </span>
+                    <span
+                      className={`text-[10px] font-semibold block ${
+                        p.salePriceCOP >= p.totalCostCOP
+                          ? 'text-[#21865B]'
+                          : 'text-[#D64545]'
+                      }`}
+                    >
+                      Margen{' '}
+                      {p.salePriceCOP > 0
+                        ? (
+                            ((p.salePriceCOP - p.totalCostCOP) /
+                              p.salePriceCOP) *
+                            100
+                          ).toFixed(0)
+                        : '0'}
+                      % · Util. {formatCOP(p.salePriceCOP - p.totalCostCOP)}
                     </span>
                   </div>
 
@@ -434,9 +451,10 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   <th className="py-2.5 px-3">Metal & Ley</th>
                   <th className="py-2.5 px-3 text-right">Peso Bruto</th>
                   <th className="py-2.5 px-3 text-right">Peso Neto Metal</th>
-                  <th className="py-2.5 px-3 text-right text-[#7F581A] font-bold">Oro Fino 24K</th>
+                  <th className="py-2.5 px-3 text-right text-[#059669] font-bold">Oro Fino 24K</th>
                   <th className="py-2.5 px-3">Gemas</th>
                   <th className="py-2.5 px-3 text-right">Precio Venta</th>
+                  <th className="py-2.5 px-3 text-right">Margen</th>
                   <th className="py-2.5 px-3">Estado</th>
                   <th className="py-2.5 px-3 text-center">Acciones</th>
                 </tr>
@@ -444,7 +462,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               <tbody className="divide-y divide-[#EAECEF] text-[#20242B]">
                 {filteredProducts.map((p) => (
                   <tr key={p.id} className="hover:bg-[#F8F9FA]/60">
-                    <td className="py-2.5 px-3 font-mono font-bold text-[#7F581A]">{p.sku}</td>
+                    <td className="py-2.5 px-3 font-mono font-bold text-[#059669]">{p.sku}</td>
                     <td className="py-2.5 px-3">
                       <div className="flex items-center gap-2.5">
                         <img
@@ -458,13 +476,31 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                     <td className="py-2.5 px-3 text-[#727985]">{p.metalType}</td>
                     <td className="py-2.5 px-3 text-right font-mono">{formatGrams(p.grossWeightGrams)}</td>
                     <td className="py-2.5 px-3 text-right font-mono font-medium">{formatGrams(p.netMetalWeightGrams)}</td>
-                    <td className="py-2.5 px-3 text-right font-mono font-bold text-[#7F581A]">
+                    <td className="py-2.5 px-3 text-right font-mono font-bold text-[#059669]">
                       {formatGrams(p.fineMetalContentGrams)}
                     </td>
                     <td className="py-2.5 px-3 text-[#727985]">
                       {p.stones.length > 0 ? `${p.stones[0].type} (${p.stones[0].carats} ct)` : '-'}
                     </td>
                     <td className="py-2.5 px-3 text-right font-mono font-bold">{formatCOP(p.salePriceCOP)}</td>
+                    <td className="py-2.5 px-3 text-right">
+                      <span
+                        className={`font-mono font-bold ${
+                          p.salePriceCOP >= p.totalCostCOP
+                            ? 'text-[#21865B]'
+                            : 'text-[#D64545]'
+                        }`}
+                      >
+                        {p.salePriceCOP > 0
+                          ? (
+                              ((p.salePriceCOP - p.totalCostCOP) /
+                                p.salePriceCOP) *
+                              100
+                            ).toFixed(0)
+                          : '0'}
+                        %
+                      </span>
+                    </td>
                     <td className="py-2.5 px-3">
                       <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#F4F5F7]">
                         {p.status}
@@ -536,7 +572,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               <div className="bg-[#F8F9FA] rounded-2xl p-3.5 border border-[#EAECEF] space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#20242B] flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-[#9B7028]" />
+                    <Sparkles className="w-4 h-4 text-[#10B981]" />
                     Fotografía de Alta Joyería
                   </span>
                   {formData.imageUrl && (
@@ -558,8 +594,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                         onClick={() => setFormData({ ...formData, imageUrl: preset.url })}
                         className={`flex items-center gap-1.5 p-1 rounded-xl border transition-all shrink-0 ${
                           formData.imageUrl === preset.url
-                            ? 'border-[#9B7028] bg-white ring-2 ring-[#9B7028]/20 shadow-xs'
-                            : 'border-[#EAECEF] bg-white hover:border-[#9B7028]/50'
+                            ? 'border-[#10B981] bg-white ring-2 ring-[#10B981]/20 shadow-xs'
+                            : 'border-[#EAECEF] bg-white hover:border-[#10B981]/50'
                         }`}
                       >
                         <img src={preset.url} alt="" className="w-7 h-7 rounded-lg object-cover" />
@@ -645,7 +681,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               {/* Real-time Metal Calculation Strip */}
               <div className="bg-[#F8F9FA] rounded-2xl p-4 border border-[#EAECEF] space-y-3">
                 <span className="font-bold text-[#20242B] flex items-center gap-1.5">
-                  <Coins className="w-4 h-4 text-[#9B7028]" />
+                  <Coins className="w-4 h-4 text-[#10B981]" />
                   Pesaje en Balanza & Pureza de Oro Fino
                 </span>
 
@@ -701,10 +737,10 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                     <span className="font-mono font-bold text-sm text-[#20242B]">{formatGrams(netMetalPreview)}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[#7F581A] block font-semibold text-[11px]">
+                    <span className="text-[#059669] block font-semibold text-[11px]">
                       Contenido Oro Fino Puro (24K / Ley {metalDef.fineness}):
                     </span>
-                    <span className="font-mono font-bold text-base text-[#7F581A]">
+                    <span className="font-mono font-bold text-base text-[#059669]">
                       {formatGrams(fineMetalPreview)}
                     </span>
                   </div>
@@ -744,6 +780,20 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 </div>
               </div>
 
+              <div
+                className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold ${
+                  Number(marginPreview) >= 0
+                    ? 'bg-[#21865B]/10 text-[#21865B]'
+                    : 'bg-[#D64545]/10 text-[#D64545]'
+                }`}
+              >
+                <span>
+                  Margen estimado sobre venta: {marginPreview}% · Utilidad{' '}
+                  {formatCOP(formData.salePriceCOP - totalCostPreview)}
+                </span>
+                <span>Costo total {formatCOP(totalCostPreview)}</span>
+              </div>
+
               <div className="pt-3 border-t border-[#EAECEF] flex justify-end gap-2">
                 <button
                   type="button"
@@ -754,7 +804,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-xl font-bold shadow-xs"
+                  className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl font-bold shadow-xs"
                 >
                   Guardar Joya
                 </button>
@@ -770,7 +820,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
           <div className="bg-white rounded-3xl border border-[#EAECEF] shadow-2xl w-full max-w-lg p-5 sm:p-7 space-y-4 text-xs">
             <div className="flex justify-between items-start pb-3 border-b border-[#EAECEF]">
               <div>
-                <span className="font-mono text-xs font-bold text-[#7F581A] bg-[#9B7028]/10 px-2 py-0.5 rounded">
+                <span className="font-mono text-xs font-bold text-[#059669] bg-[#10B981]/10 px-2 py-0.5 rounded">
                   {selectedProductDetails.sku}
                 </span>
                 <h2 className="text-base font-bold text-[#20242B] mt-1">
@@ -817,8 +867,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                   </p>
                 </div>
                 <div>
-                  <span className="text-[#7F581A] font-semibold">Oro Fino Puro 24K:</span>
-                  <p className="font-mono font-bold text-[#7F581A]">
+                  <span className="text-[#059669] font-semibold">Oro Fino Puro 24K:</span>
+                  <p className="font-mono font-bold text-[#059669]">
                     {formatGrams(selectedProductDetails.fineMetalContentGrams)}
                   </p>
                 </div>
@@ -830,6 +880,30 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 <span className="text-[#727985] block">Precio de Venta al Público:</span>
                 <span className="font-mono font-bold text-base text-[#20242B]">
                   {formatCOP(selectedProductDetails.salePriceCOP)}
+                </span>
+                <span
+                  className={`text-[11px] font-semibold block ${
+                    selectedProductDetails.salePriceCOP >=
+                    selectedProductDetails.totalCostCOP
+                      ? 'text-[#21865B]'
+                      : 'text-[#D64545]'
+                  }`}
+                >
+                  Costo {formatCOP(selectedProductDetails.totalCostCOP)} · Utilidad{' '}
+                  {formatCOP(
+                    selectedProductDetails.salePriceCOP -
+                      selectedProductDetails.totalCostCOP
+                  )}{' '}
+                  (
+                  {selectedProductDetails.salePriceCOP > 0
+                    ? (
+                        ((selectedProductDetails.salePriceCOP -
+                          selectedProductDetails.totalCostCOP) /
+                          selectedProductDetails.salePriceCOP) *
+                        100
+                      ).toFixed(1)
+                    : '0'}
+                  %)
                 </span>
               </div>
               <button
@@ -898,7 +972,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-xl font-bold"
+                  className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl font-bold"
                 >
                   Confirmar Traslado
                 </button>

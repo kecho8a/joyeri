@@ -65,7 +65,7 @@ export const BranchesView: React.FC = () => {
 
         <button
           onClick={() => setIsNewModalOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-sm transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-sm transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nueva Sede
@@ -83,7 +83,7 @@ export const BranchesView: React.FC = () => {
             <div
               key={b.id}
               className={`bg-white rounded-xl border p-4 shadow-sm space-y-3 transition-all ${
-                isCurrent ? 'border-[#9B7028] ring-1 ring-[#9B7028]/20' : 'border-[#E5E7EB]'
+                isCurrent ? 'border-[#10B981] ring-1 ring-[#10B981]/20' : 'border-[#E5E7EB]'
               }`}
             >
               <div className="flex items-start justify-between">
@@ -95,7 +95,7 @@ export const BranchesView: React.FC = () => {
                   <p className="text-xs text-[#727985]">{b.city}</p>
                 </div>
                 {isCurrent && (
-                  <span className="text-[10px] font-bold text-[#7F581A] bg-[#9B7028]/10 px-2 py-0.5 rounded flex items-center gap-1">
+                  <span className="text-[10px] font-bold text-[#059669] bg-[#10B981]/10 px-2 py-0.5 rounded flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> Activa
                   </span>
                 )}
@@ -127,7 +127,7 @@ export const BranchesView: React.FC = () => {
                     Seleccionar como Sede Activa
                   </button>
                 ) : (
-                  <span className="text-[11px] font-semibold text-[#7F581A]">Operando en esta sede</span>
+                  <span className="text-[11px] font-semibold text-[#059669]">Operando en esta sede</span>
                 )}
               </div>
             </div>
@@ -220,7 +220,7 @@ export const BranchesView: React.FC = () => {
                 <button type="button" onClick={() => setIsNewModalOpen(false)} className="px-4 py-2 text-[#727985]">
                   Cancelar
                 </button>
-                <button type="submit" className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg font-semibold">
+                <button type="submit" className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg font-semibold">
                   Crear Sede
                 </button>
               </div>

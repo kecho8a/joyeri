@@ -56,7 +56,7 @@ export const AuditView: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar evento, usuario o acción..."
-            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#9B7028] focus:bg-white"
+            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#10B981] focus:bg-white"
           />
         </div>
 
@@ -101,7 +101,7 @@ export const AuditView: React.FC = () => {
                       {log.action}
                     </span>
                   </td>
-                  <td className="py-2.5 px-3 font-semibold text-[#7F581A]">
+                  <td className="py-2.5 px-3 font-semibold text-[#059669]">
                     {log.module}
                   </td>
                   <td className="py-2.5 px-3 text-[#20242B]">

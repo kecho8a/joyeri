@@ -92,7 +92,7 @@ export const MetalsBoardView: React.FC = () => {
       {/* Main Metal Prices Board */}
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-sm space-y-4">
         <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">
-          <Coins className="w-4 h-4 text-[#9B7028]" />
+          <Coins className="w-4 h-4 text-[#10B981]" />
           Precios Vigentes en Mostrador
         </h2>
 
@@ -102,7 +102,7 @@ export const MetalsBoardView: React.FC = () => {
             return (
               <div
                 key={metal.code}
-                className="p-4 rounded-xl border border-[#E5E7EB] bg-[#F4F5F7]/40 hover:border-[#9B7028] transition-all flex flex-col justify-between space-y-3"
+                className="p-4 rounded-xl border border-[#E5E7EB] bg-[#F4F5F7]/40 hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
               >
                 <div>
                   <div className="flex items-start justify-between">
@@ -132,10 +132,10 @@ export const MetalsBoardView: React.FC = () => {
                       <span className="text-[10px] text-[#727985] block">por gramo</span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-[#7F581A] block uppercase font-semibold">
+                      <span className="text-[10px] text-[#059669] block uppercase font-semibold">
                         Venta Base
                       </span>
-                      <span className="font-mono font-bold text-sm text-[#7F581A] tabular-nums">
+                      <span className="font-mono font-bold text-sm text-[#059669] tabular-nums">
                         {formatCOP(metal.sellPriceGramCOP)}
                       </span>
                       <span className="text-[10px] text-[#727985] block">por gramo</span>
@@ -200,10 +200,10 @@ export const MetalsBoardView: React.FC = () => {
 
           <div className="bg-white p-3 rounded-lg border border-[#E5E7EB] flex items-center justify-between">
             <div>
-              <span className="text-[#7F581A] block font-semibold text-[11px]">
+              <span className="text-[#059669] block font-semibold text-[11px]">
                 Oro Fino Puro Resultante (24K):
               </span>
-              <span className="font-mono font-bold text-base text-[#7F581A] tabular-nums">
+              <span className="font-mono font-bold text-base text-[#059669] tabular-nums">
                 {formatGrams(calculatedFineGrams)}
               </span>
             </div>
@@ -227,8 +227,8 @@ export const MetalsBoardView: React.FC = () => {
 
           <div className="p-3.5 rounded-xl border border-[#E5E7EB] bg-white flex justify-between items-center">
             <div>
-              <span className="text-[#7F581A] block font-semibold text-[11px]">Valor Base de Venta:</span>
-              <span className="text-base font-bold text-[#7F581A] font-mono tabular-nums">
+              <span className="text-[#059669] block font-semibold text-[11px]">Valor Base de Venta:</span>
+              <span className="text-base font-bold text-[#059669] font-mono tabular-nums">
                 {formatCOP(retailBaseValueCOP)}
               </span>
             </div>
@@ -274,7 +274,7 @@ export const MetalsBoardView: React.FC = () => {
                   required
                   value={sellPriceInput}
                   onChange={(e) => setSellPriceInput(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-3 py-2 font-mono font-bold text-[#7F581A]"
+                  className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-3 py-2 font-mono font-bold text-[#059669]"
                 />
               </div>
 
@@ -301,7 +301,7 @@ export const MetalsBoardView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg font-semibold"
+                  className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg font-semibold"
                 >
                   Guardar Cotización
                 </button>

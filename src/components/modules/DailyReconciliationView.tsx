@@ -24,9 +24,9 @@ import {
   formatDateTime,
 } from '../../utils/jewelryCalculations';
 import {
-  getExpectedGoldLines,
+  getExpectedMetalLines,
   getExpectedStoneLines,
-  getInStoreGoldPieces,
+  getInStoreMetalPieces,
   RECONCILIATION_CARATS_TOLERANCE,
   RECONCILIATION_GRAMS_TOLERANCE,
   round3,
@@ -65,9 +65,9 @@ export const DailyReconciliationView: React.FC = () => {
   const user = erpDb.getActiveUser();
   const shift = state.currentCashShift;
 
-  const expectedGold = getExpectedGoldLines(state.products, branch.id);
+  const expectedGold = getExpectedMetalLines(state.products, branch.id);
   const expectedStones = getExpectedStoneLines(state.products, branch.id);
-  const goldPiecesInStore = getInStoreGoldPieces(state.products, branch.id);
+  const goldPiecesInStore = getInStoreMetalPieces(state.products, branch.id);
 
   const [goldCounts, setGoldCounts] = useState<Record<string, GoldCountInput>>({});
   const [stoneCounts, setStoneCounts] = useState<Record<string, StoneCountInput>>({});
@@ -77,7 +77,10 @@ export const DailyReconciliationView: React.FC = () => {
   const expectedCashCOP = shift ? shift.expectedCashCOP : 0;
   const countedCashNumber = toNumber(countedCash);
   const cashDifferenceCOP = round3(countedCashNumber - expectedCashCOP);
-  const cashMatches = !!shift && countedCashNumber === expectedCashCOP;
+  const cashMatches =
+    !!shift &&
+    shift.status === 'ABIERTA' &&
+    countedCashNumber === expectedCashCOP;
 
   const goldPreview = expectedGold.map((line) => {
     const input = goldCounts[line.metalType] || { pieces: '', grossGrams: '' };
@@ -254,7 +257,7 @@ export const DailyReconciliationView: React.FC = () => {
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B] flex items-center gap-2">
-            <ClipboardCheck className="w-5 h-5 text-[#9B7028]" />
+            <ClipboardCheck className="w-5 h-5 text-[#10B981]" />
             Cuadre Diario de Inventario & Caja
           </h1>
             <p className="text-xs text-[#727985]">
@@ -273,7 +276,7 @@ export const DailyReconciliationView: React.FC = () => {
       </div>
 
       {!shift && (
-        <div className="bg-[#D99032]/10 border border-[#D99032]/30 rounded-xl p-3 text-xs text-[#7F581A] flex items-center gap-2">
+        <div className="bg-[#DC2626]/10 border border-[#DC2626]/30 rounded-xl p-3 text-xs text-[#059669] flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 shrink-0" />
           No hay turno de caja registrado. El efectivo esperado se mostrará en cero hasta abrir un turno en el módulo Caja.
         </div>
@@ -285,8 +288,8 @@ export const DailyReconciliationView: React.FC = () => {
           <div className="p-4 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h2 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
-                <Scale className="w-4 h-4 text-[#9B7028]" />
-                1. Joyas de Oro que quedaron en la sede
+                <Scale className="w-4 h-4 text-[#10B981]" />
+                1. Joyas de metal precioso que quedaron en la sede
               </h2>
               <p className="text-[11px] text-[#727985] mt-0.5">
                 Ingrese lo contado físicamente. Se compara contra joyas en estado DISPONIBLE o RESERVADO de esta sede.
@@ -333,7 +336,7 @@ export const DailyReconciliationView: React.FC = () => {
                       <td className="py-2.5 px-3 text-right font-mono">
                         {formatGrams(line.grossWeightGrams)}
                       </td>
-                      <td className="py-2.5 px-3 text-right font-mono text-[#7F581A]">
+                      <td className="py-2.5 px-3 text-right font-mono text-[#059669]">
                         {formatGrams(line.fineMetalContentGrams)}
                       </td>
                       <td className="py-2.5 px-3">
@@ -346,7 +349,7 @@ export const DailyReconciliationView: React.FC = () => {
                           onChange={(e) =>
                             handleGoldChange(line.metalType, 'pieces', e.target.value)
                           }
-                          className="w-20 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#9B7028] focus:bg-white"
+                          className="w-20 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#10B981] focus:bg-white"
                         />
                       </td>
                       <td className="py-2.5 px-3">
@@ -363,7 +366,7 @@ export const DailyReconciliationView: React.FC = () => {
                               e.target.value
                             )
                           }
-                          className="w-24 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#9B7028] focus:bg-white"
+                          className="w-24 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#10B981] focus:bg-white"
                         />
                       </td>
                       <td className="py-2.5 px-3 text-right font-mono">
@@ -397,7 +400,7 @@ export const DailyReconciliationView: React.FC = () => {
                 {goldPreview.length === 0 && (
                   <tr>
                     <td colSpan={8} className="py-6 text-center text-[#727985]">
-                      No hay joyas de oro registradas como disponibles o reservadas en esta sede.
+                      No hay joyas de metal precioso registradas como disponibles o reservadas en esta sede.
                     </td>
                   </tr>
                 )}
@@ -406,14 +409,14 @@ export const DailyReconciliationView: React.FC = () => {
               {goldPreview.length > 0 && (
                 <tfoot className="bg-[#F4F5F7] border-t border-[#E5E7EB] font-semibold">
                   <tr>
-                    <td className="py-2.5 px-3">TOTAL ORO</td>
+                    <td className="py-2.5 px-3">TOTAL METALES</td>
                     <td className="py-2.5 px-3 text-right font-mono">
                       {expectedGoldPieces}
                     </td>
                     <td className="py-2.5 px-3 text-right font-mono">
                       {formatGrams(expectedGoldGrossGrams)}
                     </td>
-                    <td className="py-2.5 px-3 text-right font-mono text-[#7F581A]">
+                    <td className="py-2.5 px-3 text-right font-mono text-[#059669]">
                       {formatGrams(expectedGoldFineGrams)}
                     </td>
                     <td className="py-2.5 px-3 font-mono">{countedGoldPieces}</td>
@@ -440,7 +443,7 @@ export const DailyReconciliationView: React.FC = () => {
           <div className="p-4 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h2 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
-                <Gem className="w-4 h-4 text-[#9B7028]" />
+                <Gem className="w-4 h-4 text-[#10B981]" />
                 2. Piedras Preciosas que quedaron en la sede
               </h2>
               <p className="text-[11px] text-[#727985] mt-0.5">
@@ -495,7 +498,7 @@ export const DailyReconciliationView: React.FC = () => {
                               e.target.value
                             )
                           }
-                          className="w-20 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#9B7028] focus:bg-white"
+                          className="w-20 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#10B981] focus:bg-white"
                         />
                       </td>
                       <td className="py-2.5 px-3">
@@ -512,7 +515,7 @@ export const DailyReconciliationView: React.FC = () => {
                               e.target.value
                             )
                           }
-                          className="w-24 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#9B7028] focus:bg-white"
+                          className="w-24 bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-2 py-1 font-mono font-bold focus:outline-none focus:border-[#10B981] focus:bg-white"
                         />
                       </td>
                       <td className="py-2.5 px-3 text-right font-mono">
@@ -587,7 +590,7 @@ export const DailyReconciliationView: React.FC = () => {
         <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
           <div className="p-4 border-b border-[#E5E7EB]">
             <h2 className="font-bold text-sm text-[#20242B] flex items-center gap-2">
-              <Landmark className="w-4 h-4 text-[#9B7028]" />
+              <Landmark className="w-4 h-4 text-[#10B981]" />
               3. Efectivo que debe haber en Caja
             </h2>
             <p className="text-[11px] text-[#727985] mt-0.5">
@@ -656,7 +659,7 @@ export const DailyReconciliationView: React.FC = () => {
                   value={countedCash}
                   onChange={(e) => setCountedCash(e.target.value)}
                   placeholder="Ingrese el efectivo contado"
-                  className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-3 py-2 font-mono font-bold text-[#20242B] focus:outline-none focus:border-[#9B7028] focus:bg-white"
+                  className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg px-3 py-2 font-mono font-bold text-[#20242B] focus:outline-none focus:border-[#10B981] focus:bg-white"
                 />
               </div>
 
@@ -703,7 +706,7 @@ export const DailyReconciliationView: React.FC = () => {
                   : 'El cuadre presenta diferencias'}
               </h3>
               <p className="text-[11px] text-[#20242B] mt-0.5">
-                Oro: {countedGoldPieces}/{expectedGoldPieces} piezas y{' '}
+                Metales: {countedGoldPieces}/{expectedGoldPieces} piezas y{' '}
                 {formatGrams(countedGoldGrossGrams)} de {formatGrams(expectedGoldGrossGrams)} · Piedras:{' '}
                 {formatCarats(countedStoneCarats)} de {formatCarats(expectedStoneCarats)} · Caja:{' '}
                 {formatCOP(countedCashNumber)} de {formatCOP(expectedCashCOP)}
@@ -723,7 +726,7 @@ export const DailyReconciliationView: React.FC = () => {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Novedades, faltantes, sobrantes o justificación de diferencias..."
-              className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#20242B] focus:outline-none focus:border-[#9B7028] focus:bg-white"
+              className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#20242B] focus:outline-none focus:border-[#10B981] focus:bg-white"
             />
           </div>
 
@@ -733,7 +736,7 @@ export const DailyReconciliationView: React.FC = () => {
             </p>
             <button
               type="submit"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-sm transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-sm transition-colors"
             >
               <Save className="w-4 h-4" />
               Registrar Cuadre y Cerrar Turno
@@ -746,7 +749,7 @@ export const DailyReconciliationView: React.FC = () => {
       <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
         <div className="p-4 border-b border-[#E5E7EB]">
           <h2 className="font-bold text-sm text-[#20242B]">
-            Detalle de piezas de oro que el sistema espera en la sede
+            Detalle de piezas de metal precioso que el sistema espera en la sede
           </h2>
           <p className="text-[11px] text-[#727985] mt-0.5">
             {goldPiecesInStore.length} piezas en estado DISPONIBLE o RESERVADO.
@@ -801,7 +804,7 @@ export const DailyReconciliationView: React.FC = () => {
               {goldPiecesInStore.length === 0 && (
                 <tr>
                   <td colSpan={7} className="py-6 text-center text-[#727985]">
-                    No hay piezas de oro disponibles o reservadas en esta sede.
+                    No hay piezas de metal precioso disponibles o reservadas en esta sede.
                   </td>
                 </tr>
               )}
@@ -824,8 +827,8 @@ export const DailyReconciliationView: React.FC = () => {
                 <th className="p-2.5">Fecha</th>
                 <th className="p-2.5">Sede</th>
                 <th className="p-2.5">Responsable</th>
-                <th className="p-2.5 text-right">Oro (pzas)</th>
-                <th className="p-2.5 text-right">Oro (g)</th>
+                <th className="p-2.5 text-right">Metales (pzas)</th>
+                <th className="p-2.5 text-right">Metal (g)</th>
                 <th className="p-2.5 text-right">Piedras (ct)</th>
                 <th className="p-2.5 text-right">Caja Esperada</th>
                 <th className="p-2.5 text-right">Caja Contada</th>

@@ -245,7 +245,7 @@ export const ReportsView: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#21865B] animate-pulse" />
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#9B7028]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#10B981]">
               Control Total de la Tienda & Auditoría
             </span>
           </div>
@@ -304,7 +304,7 @@ export const ReportsView: React.FC = () => {
             </button>
             <button
               onClick={handleExportCSV}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-xs transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-xs transition-all"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Exportar CSV</span>
@@ -319,7 +319,7 @@ export const ReportsView: React.FC = () => {
           onClick={() => setActiveTab('pyg')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${
             activeTab === 'pyg'
-              ? 'bg-[#9B7028] text-white shadow-xs'
+              ? 'bg-[#10B981] text-white shadow-xs'
               : 'text-[#727985] hover:text-[#20242B] hover:bg-[#F4F5F7]'
           }`}
         >
@@ -331,7 +331,7 @@ export const ReportsView: React.FC = () => {
           onClick={() => setActiveTab('metals')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${
             activeTab === 'metals'
-              ? 'bg-[#9B7028] text-white shadow-xs'
+              ? 'bg-[#10B981] text-white shadow-xs'
               : 'text-[#727985] hover:text-[#20242B] hover:bg-[#F4F5F7]'
           }`}
         >
@@ -343,7 +343,7 @@ export const ReportsView: React.FC = () => {
           onClick={() => setActiveTab('sellers')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${
             activeTab === 'sellers'
-              ? 'bg-[#9B7028] text-white shadow-xs'
+              ? 'bg-[#10B981] text-white shadow-xs'
               : 'text-[#727985] hover:text-[#20242B] hover:bg-[#F4F5F7]'
           }`}
         >
@@ -355,7 +355,7 @@ export const ReportsView: React.FC = () => {
           onClick={() => setActiveTab('payments')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${
             activeTab === 'payments'
-              ? 'bg-[#9B7028] text-white shadow-xs'
+              ? 'bg-[#10B981] text-white shadow-xs'
               : 'text-[#727985] hover:text-[#20242B] hover:bg-[#F4F5F7]'
           }`}
         >
@@ -367,7 +367,7 @@ export const ReportsView: React.FC = () => {
           onClick={() => setActiveTab('workshop')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${
             activeTab === 'workshop'
-              ? 'bg-[#9B7028] text-white shadow-xs'
+              ? 'bg-[#10B981] text-white shadow-xs'
               : 'text-[#727985] hover:text-[#20242B] hover:bg-[#F4F5F7]'
           }`}
         >
@@ -379,7 +379,7 @@ export const ReportsView: React.FC = () => {
           onClick={() => setActiveTab('inventory')}
           className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${
             activeTab === 'inventory'
-              ? 'bg-[#9B7028] text-white shadow-xs'
+              ? 'bg-[#10B981] text-white shadow-xs'
               : 'text-[#727985] hover:text-[#20242B] hover:bg-[#F4F5F7]'
           }`}
         >
@@ -396,7 +396,7 @@ export const ReportsView: React.FC = () => {
             <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-[#727985] font-bold uppercase tracking-wider">Ventas Brutas Facturadas</span>
-                <span className="p-1.5 rounded-lg bg-[#9B7028]/10 text-[#7F581A]">
+                <span className="p-1.5 rounded-lg bg-[#10B981]/10 text-[#059669]">
                   <Receipt className="w-4 h-4" />
                 </span>
               </div>
@@ -442,12 +442,12 @@ export const ReportsView: React.FC = () => {
 
             <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-[#9B7028] font-bold uppercase tracking-wider">Utilidad Neta (EBITDA)</span>
-                <span className="p-1.5 rounded-lg bg-[#9B7028]/10 text-[#7F581A]">
+                <span className="text-[10px] text-[#10B981] font-bold uppercase tracking-wider">Utilidad Neta (EBITDA)</span>
+                <span className="p-1.5 rounded-lg bg-[#10B981]/10 text-[#059669]">
                   <DollarSign className="w-4 h-4" />
                 </span>
               </div>
-              <p className="text-xl font-bold text-[#7F581A] font-mono mt-2 tabular-nums">
+              <p className="text-xl font-bold text-[#059669] font-mono mt-2 tabular-nums">
                 {formatCOP(netOperatingIncomeCOP)}
               </p>
               <div className="flex justify-between items-center text-[10px] text-[#727985] mt-1 pt-2 border-t border-[#EAECEF]">
@@ -468,7 +468,7 @@ export const ReportsView: React.FC = () => {
                   Estructura contable exacta bajo normas NIIF y normativa fiscal colombiana
                 </p>
               </div>
-              <span className="text-xs font-mono font-semibold text-[#7F581A] bg-[#9B7028]/10 px-2.5 py-1 rounded-lg">
+              <span className="text-xs font-mono font-semibold text-[#059669] bg-[#10B981]/10 px-2.5 py-1 rounded-lg">
                 Moneda: Pesos Colombianos (COP)
               </span>
             </div>
@@ -506,7 +506,7 @@ export const ReportsView: React.FC = () => {
                 <span className="pl-6">(-) Liquidación de Comisiones Comerciales de Venta (sobre ingreso neto sin IVA)</span>
                 <span className="font-mono text-[#D64545]">-{formatCOP(totalCommissionsCOP)}</span>
               </div>
-              <div className="py-3 flex justify-between items-center font-bold bg-[#9B7028]/15 px-3 rounded-xl text-[#7F581A] text-sm">
+              <div className="py-3 flex justify-between items-center font-bold bg-[#10B981]/15 px-3 rounded-xl text-[#059669] text-sm">
                 <span>(=) RESULTADO INTEGRAL OPERATIVO ANTES DE IMPUESTOS</span>
                 <span className="font-mono text-base">{formatCOP(netOperatingIncomeCOP)}</span>
               </div>
@@ -520,7 +520,7 @@ export const ReportsView: React.FC = () => {
                 Registro Detallado de Facturación ({filteredSales.length} comprobantes)
               </h3>
               <span className="text-xs text-[#727985]">
-                Total: <strong className="font-mono text-[#7F581A]">{formatCOP(totalBilledCOP)}</strong>
+                Total: <strong className="font-mono text-[#059669]">{formatCOP(totalBilledCOP)}</strong>
               </span>
             </div>
             <div className="overflow-x-auto">
@@ -540,7 +540,7 @@ export const ReportsView: React.FC = () => {
                 <tbody className="divide-y divide-[#EAECEF] text-[#20242B]">
                   {filteredSales.map((s) => (
                     <tr key={s.id} className="hover:bg-[#F8F9FA]/50 transition-colors">
-                      <td className="py-2.5 px-3 font-mono font-bold text-[#7F581A]">{s.invoiceNumber}</td>
+                      <td className="py-2.5 px-3 font-mono font-bold text-[#059669]">{s.invoiceNumber}</td>
                       <td className="py-2.5 px-3 text-[#727985]">
                         <span className="block text-[#20242B] font-medium">{formatDate(s.createdAt)}</span>
                         <span className="text-[10px] text-[#727985]">
@@ -598,12 +598,12 @@ export const ReportsView: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-[#7F581A] font-bold uppercase tracking-wider">Oro Fino Puro 24K en Bóveda</span>
-                <span className="p-1.5 rounded-lg bg-[#9B7028]/10 text-[#7F581A]">
+                <span className="text-[10px] text-[#059669] font-bold uppercase tracking-wider">Oro Fino Puro 24K en Bóveda</span>
+                <span className="p-1.5 rounded-lg bg-[#10B981]/10 text-[#059669]">
                   <Coins className="w-4 h-4" />
                 </span>
               </div>
-              <p className="text-2xl font-bold text-[#7F581A] font-mono mt-2 tabular-nums">
+              <p className="text-2xl font-bold text-[#059669] font-mono mt-2 tabular-nums">
                 {formatGrams(totalFineGold24KGrams)}
               </p>
               <div className="text-[10px] text-[#727985] mt-1 pt-2 border-t border-[#EAECEF] flex justify-between">
@@ -685,7 +685,7 @@ export const ReportsView: React.FC = () => {
                     <th className="py-2.5 px-3 text-center">Piezas en Stock</th>
                     <th className="py-2.5 px-3 text-right">Peso Bruto Total</th>
                     <th className="py-2.5 px-3 text-right">Peso Neto Metal</th>
-                    <th className="py-2.5 px-3 text-right text-[#7F581A]">Metal Fino Puro</th>
+                    <th className="py-2.5 px-3 text-right text-[#059669]">Metal Fino Puro</th>
                     <th className="py-2.5 px-3 text-right">Precio Mercado Gramo</th>
                     <th className="py-2.5 px-3 text-right">Valorización Total</th>
                   </tr>
@@ -707,7 +707,7 @@ export const ReportsView: React.FC = () => {
                         <td className="py-2.5 px-3 text-center font-mono font-bold">{prods.length}</td>
                         <td className="py-2.5 px-3 text-right font-mono tabular-nums text-[#727985]">{formatGrams(gross)}</td>
                         <td className="py-2.5 px-3 text-right font-mono tabular-nums">{formatGrams(net)}</td>
-                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#7F581A] tabular-nums">
+                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#059669] tabular-nums">
                           {formatGrams(fine)}
                         </td>
                         <td className="py-2.5 px-3 text-right font-mono tabular-nums text-[#727985]">{formatCOP(priceGram)}</td>
@@ -748,7 +748,7 @@ export const ReportsView: React.FC = () => {
                   className="bg-white rounded-2xl border border-[#EAECEF] p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#9B7028]/15 text-[#7F581A] flex items-center justify-center font-bold text-sm">
+                    <div className="w-10 h-10 rounded-full bg-[#10B981]/15 text-[#059669] flex items-center justify-center font-bold text-sm">
                       {seller.name.slice(0, 2).toUpperCase()}
                     </div>
                     <div>
@@ -772,7 +772,7 @@ export const ReportsView: React.FC = () => {
                     </div>
                     <div className="flex justify-between text-[#727985]">
                       <span>Tasa Comisión Pactada:</span>
-                      <span className="text-[#9B7028] font-bold">{commRate}%</span>
+                      <span className="text-[#10B981] font-bold">{commRate}%</span>
                     </div>
                     <div className="flex justify-between pt-1.5 border-t border-[#EAECEF] text-sm text-[#21865B] font-bold">
                       <span>COMISIÓN A LIQUIDAR:</span>
@@ -799,7 +799,7 @@ export const ReportsView: React.FC = () => {
                 >
                   <div className="flex justify-between items-center text-xs">
                     <span className="font-bold text-[#20242B]">{method.replace('_', ' ')}</span>
-                    <span className="font-mono text-[#7F581A] bg-[#9B7028]/10 px-2 py-0.5 rounded text-[10px] font-bold">
+                    <span className="font-mono text-[#059669] bg-[#10B981]/10 px-2 py-0.5 rounded text-[10px] font-bold">
                       {percent}%
                     </span>
                   </div>
@@ -809,7 +809,7 @@ export const ReportsView: React.FC = () => {
                   {/* Progress bar */}
                   <div className="w-full bg-[#F4F5F7] h-2 rounded-full overflow-hidden mt-2">
                     <div
-                      className="bg-[#9B7028] h-full rounded-full transition-all"
+                      className="bg-[#10B981] h-full rounded-full transition-all"
                       style={{ width: `${Math.min(100, parseFloat(percent))}%` }}
                     />
                   </div>
@@ -853,9 +853,9 @@ export const ReportsView: React.FC = () => {
                   -{formatCOP(state.currentCashShift.cashExpensesCOP)}
                 </span>
               </div>
-              <div className="bg-[#9B7028]/10 p-3 rounded-xl">
-                <span className="text-[#7F581A] block text-[10px] font-bold">Efectivo Esperado en Gaveta</span>
-                <span className="font-bold text-base text-[#7F581A]">
+              <div className="bg-[#10B981]/10 p-3 rounded-xl">
+                <span className="text-[#059669] block text-[10px] font-bold">Efectivo Esperado en Gaveta</span>
+                <span className="font-bold text-base text-[#059669]">
                   {formatCOP(state.currentCashShift.expectedCashCOP)}
                 </span>
               </div>
@@ -889,8 +889,8 @@ export const ReportsView: React.FC = () => {
             </div>
 
             <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-              <span className="text-[10px] text-[#9B7028] font-bold uppercase tracking-wider block">Merma Media de Fundición</span>
-              <p className="text-xl font-bold font-mono text-[#7F581A] mt-1">{workshopStats.lossPercentage}%</p>
+              <span className="text-[10px] text-[#10B981] font-bold uppercase tracking-wider block">Merma Media de Fundición</span>
+              <p className="text-xl font-bold font-mono text-[#059669] mt-1">{workshopStats.lossPercentage}%</p>
               <span className="text-[10px] text-[#21865B]">Tolerancia permitida: ≤ 5.0%</span>
             </div>
           </div>
@@ -911,7 +911,7 @@ export const ReportsView: React.FC = () => {
                     <th className="py-2.5 px-3 text-right">Oro Entregado</th>
                     <th className="py-2.5 px-3 text-right">Joya Terminada</th>
                     <th className="py-2.5 px-3 text-right">Retal Devuelto</th>
-                    <th className="py-2.5 px-3 text-right text-[#7F581A]">Merma Neta</th>
+                    <th className="py-2.5 px-3 text-right text-[#059669]">Merma Neta</th>
                     <th className="py-2.5 px-3">Estado</th>
                   </tr>
                 </thead>
@@ -920,7 +920,7 @@ export const ReportsView: React.FC = () => {
                     const delivered = ord.materialsDelivered.reduce((sum, m) => sum + m.weightGrams, 0);
                     return (
                       <tr key={ord.id} className="hover:bg-[#F8F9FA]/50 transition-colors">
-                        <td className="py-2.5 px-3 font-mono font-bold text-[#7F581A]">{ord.code}</td>
+                        <td className="py-2.5 px-3 font-mono font-bold text-[#059669]">{ord.code}</td>
                         <td className="py-2.5 px-3 font-semibold">{ord.designName}</td>
                         <td className="py-2.5 px-3 text-[#727985]">{ord.artisanName}</td>
                         <td className="py-2.5 px-3 text-right font-mono tabular-nums">{formatGrams(delivered)}</td>
@@ -930,7 +930,7 @@ export const ReportsView: React.FC = () => {
                         <td className="py-2.5 px-3 text-right font-mono tabular-nums">
                           {ord.scrapReturnedGrams ? formatGrams(ord.scrapReturnedGrams) : '-'}
                         </td>
-                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#7F581A] tabular-nums">
+                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#059669] tabular-nums">
                           {ord.netWeightDifferenceGrams ? formatGrams(ord.netWeightDifferenceGrams) : '-'}
                         </td>
                         <td className="py-2.5 px-3">
@@ -938,7 +938,7 @@ export const ReportsView: React.FC = () => {
                             className={`text-[10px] font-semibold px-2 py-0.5 rounded ${
                               ord.status === 'CONCILIADA'
                                 ? 'bg-[#21865B]/10 text-[#21865B]'
-                                : 'bg-[#D99032]/10 text-[#D99032]'
+                                : 'bg-[#DC2626]/10 text-[#DC2626]'
                             }`}
                           >
                             {ord.status}
@@ -969,8 +969,8 @@ export const ReportsView: React.FC = () => {
               <span className="text-[10px] text-[#727985]">Costo adquisición metales y orfebrería</span>
             </div>
             <div className="bg-white p-4 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-              <span className="text-[10px] text-[#9B7028] font-bold uppercase tracking-wider block">Margen Potencial Global</span>
-              <p className="text-xl font-bold font-mono text-[#7F581A] mt-1">
+              <span className="text-[10px] text-[#10B981] font-bold uppercase tracking-wider block">Margen Potencial Global</span>
+              <p className="text-xl font-bold font-mono text-[#059669] mt-1">
                 {totalInventoryRetailValueCOP > 0
                   ? (((totalInventoryRetailValueCOP - totalInventoryCostValueCOP) / totalInventoryRetailValueCOP) * 100).toFixed(1)
                   : '0'}%
@@ -993,7 +993,7 @@ export const ReportsView: React.FC = () => {
                     <th className="py-2.5 px-3">SKU & Ref</th>
                     <th className="py-2.5 px-3">Sede & Ubicación</th>
                     <th className="py-2.5 px-3 text-right">Peso Neto</th>
-                    <th className="py-2.5 px-3 text-right text-[#7F581A]">Oro 24K Fino</th>
+                    <th className="py-2.5 px-3 text-right text-[#059669]">Oro 24K Fino</th>
                     <th className="py-2.5 px-3 text-right">Costo Total</th>
                     <th className="py-2.5 px-3 text-right">Precio Venta</th>
                     <th className="py-2.5 px-3">Estado</th>
@@ -1018,7 +1018,7 @@ export const ReportsView: React.FC = () => {
                           </div>
                         </td>
                         <td className="py-2.5 px-3 font-mono">
-                          <span className="font-bold text-[#7F581A] block">{p.sku}</span>
+                          <span className="font-bold text-[#059669] block">{p.sku}</span>
                           <span className="text-[10px] text-[#727985]">{p.reference}</span>
                         </td>
                         <td className="py-2.5 px-3 text-[#727985]">
@@ -1028,7 +1028,7 @@ export const ReportsView: React.FC = () => {
                           <span className="text-[10px]">{p.locationInStore}</span>
                         </td>
                         <td className="py-2.5 px-3 text-right font-mono tabular-nums">{formatGrams(p.netMetalWeightGrams)}</td>
-                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#7F581A] tabular-nums">
+                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#059669] tabular-nums">
                           {formatGrams(p.fineMetalContentGrams)}
                         </td>
                         <td className="py-2.5 px-3 text-right font-mono tabular-nums text-[#727985]">{formatCOP(p.totalCostCOP)}</td>
@@ -1041,7 +1041,7 @@ export const ReportsView: React.FC = () => {
                               p.status === 'DISPONIBLE'
                                 ? 'bg-[#21865B]/10 text-[#21865B]'
                                 : p.status === 'RESERVADO'
-                                ? 'bg-[#D99032]/10 text-[#D99032]'
+                                ? 'bg-[#DC2626]/10 text-[#DC2626]'
                                 : 'bg-[#727985]/10 text-[#727985]'
                             }`}
                           >

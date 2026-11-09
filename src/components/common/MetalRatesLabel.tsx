@@ -27,6 +27,16 @@ interface MetalRatesData {
 
 const CACHE_KEY = 'joyeri_precios_metales';
 
+function syncRatesToStore(data: MetalRatesData) {
+  erpDb.syncOfficialMetalRates({
+    gold24kCOP: data.metales.oro.venta,
+    silverCOP: data.metales.plata.venta,
+    platinumCOP: data.metales.platino?.venta,
+    source: data.fuente,
+    effectiveText: data.vigencia.texto,
+  });
+}
+
 function isValidPayload(data: unknown): data is MetalRatesData {
   const d = data as MetalRatesData | null;
   return (
@@ -98,6 +108,7 @@ export const MetalRatesLabel: React.FC = () => {
         if (cancelled) return;
         setRates(data);
         setSource('oficial');
+        syncRatesToStore(data);
         try {
           localStorage.setItem(CACHE_KEY, JSON.stringify(data));
         } catch {
@@ -109,6 +120,7 @@ export const MetalRatesLabel: React.FC = () => {
         if (cached) {
           setRates(cached);
           setSource('cache');
+          syncRatesToStore(cached);
         } else {
           setRates(buildFallbackFromStore());
           setSource('interno');
@@ -137,7 +149,7 @@ export const MetalRatesLabel: React.FC = () => {
 
   return (
     <div
-      className="relative w-full h-9 overflow-hidden rounded-full border border-[#9B7028]/25 bg-[#9B7028]/5"
+      className="relative w-full h-9 overflow-hidden rounded-full border border-[#10B981]/25 bg-[#10B981]/5"
       role="marquee"
       title="Tasas por gramo — Banco de la República"
       aria-label={`Tasas del dia: oro compra ${formatCOP(
@@ -150,8 +162,8 @@ export const MetalRatesLabel: React.FC = () => {
           icono desde sm, compra/venta desde md y vigencia/fuente
           desde lg para que nunca desborde */}
       <div className="metal-rates-label gap-0.5 px-2 text-[9px] sm:gap-2 sm:px-4 sm:text-[11px] font-semibold text-[#5C4313]">
-        <Landmark className="hidden sm:block w-3.5 h-3.5 shrink-0 text-[#7F581A]" />
-        <span className="text-[#7F581A]">ORO</span>
+        <Landmark className="hidden sm:block w-3.5 h-3.5 shrink-0 text-[#059669]" />
+        <span className="text-[#059669]">ORO</span>
         <span className="hidden md:inline text-[#727985] font-medium">
           compra
         </span>
@@ -166,7 +178,7 @@ export const MetalRatesLabel: React.FC = () => {
           {oroVenta}
         </span>
         <span className="text-[#C9CDD3]">·</span>
-        <span className="text-[#7F581A]">PLATA</span>
+        <span className="text-[#059669]">PLATA</span>
         <span className="hidden md:inline text-[#727985] font-medium">
           compra
         </span>
@@ -181,7 +193,7 @@ export const MetalRatesLabel: React.FC = () => {
           {plataVenta}
         </span>
         <span className="hidden md:inline text-[#C9CDD3]">|</span>
-        <span className="hidden md:inline text-[#7F581A]">c/g</span>
+        <span className="hidden md:inline text-[#059669]">c/g</span>
         {vigencia && (
           <span className="hidden lg:inline font-medium text-[#727985]">
             Vig. {vigencia}

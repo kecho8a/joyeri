@@ -347,6 +347,7 @@ export interface RepairOrder {
     | 'Engaste y Reposición de Gema'
     | 'Pulido y Baño de Rodio'
     | 'Soldadura Láser'
+    | 'Grabado Láser'
     | 'Hechura Personalizada'
     | 'Mantenimiento y Ajuste Broche';
   diagnosticDetails: string;
@@ -440,6 +441,54 @@ export interface Expense {
   paymentMethod: PaymentMethod;
   registeredBy: string;
   date: string;
+}
+
+// COMPRAS, MATERIA PRIMA Y CUENTAS POR PAGAR
+
+export type PurchaseItemCategory =
+  | 'Materia Prima'
+  | 'Insumo de Taller'
+  | 'Piedra Preciosa'
+  | 'Joya Terminada'
+  | 'Otro';
+
+export interface PurchaseItem {
+  id: string;
+  description: string;
+  category: PurchaseItemCategory;
+  quantity: number;
+  unit: string;
+  unitCostCOP: number;
+  totalCostCOP: number;
+}
+
+export interface Purchase {
+  id: string;
+  invoiceNumber: string;
+  supplierId: string;
+  supplierName: string;
+  branchId: string;
+  date: string;
+  paymentMethod: PaymentMethod;
+  items: PurchaseItem[];
+  totalCOP: number;
+  status: 'PAGADA' | 'PENDIENTE';
+  notes?: string;
+  accountingEntryId: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface RawMaterial {
+  id: string;
+  name: string;
+  category: PurchaseItemCategory;
+  unit: string;
+  quantity: number;
+  unitCostCOP: number;
+  minStock: number;
+  branchId: string;
+  updatedAt: string;
 }
 
 export interface JournalRow {

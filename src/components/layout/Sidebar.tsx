@@ -61,7 +61,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'products', label: 'Catálogo de Joyas', icon: Package, badge: availableCount },
     { id: 'layaways', label: 'Separados (Apartados)', icon: BookmarkCheck, badge: activeLayaways },
     { id: 'repairs', label: 'Taller & Reparaciones', icon: Wrench, badge: pendingRepairs },
-    { id: 'metals', label: 'Pizarra de Oro & Leyes', icon: Coins },
+    { id: 'metals', label: 'Pizarra de Metales & Leyes', icon: Coins },
     { id: 'cash', label: 'Caja del Día (Arqueos)', icon: Landmark },
     { id: 'daily-reconciliation', label: 'Cuadre Diario', icon: ClipboardCheck },
   ];
@@ -74,6 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'accounting', label: 'Contabilidad Partida Doble', icon: FileSpreadsheet },
     { id: 'reports', label: 'Informes Gerenciales', icon: BarChart3 },
     { id: 'suppliers', label: 'Proveedores & CxP', icon: Truck },
+    { id: 'purchases', label: 'Compras & Materia Prima', icon: Package },
     { id: 'expenses', label: 'Gastos Operacionales', icon: TrendingDown },
     { id: 'warranties', label: 'Garantías Oficiales', icon: ShieldCheck },
     { id: 'branches', label: 'Sucursales & Sedes', icon: Building },
@@ -158,9 +159,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     title={collapsed && !isMobileOpen ? item.label : undefined}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-left ${
                       isActive
-                        ? 'bg-[#9B7028] text-white shadow-sm font-semibold'
+                        ? 'bg-[#10B981] text-white shadow-sm font-semibold'
                         : item.isPrimaryAction
-                        ? 'bg-[#9B7028]/10 text-[#7F581A] hover:bg-[#9B7028]/20 font-semibold'
+                        ? 'bg-[#10B981]/10 text-[#059669] hover:bg-[#10B981]/20 font-semibold'
                         : 'text-[#20242B] hover:bg-[#F4F5F7] hover:text-[#20242B]'
                     }`}
                   >
@@ -169,7 +170,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         isActive
                           ? 'text-white'
                           : item.isPrimaryAction
-                          ? 'text-[#7F581A]'
+                          ? 'text-[#059669]'
                           : 'text-[#727985]'
                       }`}
                     />

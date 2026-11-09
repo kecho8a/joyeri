@@ -135,7 +135,7 @@ export const LayawaysView: React.FC = () => {
         </div>
         <button
           onClick={() => setIsNewModalOpen(true)}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-xs active:scale-95 transition-all"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-xs active:scale-95 transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>+ Nuevo Separado</span>
@@ -151,7 +151,7 @@ export const LayawaysView: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar por código SEP, cliente o joya..."
-            className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#9B7028] focus:bg-white transition-colors"
+            className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#10B981] focus:bg-white transition-colors"
           />
         </div>
 
@@ -163,7 +163,7 @@ export const LayawaysView: React.FC = () => {
               onClick={() => setSelectedStatus(tab.id)}
               className={`px-3 py-1 rounded-lg font-medium whitespace-nowrap transition-colors ${
                 selectedStatus === tab.id
-                  ? 'bg-[#9B7028] text-white shadow-xs font-semibold'
+                  ? 'bg-[#10B981] text-white shadow-xs font-semibold'
                   : 'bg-[#F4F5F7] text-[#727985] hover:text-[#20242B] border border-[#EAECEF]'
               }`}
             >
@@ -191,7 +191,7 @@ export const LayawaysView: React.FC = () => {
             >
               <div>
                 <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="font-mono text-xs font-bold text-[#7F581A] bg-[#9B7028]/10 px-2 py-0.5 rounded-lg text-[11px]">
+                  <span className="font-mono text-xs font-bold text-[#059669] bg-[#10B981]/10 px-2 py-0.5 rounded-lg text-[11px]">
                     {lay.code}
                   </span>
                   <span
@@ -200,7 +200,7 @@ export const LayawaysView: React.FC = () => {
                         ? 'bg-[#727985]/10 text-[#727985]'
                         : isFullyPaid
                         ? 'bg-[#21865B] text-white font-bold'
-                        : 'bg-[#D99032]/10 text-[#D99032]'
+                        : 'bg-[#DC2626]/10 text-[#DC2626]'
                     }`}
                   >
                     {lay.status}
@@ -229,7 +229,7 @@ export const LayawaysView: React.FC = () => {
                   </div>
                   <div className="w-full bg-[#F4F5F7] h-2.5 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all ${isFullyPaid ? 'bg-[#21865B]' : 'bg-[#9B7028]'}`}
+                      className={`h-full rounded-full transition-all ${isFullyPaid ? 'bg-[#21865B]' : 'bg-[#10B981]'}`}
                       style={{ width: `${pctPaid}%` }}
                     />
                   </div>
@@ -263,7 +263,7 @@ export const LayawaysView: React.FC = () => {
                         setPaymentModalLayaway(lay);
                         setPaymentAmount(Math.min(500000, lay.balanceCOP));
                       }}
-                      className="px-3.5 py-1.5 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-xl text-xs font-bold shadow-xs active:scale-95 transition-all"
+                      className="px-3.5 py-1.5 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl text-xs font-bold shadow-xs active:scale-95 transition-all"
                     >
                       + Abonar Cuota
                     </button>
@@ -384,7 +384,7 @@ export const LayawaysView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-xl font-bold"
+                  className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl font-bold"
                 >
                   Crear Separado
                 </button>
@@ -452,7 +452,7 @@ export const LayawaysView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-xl font-bold"
+                  className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl font-bold"
                 >
                   Registrar Abono
                 </button>

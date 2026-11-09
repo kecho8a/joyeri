@@ -96,6 +96,11 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
     grandTotal += finalItemPrice;
   });
 
+  const cartCost = cartProducts.reduce((acc, p) => acc + p.totalCostCOP, 0);
+  const estimatedMargin = subtotal - cartCost;
+  const estimatedMarginPct =
+    subtotal > 0 ? (estimatedMargin / subtotal) * 100 : 0;
+
   const addToCart = (product: Product) => {
     setErrorMsg(null);
     setCartProductIds([...cartProductIds, product.id]);
@@ -168,7 +173,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
             Punto de Venta (POS) & Mostrador
           </h1>
           <p className="text-xs text-[#727985]">
-            Emisión ágil de facturas comerciales con garantía oficial y deducción automática de stock
+            Emisión ágil de comprobantes internos de venta con garantía oficial y deducción automática de stock
           </p>
         </div>
 
@@ -188,7 +193,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
             onClick={() => setMobileTab('cart')}
             className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 ${
               mobileTab === 'cart'
-                ? 'bg-white text-[#9B7028] shadow-xs font-bold'
+                ? 'bg-white text-[#10B981] shadow-xs font-bold'
                 : 'text-[#727985]'
             }`}
           >
@@ -218,7 +223,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Escanear código o buscar SKU / Nombre / Esmeralda..."
-                className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#9B7028] focus:bg-white transition-colors"
+                className="w-full bg-[#F4F5F7] border border-[#EAECEF] rounded-xl pl-9 pr-4 py-2 text-xs text-[#20242B] placeholder-[#727985] focus:outline-none focus:border-[#10B981] focus:bg-white transition-colors"
                 autoFocus
               />
             </div>
@@ -231,7 +236,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1 rounded-lg font-medium whitespace-nowrap transition-colors ${
                     selectedCategory === cat
-                      ? 'bg-[#9B7028] text-white shadow-xs font-semibold'
+                      ? 'bg-[#10B981] text-white shadow-xs font-semibold'
                       : 'bg-[#F4F5F7] text-[#727985] hover:text-[#20242B] border border-[#EAECEF]'
                   }`}
                 >
@@ -248,7 +253,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
               return (
                 <div
                   key={j.id}
-                  className="bg-white rounded-2xl border border-[#EAECEF] p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:border-[#9B7028] transition-all flex flex-col justify-between space-y-2.5 group text-left"
+                  className="bg-white rounded-2xl border border-[#EAECEF] p-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:border-[#10B981] transition-all flex flex-col justify-between space-y-2.5 group text-left"
                 >
                   <div>
                     {/* Jewel Image */}
@@ -259,7 +264,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                       />
-                      <span className="absolute top-1.5 left-1.5 font-mono font-bold text-[#7F581A] bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] shadow-xs">
+                      <span className="absolute top-1.5 left-1.5 font-mono font-bold text-[#059669] bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] shadow-xs">
                         {j.sku}
                       </span>
                       <span className="absolute top-1.5 right-1.5 text-[10px] font-semibold bg-white/90 backdrop-blur-xs text-[#20242B] px-1.5 py-0.5 rounded shadow-xs">
@@ -276,7 +281,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                       <span className="bg-[#F4F5F7] px-2 py-0.5 rounded font-mono">
                         Peso: {formatGrams(j.netMetalWeightGrams)}
                       </span>
-                      <span className="bg-[#9B7028]/5 text-[#7F581A] px-2 py-0.5 rounded font-mono font-bold">
+                      <span className="bg-[#10B981]/5 text-[#059669] px-2 py-0.5 rounded font-mono font-bold">
                         Oro 24K: {formatGrams(j.fineMetalContentGrams)}
                       </span>
                     </div>
@@ -298,7 +303,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                     </div>
                     <button
                       onClick={() => addToCart(j)}
-                      className="px-3 py-1.5 rounded-xl bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-xs flex items-center gap-1 active:scale-95 transition-all"
+                      className="px-3 py-1.5 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-xs flex items-center gap-1 active:scale-95 transition-all"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Agregar</span>
@@ -320,7 +325,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
         <div className={`lg:col-span-5 bg-white rounded-2xl border border-[#EAECEF] p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4 ${mobileTab === 'catalog' ? 'hidden lg:block' : 'block'}`}>
           <div className="flex items-center justify-between pb-3 border-b border-[#EAECEF]">
             <h2 className="text-sm font-bold text-[#20242B] flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4 text-[#9B7028]" />
+              <ShoppingBag className="w-4 h-4 text-[#10B981]" />
               Carrito de Facturación ({cartProducts.length} ítems)
             </h2>
             {cartProducts.length > 0 && (
@@ -367,6 +372,15 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                     <p className="font-bold text-[#20242B] line-clamp-1">{p.name}</p>
                     <p className="text-[11px] text-[#727985] font-mono mt-0.5">
                       {p.sku} · {formatGrams(p.netMetalWeightGrams)} metal
+                    </p>
+                    <p
+                      className={`text-[10px] font-semibold mt-0.5 ${
+                        finalPrice >= p.totalCostCOP
+                          ? 'text-[#21865B]'
+                          : 'text-[#D64545]'
+                      }`}
+                    >
+                      Util. estimada {formatCOP(finalPrice - p.totalCostCOP)}
                     </p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-[10px] text-[#727985]">Descuento:</span>
@@ -415,7 +429,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                 onClick={() => setPaymentMethod('EFECTIVO')}
                 className={`p-2.5 rounded-xl border text-left font-medium transition-all ${
                   paymentMethod === 'EFECTIVO'
-                    ? 'border-[#9B7028] bg-[#9B7028]/10 text-[#7F581A] font-bold shadow-xs'
+                    ? 'border-[#10B981] bg-[#10B981]/10 text-[#059669] font-bold shadow-xs'
                     : 'border-[#EAECEF] hover:bg-[#F4F5F7] text-[#20242B]'
                 }`}
               >
@@ -426,7 +440,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                 onClick={() => setPaymentMethod('TARJETA_CREDITO')}
                 className={`p-2.5 rounded-xl border text-left font-medium transition-all ${
                   paymentMethod === 'TARJETA_CREDITO'
-                    ? 'border-[#9B7028] bg-[#9B7028]/10 text-[#7F581A] font-bold shadow-xs'
+                    ? 'border-[#10B981] bg-[#10B981]/10 text-[#059669] font-bold shadow-xs'
                     : 'border-[#EAECEF] hover:bg-[#F4F5F7] text-[#20242B]'
                 }`}
               >
@@ -437,7 +451,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                 onClick={() => setPaymentMethod('TRANSFERENCIA_BANCOLOMBIA')}
                 className={`p-2.5 rounded-xl border text-left font-medium transition-all ${
                   paymentMethod === 'TRANSFERENCIA_BANCOLOMBIA'
-                    ? 'border-[#9B7028] bg-[#9B7028]/10 text-[#7F581A] font-bold shadow-xs'
+                    ? 'border-[#10B981] bg-[#10B981]/10 text-[#059669] font-bold shadow-xs'
                     : 'border-[#EAECEF] hover:bg-[#F4F5F7] text-[#20242B]'
                 }`}
               >
@@ -448,7 +462,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
                 onClick={() => setPaymentMethod('NEQUI_DAVIPLATA')}
                 className={`p-2.5 rounded-xl border text-left font-medium transition-all ${
                   paymentMethod === 'NEQUI_DAVIPLATA'
-                    ? 'border-[#9B7028] bg-[#9B7028]/10 text-[#7F581A] font-bold shadow-xs'
+                    ? 'border-[#10B981] bg-[#10B981]/10 text-[#059669] font-bold shadow-xs'
                     : 'border-[#EAECEF] hover:bg-[#F4F5F7] text-[#20242B]'
                 }`}
               >
@@ -485,17 +499,29 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
             </div>
             <div className="flex justify-between text-base font-bold text-[#20242B] pt-2 border-t border-[#EAECEF]">
               <span>Total Factura:</span>
-              <span className="font-mono text-[#7F581A] tabular-nums text-lg">
+              <span className="font-mono text-[#059669] tabular-nums text-lg">
                 {formatCOP(grandTotal)}
               </span>
             </div>
+            {cartProducts.length > 0 && (
+              <div
+                className={`flex justify-between pt-2 border-t border-[#EAECEF] font-semibold ${
+                  estimatedMargin >= 0 ? 'text-[#21865B]' : 'text-[#D64545]'
+                }`}
+              >
+                <span>Utilidad estimada (sin IVA):</span>
+                <span className="font-mono tabular-nums">
+                  {formatCOP(estimatedMargin)} ({estimatedMarginPct.toFixed(0)}%)
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Checkout CTA Button */}
           <button
             onClick={handleCheckout}
             disabled={cartProducts.length === 0}
-            className="w-full py-3.5 rounded-xl bg-[#9B7028] hover:bg-[#7F581A] active:scale-98 disabled:opacity-40 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-3.5 rounded-xl bg-[#10B981] hover:bg-[#059669] active:scale-98 disabled:opacity-40 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <CheckCircle2 className="w-5 h-5" />
             <span>Cobrar {cartProducts.length > 0 ? formatCOP(grandTotal) : ''}</span>
@@ -508,7 +534,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
         <div className="lg:hidden fixed bottom-16 left-3 right-3 z-30">
           <button
             onClick={() => setMobileTab('cart')}
-            className="w-full py-3 px-4 bg-[#9B7028] text-white rounded-xl shadow-lg flex items-center justify-between font-bold text-xs"
+            className="w-full py-3 px-4 bg-[#10B981] text-white rounded-xl shadow-lg flex items-center justify-between font-bold text-xs"
           >
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4" />
@@ -538,6 +564,10 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
               <div className="mt-2 inline-block bg-[#F4F5F7] px-3 py-1 rounded-lg border border-[#EAECEF] font-mono font-bold text-xs text-[#20242B]">
                 FACTURA: {completedSale.invoiceNumber}
               </div>
+              <p className="text-[10px] text-[#727985] text-center">
+                Comprobante interno de control. No constituye factura
+                electrónica DIAN.
+              </p>
             </div>
 
             {/* Customer & Sale Metadata */}
@@ -598,7 +628,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
               </div>
               <div className="flex justify-between font-bold text-sm text-[#20242B] pt-1 border-t border-[#EAECEF]">
                 <span>TOTAL FACTURA:</span>
-                <span className="font-mono text-[#7F581A]">{formatCOP(completedSale.totalCOP)}</span>
+                <span className="font-mono text-[#059669]">{formatCOP(completedSale.totalCOP)}</span>
               </div>
             </div>
 
@@ -622,7 +652,7 @@ export const PosView: React.FC<PosViewProps> = ({ onSaleComplete }) => {
               </button>
               <button
                 onClick={() => setCompletedSale(null)}
-                className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg text-xs font-semibold"
+                className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg text-xs font-semibold"
               >
                 Listo / Nueva Venta
               </button>

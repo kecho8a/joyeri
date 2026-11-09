@@ -46,7 +46,7 @@ export const CashView: React.FC = () => {
 
         <div className="flex items-center gap-2">
           {currentShift && currentShift.status === 'ABIERTA' ? (
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#9B7028]/10 text-[#7F581A] text-xs font-semibold border border-[#9B7028]/20">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#10B981]/10 text-[#059669] text-xs font-semibold border border-[#10B981]/20">
               <Lock className="w-4 h-4" />
               El cierre oficial se registra en Cuadre Diario
             </div>

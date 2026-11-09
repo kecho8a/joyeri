@@ -63,7 +63,7 @@ export const EmployeesView: React.FC = () => {
 
         <button
           onClick={() => setIsNewModalOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-sm transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-sm transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nuevo Empleado
@@ -96,7 +96,7 @@ export const EmployeesView: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-[#727985] block text-[11px]">Tasa Comisión:</span>
-                  <span className="font-mono font-bold text-[#9B7028]">{emp.commissionRatePercent}%</span>
+                  <span className="font-mono font-bold text-[#10B981]">{emp.commissionRatePercent}%</span>
                 </div>
                 <div>
                   <span className="text-[#727985] block text-[11px]">Ventas del Mes:</span>
@@ -192,7 +192,7 @@ export const EmployeesView: React.FC = () => {
                 <button type="button" onClick={() => setIsNewModalOpen(false)} className="px-4 py-2 text-[#727985]">
                   Cancelar
                 </button>
-                <button type="submit" className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg font-semibold">
+                <button type="submit" className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg font-semibold">
                   Guardar Empleado
                 </button>
               </div>

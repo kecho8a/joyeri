@@ -29,6 +29,9 @@ import {
   DailyReconciliation,
   DailyReconciliationGoldLine,
   DailyReconciliationStoneLine,
+  Purchase,
+  PurchaseItem,
+  RawMaterial,
 } from '../types';
 import {
   calculateNetMetalWeight,
@@ -36,7 +39,7 @@ import {
   METAL_DEFINITIONS,
 } from '../utils/jewelryCalculations';
 import {
-  getExpectedGoldLines,
+  getExpectedMetalLines,
   getExpectedStoneLines,
   RECONCILIATION_CARATS_TOLERANCE,
   RECONCILIATION_GRAMS_TOLERANCE,
@@ -290,6 +293,176 @@ const INITIAL_SUPPLIERS: Supplier[] = [
     city: 'Bogotá D.C.',
     category: 'Hechura y Orfebrería',
     balancePendingCOP: 2200000,
+  },
+  {
+    id: 'PRV-04',
+    nit: '900.781.452-3',
+    companyName: 'Insumos Joyeros de Colombia SAS',
+    contactName: 'Andrea Lucía Pardo',
+    phone: '601 412 7788',
+    email: 'compras@insumosjoyeros.co',
+    city: 'Bogotá D.C.',
+    category: 'Herramientas e Insumos',
+    balancePendingCOP: 0,
+  },
+];
+
+const INITIAL_RAW_MATERIALS: RawMaterial[] = [
+  {
+    id: 'MAT-01',
+    name: 'Granalla de Oro 18K Nacional',
+    category: 'Materia Prima',
+    unit: 'g',
+    quantity: 45.5,
+    unitCostCOP: 285000,
+    minStock: 20,
+    branchId: 'SED-01',
+    updatedAt: '2026-03-06T09:00:00Z',
+  },
+  {
+    id: 'MAT-02',
+    name: 'Granalla de Plata Esterlina 925',
+    category: 'Materia Prima',
+    unit: 'g',
+    quantity: 320,
+    unitCostCOP: 4600,
+    minStock: 150,
+    branchId: 'SED-01',
+    updatedAt: '2026-03-06T09:00:00Z',
+  },
+  {
+    id: 'MAT-03',
+    name: 'Esmeralda Muzo Nacional',
+    category: 'Piedra Preciosa',
+    unit: 'ct',
+    quantity: 2.4,
+    unitCostCOP: 4200000,
+    minStock: 1,
+    branchId: 'SED-01',
+    updatedAt: '2026-03-06T09:00:00Z',
+  },
+  {
+    id: 'MAT-04',
+    name: 'Diamantes Brillantes 0.01 ct',
+    category: 'Piedra Preciosa',
+    unit: 'ct',
+    quantity: 3.2,
+    unitCostCOP: 3500000,
+    minStock: 1,
+    branchId: 'SED-01',
+    updatedAt: '2026-03-06T09:00:00Z',
+  },
+  {
+    id: 'MAT-05',
+    name: 'Pasta de Pulir Dialux',
+    category: 'Insumo de Taller',
+    unit: 'unidad',
+    quantity: 6,
+    unitCostCOP: 38000,
+    minStock: 3,
+    branchId: 'SED-01',
+    updatedAt: '2026-03-06T09:00:00Z',
+  },
+  {
+    id: 'MAT-06',
+    name: 'Brocas de Precisión para Joyería',
+    category: 'Insumo de Taller',
+    unit: 'unidad',
+    quantity: 12,
+    unitCostCOP: 12000,
+    minStock: 10,
+    branchId: 'SED-01',
+    updatedAt: '2026-03-06T09:00:00Z',
+  },
+];
+
+const INITIAL_PURCHASES: Purchase[] = [
+  {
+    id: 'PUR-01',
+    invoiceNumber: 'FC-PRV-2026-0031',
+    supplierId: 'PRV-01',
+    supplierName: 'Fundición & Refinería Andina de Metales SAS',
+    branchId: 'SED-01',
+    date: '2026-03-06',
+    paymentMethod: 'TRANSFERENCIA_BANCOLOMBIA',
+    items: [
+      {
+        id: 'PIT-01',
+        description: 'Granalla de Oro 18K Nacional',
+        category: 'Materia Prima',
+        quantity: 30,
+        unit: 'g',
+        unitCostCOP: 285000,
+        totalCostCOP: 8550000,
+      },
+    ],
+    totalCOP: 8550000,
+    status: 'PAGADA',
+    notes: 'Compra de materia prima para órdenes de hechura del mes.',
+    accountingEntryId: 'CC-COM-2026-0031',
+    createdBy: 'Carlos Mendoza',
+    createdAt: '2026-03-06T09:10:00Z',
+  },
+  {
+    id: 'PUR-02',
+    invoiceNumber: 'FC-PRV-2026-0032',
+    supplierId: 'PRV-02',
+    supplierName: 'Consorcio Esmeraldas de Muzo & Chivor Ltda',
+    branchId: 'SED-01',
+    date: '2026-03-07',
+    paymentMethod: 'TRANSFERENCIA_BANCOLOMBIA',
+    items: [
+      {
+        id: 'PIT-02',
+        description: 'Esmeralda Muzo Nacional',
+        category: 'Piedra Preciosa',
+        quantity: 1.5,
+        unit: 'ct',
+        unitCostCOP: 4200000,
+        totalCostCOP: 6300000,
+      },
+    ],
+    totalCOP: 6300000,
+    status: 'PENDIENTE',
+    notes: 'Saldo pendiente con el proveedor de gemas.',
+    accountingEntryId: 'CC-COM-2026-0032',
+    createdBy: 'Carlos Mendoza',
+    createdAt: '2026-03-07T11:30:00Z',
+  },
+  {
+    id: 'PUR-03',
+    invoiceNumber: 'FC-PRV-2026-0033',
+    supplierId: 'PRV-04',
+    supplierName: 'Insumos Joyeros de Colombia SAS',
+    branchId: 'SED-01',
+    date: '2026-03-08',
+    paymentMethod: 'EFECTIVO',
+    items: [
+      {
+        id: 'PIT-03',
+        description: 'Pasta de Pulir Dialux',
+        category: 'Insumo de Taller',
+        quantity: 4,
+        unit: 'unidad',
+        unitCostCOP: 38000,
+        totalCostCOP: 152000,
+      },
+      {
+        id: 'PIT-04',
+        description: 'Brocas de Precisión para Joyería',
+        category: 'Insumo de Taller',
+        quantity: 10,
+        unit: 'unidad',
+        unitCostCOP: 12000,
+        totalCostCOP: 120000,
+      },
+    ],
+    totalCOP: 272000,
+    status: 'PAGADA',
+    notes: 'Reposición de insumos de taller.',
+    accountingEntryId: 'CC-COM-2026-0033',
+    createdBy: 'Carlos Mendoza',
+    createdAt: '2026-03-08T08:50:00Z',
   },
 ];
 
@@ -849,6 +1022,29 @@ const INITIAL_CASH_SHIFT: CashShift = {
   status: 'ABIERTA',
 };
 
+function createClosedCashShift(branchId: string): CashShift {
+  return {
+    id: `CSH-SIN-TURNO-${branchId}`,
+    shiftNumber: `SIN-TURNO-${branchId}`,
+    branchId,
+    cashierId: 'USR-01',
+    cashierName: 'Sin turno abierto',
+    openedAt: '',
+    initialCashCOP: 0,
+    cashSalesCOP: 0,
+    cardSalesCOP: 0,
+    transferSalesCOP: 0,
+    layawayCashCOP: 0,
+    repairCashCOP: 0,
+    repairCardCOP: 0,
+    repairTransferCOP: 0,
+    cashExpensesCOP: 0,
+    cashRefundsCOP: 0,
+    expectedCashCOP: 0,
+    status: 'CERRADA',
+  };
+}
+
 const INITIAL_LAYAWAYS: Layaway[] = [
   {
     id: 'LAY-01',
@@ -1114,6 +1310,8 @@ const INITIAL_AUDIT: AuditLogItem[] = [
 ];
 
 const STORAGE_KEY = 'joyeri_erp_db_v1';
+const AUTO_BACKUP_PREFIX = 'joyeri_erp_auto_backup_';
+const AUTO_BACKUP_LIMIT = 7;
 
 export interface DatabaseState {
   branches: Branch[];
@@ -1122,9 +1320,12 @@ export interface DatabaseState {
   customers: Customer[];
   suppliers: Supplier[];
   products: Product[];
+  purchases: Purchase[];
+  rawMaterials: RawMaterial[];
   sales: Sale[];
   saleReturns: SaleReturn[];
   currentCashShift: CashShift;
+  branchCashShifts: Record<string, CashShift>;
   cashShiftsHistory: CashShift[];
   layaways: Layaway[];
   repairs: RepairOrder[];
@@ -1138,6 +1339,7 @@ export interface DatabaseState {
   dailyReconciliations: DailyReconciliation[];
   activeBranchId: string;
   activeUserId: string;
+  largeText: boolean;
 }
 
 class ERPDatabaseService {
@@ -1234,16 +1436,40 @@ class ERPDatabaseService {
             }))
           : [];
 
+        const branches: Branch[] = parsed.branches || INITIAL_BRANCHES;
+        const activeBranchId: string = parsed.activeBranchId || 'SED-01';
+        const branchCashShifts: Record<string, CashShift> = {};
+        branches.forEach((branch) => {
+          const saved = parsed.branchCashShifts?.[branch.id];
+          if (saved) {
+            branchCashShifts[branch.id] = {
+              ...saved,
+              repairCardCOP: saved.repairCardCOP ?? 0,
+              repairTransferCOP: saved.repairTransferCOP ?? 0,
+              cashRefundsCOP: saved.cashRefundsCOP ?? 0,
+            };
+          } else if (branch.id === activeBranchId) {
+            branchCashShifts[branch.id] = currentCashShift;
+          } else {
+            branchCashShifts[branch.id] = createClosedCashShift(branch.id);
+          }
+        });
+
         return {
-          branches: parsed.branches || INITIAL_BRANCHES,
+          branches,
           users: parsed.users || INITIAL_USERS,
           metalPrices: parsed.metalPrices || INITIAL_METAL_PRICES,
           customers: parsed.customers || INITIAL_CUSTOMERS,
           suppliers: parsed.suppliers || INITIAL_SUPPLIERS,
           products,
+          purchases: Array.isArray(parsed.purchases) ? parsed.purchases : INITIAL_PURCHASES,
+          rawMaterials: Array.isArray(parsed.rawMaterials)
+            ? parsed.rawMaterials
+            : INITIAL_RAW_MATERIALS,
           sales,
           saleReturns,
-          currentCashShift,
+          currentCashShift: branchCashShifts[activeBranchId] || currentCashShift,
+          branchCashShifts,
           cashShiftsHistory,
           layaways: parsed.layaways || INITIAL_LAYAWAYS,
           repairs,
@@ -1257,8 +1483,9 @@ class ERPDatabaseService {
           dailyReconciliations: Array.isArray(parsed.dailyReconciliations)
             ? parsed.dailyReconciliations
             : [],
-          activeBranchId: parsed.activeBranchId || 'SED-01',
+          activeBranchId: activeBranchId,
           activeUserId: parsed.activeUserId || 'USR-01',
+          largeText: !!parsed.largeText,
         };
       }
     } catch {
@@ -1272,9 +1499,16 @@ class ERPDatabaseService {
       customers: INITIAL_CUSTOMERS,
       suppliers: INITIAL_SUPPLIERS,
       products: INITIAL_PRODUCTS,
+      purchases: INITIAL_PURCHASES,
+      rawMaterials: INITIAL_RAW_MATERIALS,
       sales: INITIAL_SALES,
       saleReturns: INITIAL_SALE_RETURNS,
       currentCashShift: INITIAL_CASH_SHIFT,
+      branchCashShifts: {
+        'SED-01': INITIAL_CASH_SHIFT,
+        'SED-02': createClosedCashShift('SED-02'),
+        'SED-03': createClosedCashShift('SED-03'),
+      },
       cashShiftsHistory: [],
       layaways: INITIAL_LAYAWAYS,
       repairs: INITIAL_REPAIRS,
@@ -1288,16 +1522,85 @@ class ERPDatabaseService {
       dailyReconciliations: [],
       activeBranchId: 'SED-01',
       activeUserId: 'USR-01',
+      largeText: false,
     };
   }
 
   private saveState() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+      this.saveDailySnapshot();
     } catch {
       // Ignore if quota exceeded
     }
     this.notify();
+  }
+
+  private listAutoBackupKeys(): string[] {
+    const keys: string[] = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith(AUTO_BACKUP_PREFIX)) keys.push(key);
+    }
+    return keys.sort();
+  }
+
+  private saveDailySnapshot() {
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const key = `${AUTO_BACKUP_PREFIX}${today}`;
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, JSON.stringify(this.state));
+      const backupKeys = this.listAutoBackupKeys();
+      while (backupKeys.length > AUTO_BACKUP_LIMIT) {
+        const oldest = backupKeys.shift();
+        if (oldest) localStorage.removeItem(oldest);
+      }
+    } catch {
+      // Sin espacio: el respaldo manual sigue disponible.
+    }
+  }
+
+  public getAutoBackups(): { date: string; key: string; sizeKb: number }[] {
+    return this.listAutoBackupKeys()
+      .map((key) => {
+        const raw = localStorage.getItem(key) || '';
+        return {
+          date: key.replace(AUTO_BACKUP_PREFIX, ''),
+          key,
+          sizeKb: Math.round(raw.length / 1024),
+        };
+      })
+      .sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  public restoreAutoBackup(date: string) {
+    const key = `${AUTO_BACKUP_PREFIX}${date}`;
+    const raw = localStorage.getItem(key);
+    if (!raw) throw new Error('No existe un respaldo automático para esa fecha.');
+    this.importBackupJSON(raw);
+  }
+
+  public getState(): DatabaseState {
+    const activeShift =
+      this.state.branchCashShifts?.[this.state.activeBranchId];
+    if (activeShift) {
+      this.state.currentCashShift = activeShift;
+    }
+    return this.state;
+  }
+
+  public toggleLargeText(): boolean {
+    this.state.largeText = !this.state.largeText;
+    this.addAudit(
+      'PREFERENCIA_ACCESIBILIDAD',
+      'Configuración',
+      this.state.largeText
+        ? 'Modo letra grande activado'
+        : 'Modo letra grande desactivado'
+    );
+    this.saveState();
+    return this.state.largeText;
   }
 
   public subscribe(fn: () => void) {
@@ -1307,11 +1610,6 @@ class ERPDatabaseService {
 
   private notify() {
     this.listeners.forEach((fn) => fn());
-  }
-
-  // Getters
-  public getState(): DatabaseState {
-    return this.state;
   }
 
   public getActiveBranch(): Branch {
@@ -1339,7 +1637,13 @@ class ERPDatabaseService {
   }
 
   public setActiveBranch(branchId: string) {
+    const target = this.state.branches.find((b) => b.id === branchId);
+    if (!target) throw new Error('Sucursal no encontrada');
+    if (!this.state.branchCashShifts) this.state.branchCashShifts = {};
     this.state.activeBranchId = branchId;
+    this.state.currentCashShift =
+      this.state.branchCashShifts[branchId] || createClosedCashShift(branchId);
+    this.state.branchCashShifts[branchId] = this.state.currentCashShift;
     this.addAudit('CAMBIO_SUCURSAL', 'Sesión', `Cambio de sucursal activa a ${branchId}`);
     this.saveState();
   }
@@ -2749,6 +3053,8 @@ class ERPDatabaseService {
     };
 
     this.state.currentCashShift = newShift;
+    if (!this.state.branchCashShifts) this.state.branchCashShifts = {};
+    this.state.branchCashShifts[branch.id] = newShift;
 
     this.addAudit(
       'APERTURA_CAJA',
@@ -2773,7 +3079,7 @@ class ERPDatabaseService {
     const shift = this.state.currentCashShift;
     const shiftWasOpen = !!shift && shift.status === 'ABIERTA';
 
-    const expectedGold = getExpectedGoldLines(this.state.products, branch.id);
+    const expectedGold = getExpectedMetalLines(this.state.products, branch.id);
     const expectedStones = getExpectedStoneLines(this.state.products, branch.id);
 
     const goldLines: DailyReconciliationGoldLine[] = expectedGold.map((line) => {
@@ -2820,7 +3126,10 @@ class ERPDatabaseService {
 
     const expectedCashCOP = shift ? shift.expectedCashCOP : 0;
     const cashDifferenceCOP = round3(input.countedCashCOP - expectedCashCOP);
-    const cashMatches = !!shift && input.countedCashCOP === expectedCashCOP;
+    const cashMatches =
+      !!shift &&
+      shift.status === 'ABIERTA' &&
+      input.countedCashCOP === expectedCashCOP;
     const inventoryMatches =
       goldLines.every((line) => line.matches) &&
       stoneLines.every((line) => line.matches);
@@ -2885,7 +3194,7 @@ class ERPDatabaseService {
     this.addAudit(
       'CUADRE_DIARIO',
       'Cuadre Diario',
-      `Cuadre ${reconciliation.date} sede ${branch.name}. Oro: ${reconciliation.countedGoldPieces}/${reconciliation.expectedGoldPieces} piezas, ${reconciliation.countedGoldGrossGrams}g contados vs ${reconciliation.expectedGoldGrossGrams}g sistema. Piedras: ${reconciliation.countedStoneCarats}ct contados vs ${reconciliation.expectedStoneCarats}ct sistema. Caja: ${reconciliation.countedCashCOP.toLocaleString('es-CO')} contados vs ${reconciliation.expectedCashCOP.toLocaleString('es-CO')} esperados (diferencia ${reconciliation.cashDifferenceCOP.toLocaleString('es-CO')}). Estado: ${status}`
+      `Cuadre ${reconciliation.date} sede ${branch.name}. Metales: ${reconciliation.countedGoldPieces}/${reconciliation.expectedGoldPieces} piezas, ${reconciliation.countedGoldGrossGrams}g contados vs ${reconciliation.expectedGoldGrossGrams}g sistema. Piedras: ${reconciliation.countedStoneCarats}ct contados vs ${reconciliation.expectedStoneCarats}ct sistema. Caja: ${reconciliation.countedCashCOP.toLocaleString('es-CO')} contados vs ${reconciliation.expectedCashCOP.toLocaleString('es-CO')} esperados (diferencia ${reconciliation.cashDifferenceCOP.toLocaleString('es-CO')}). Estado: ${status}`
     );
 
     if (shiftWasOpen && shift) {
@@ -2925,6 +3234,340 @@ class ERPDatabaseService {
     );
 
     this.saveState();
+  }
+
+  /**
+   * Sincroniza las tasas oficiales del Banco de la República con el ERP.
+   * Deriva las aleaciones por ley y evita auditorías si no hubo cambios.
+   */
+  public syncOfficialMetalRates(input: {
+    gold24kCOP: number;
+    silverCOP: number;
+    platinumCOP?: number;
+    source?: string;
+    effectiveText?: string;
+  }): boolean {
+    if (input.gold24kCOP <= 0 || input.silverCOP <= 0) return false;
+
+    const round2 = (n: number) => Math.round(n * 100) / 100;
+    const factor: Record<string, number> = {
+      ORO_24K: 1,
+      ORO_18K_NACIONAL: 18 / 24,
+      ORO_18K_ITALIANO: 18 / 24,
+      ORO_14K: 14 / 24,
+      ORO_10K: 10 / 24,
+      PLATA_925: 1,
+      PLATINO_950: 1,
+    };
+    const base: Record<string, number> = {
+      ORO_24K: input.gold24kCOP,
+      ORO_18K_NACIONAL: input.gold24kCOP,
+      ORO_18K_ITALIANO: input.gold24kCOP,
+      ORO_14K: input.gold24kCOP,
+      ORO_10K: input.gold24kCOP,
+      PLATA_925: input.silverCOP,
+      PLATINO_950: input.platinumCOP || 0,
+    };
+    const sourceLabel = input.source || 'Banco de la República';
+    const sourceText = input.effectiveText
+      ? `${sourceLabel} (vig. ${input.effectiveText})`
+      : sourceLabel;
+
+    let changed = false;
+    let updatedCount = 0;
+
+    this.state.metalPrices.forEach((item) => {
+      const target = base[item.code];
+      if (!target || target <= 0) return;
+      const sell = round2(target * factor[item.code]);
+      const buy = round2(sell * 0.95);
+      if (
+        Math.abs(item.sellPriceGramCOP - sell) < 0.01 &&
+        Math.abs(item.buyPriceGramCOP - buy) < 0.01
+      ) {
+        return;
+      }
+      item.buyPriceGramCOP = buy;
+      item.sellPriceGramCOP = sell;
+      item.lastUpdated = new Date().toISOString();
+      item.source = sourceText;
+      changed = true;
+      updatedCount += 1;
+    });
+
+    if (changed) {
+      this.addAudit(
+        'SINCRONIZAR_COTIZACION_OFICIAL',
+        'Metales Preciosos',
+        `Tasas oficiales de ${sourceLabel} sincronizadas en ${updatedCount} referencias (${sourceText}).`
+      );
+      this.saveState();
+    }
+    return changed;
+  }
+
+  // PURCHASES & RAW MATERIALS
+  public createPurchase(data: {
+    invoiceNumber: string;
+    supplierId: string;
+    date: string;
+    paymentMethod: PaymentRecord['method'];
+    notes?: string;
+    paid: boolean;
+    items: Omit<PurchaseItem, 'id' | 'totalCostCOP'>[];
+  }): Purchase {
+    if (!data.items.length) throw new Error('Agrega al menos un ítem a la compra.');
+    const supplier = this.state.suppliers.find((s) => s.id === data.supplierId);
+    if (!supplier) throw new Error('Proveedor no encontrado.');
+    const branch = this.getActiveBranch();
+    const user = this.getActiveUser();
+    const now = new Date().toISOString();
+    const items: PurchaseItem[] = data.items.map((item, index) => ({
+      ...item,
+      id: `PIT-${Date.now()}-${index}`,
+      totalCostCOP: Math.round(item.quantity * item.unitCostCOP),
+    }));
+    const totalCOP = items.reduce((acc, item) => acc + item.totalCostCOP, 0);
+    if (totalCOP <= 0) throw new Error('El total de la compra debe ser mayor a cero.');
+
+    if (!this.state.purchases) this.state.purchases = [];
+    if (!this.state.branchCashShifts) this.state.branchCashShifts = {};
+
+    const purchase: Purchase = {
+      id: `PUR-${Date.now()}`,
+      invoiceNumber: data.invoiceNumber.trim() || `FC-${Date.now()}`,
+      supplierId: supplier.id,
+      supplierName: supplier.companyName,
+      branchId: branch.id,
+      date: data.date,
+      paymentMethod: data.paymentMethod,
+      items,
+      totalCOP,
+      status: data.paid ? 'PAGADA' : 'PENDIENTE',
+      notes: data.notes,
+      accountingEntryId: `CC-COM-${Date.now()}`,
+      createdBy: user.name,
+      createdAt: now,
+    };
+
+    this.state.purchases.unshift(purchase);
+
+    if (!data.paid) {
+      supplier.balancePendingCOP += totalCOP;
+    } else if (data.paymentMethod === 'EFECTIVO') {
+      const shift = this.state.currentCashShift;
+      if (shift && shift.status === 'ABIERTA') {
+        shift.cashExpensesCOP += totalCOP;
+        shift.expectedCashCOP -= totalCOP;
+      }
+    }
+
+    // Ingresa materia prima / insumos / gemas al inventario físico.
+    items.forEach((item) => {
+      if (
+        item.category !== 'Materia Prima' &&
+        item.category !== 'Insumo de Taller' &&
+        item.category !== 'Piedra Preciosa'
+      ) {
+        return;
+      }
+      const existing = this.state.rawMaterials.find(
+        (m) => m.name.toLowerCase() === item.description.toLowerCase()
+      );
+      if (existing) {
+        const totalQty = existing.quantity + item.quantity;
+        existing.unitCostCOP =
+          totalQty > 0
+            ? Math.round(
+                (existing.quantity * existing.unitCostCOP +
+                  item.quantity * item.unitCostCOP) /
+                  totalQty
+              )
+            : item.unitCostCOP;
+        existing.quantity = round3(totalQty);
+        existing.updatedAt = now;
+      } else {
+        this.state.rawMaterials.unshift({
+          id: `MAT-${Date.now()}-${item.id}`,
+          name: item.description,
+          category: item.category,
+          unit: item.unit,
+          quantity: item.quantity,
+          unitCostCOP: item.unitCostCOP,
+          minStock: 0,
+          branchId: branch.id,
+          updatedAt: now,
+        });
+      }
+    });
+
+    const creditAccount = data.paid
+      ? this.getPaymentAccount(data.paymentMethod)
+      : { code: '220505', name: 'Proveedores Nacionales' };
+
+    const entry: AccountingEntry = {
+      id: `ACC-COM-${Date.now()}`,
+      voucherNumber: purchase.accountingEntryId,
+      date: data.date,
+      concept: `Compra ${purchase.invoiceNumber} a ${supplier.companyName}`,
+      sourceModule: 'COMPRAS',
+      rows: [
+        {
+          accountCode: '143505',
+          accountName: 'Inventario de Materias Primas e Insumos',
+          debitCOP: totalCOP,
+          creditCOP: 0,
+        },
+        {
+          accountCode: creditAccount.code,
+          accountName: creditAccount.name,
+          debitCOP: 0,
+          creditCOP: totalCOP,
+        },
+      ],
+      totalDebitCOP: totalCOP,
+      totalCreditCOP: totalCOP,
+      isBalanced: true,
+      createdBy: user.name,
+    };
+    this.state.accountingEntries.unshift(entry);
+
+    this.addAudit(
+      'REGISTRO_COMPRA',
+      'Compras',
+      `Compra ${purchase.invoiceNumber} por $${totalCOP.toLocaleString('es-CO')} a ${supplier.companyName} (${purchase.status}).`
+    );
+
+    this.saveState();
+    return purchase;
+  }
+
+  public registerSupplierPayment(
+    supplierId: string,
+    amountCOP: number,
+    paymentMethod: PaymentRecord['method'],
+    notes?: string
+  ): void {
+    const supplier = this.state.suppliers.find((s) => s.id === supplierId);
+    if (!supplier) throw new Error('Proveedor no encontrado.');
+    if (amountCOP <= 0) throw new Error('El pago debe ser mayor a cero.');
+    const user = this.getActiveUser();
+    const today = new Date().toISOString().split('T')[0];
+
+    supplier.balancePendingCOP = Math.max(
+      0,
+      supplier.balancePendingCOP - amountCOP
+    );
+
+    let remaining = amountCOP;
+    this.state.purchases
+      .filter((p) => p.supplierId === supplierId && p.status === 'PENDIENTE')
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .forEach((purchase) => {
+        if (remaining >= purchase.totalCOP) {
+          purchase.status = 'PAGADA';
+          remaining -= purchase.totalCOP;
+        }
+      });
+
+    if (paymentMethod === 'EFECTIVO') {
+      const shift = this.state.currentCashShift;
+      if (shift && shift.status === 'ABIERTA') {
+        shift.cashExpensesCOP += amountCOP;
+        shift.expectedCashCOP -= amountCOP;
+      }
+    }
+
+    const creditAccount = this.getPaymentAccount(paymentMethod);
+    const entry: AccountingEntry = {
+      id: `ACC-PAG-${Date.now()}`,
+      voucherNumber: `CC-PAG-${Date.now()}`,
+      date: today,
+      concept: `Pago a proveedor ${supplier.companyName}${notes ? `: ${notes}` : ''}`,
+      sourceModule: 'COMPRAS',
+      rows: [
+        {
+          accountCode: '220505',
+          accountName: 'Proveedores Nacionales',
+          debitCOP: amountCOP,
+          creditCOP: 0,
+        },
+        {
+          accountCode: creditAccount.code,
+          accountName: creditAccount.name,
+          debitCOP: 0,
+          creditCOP: amountCOP,
+        },
+      ],
+      totalDebitCOP: amountCOP,
+      totalCreditCOP: amountCOP,
+      isBalanced: true,
+      createdBy: user.name,
+    };
+    this.state.accountingEntries.unshift(entry);
+
+    this.addAudit(
+      'PAGO_PROVEEDOR',
+      'Compras',
+      `Pago a ${supplier.companyName} por $${amountCOP.toLocaleString('es-CO')}. Saldo pendiente: $${supplier.balancePendingCOP.toLocaleString('es-CO')}.`
+    );
+
+    this.saveState();
+  }
+
+  public createRawMaterial(data: {
+    name: string;
+    category: RawMaterial['category'];
+    unit: string;
+    quantity: number;
+    unitCostCOP: number;
+    minStock: number;
+  }): RawMaterial {
+    if (!data.name.trim()) throw new Error('Escribe el nombre del material.');
+    const branch = this.getActiveBranch();
+    const material: RawMaterial = {
+      id: `MAT-${Date.now()}`,
+      name: data.name.trim(),
+      category: data.category,
+      unit: data.unit.trim() || 'unidad',
+      quantity: data.quantity,
+      unitCostCOP: data.unitCostCOP,
+      minStock: data.minStock,
+      branchId: branch.id,
+      updatedAt: new Date().toISOString(),
+    };
+    this.state.rawMaterials.unshift(material);
+    this.addAudit(
+      'CREAR_MATERIA_PRIMA',
+      'Materia Prima',
+      `Creado ${material.name} con ${material.quantity}${material.unit} en ${branch.name}.`
+    );
+    this.saveState();
+    return material;
+  }
+
+  public adjustRawMaterial(input: {
+    id: string;
+    quantityDelta: number;
+    unitCostCOP?: number;
+    notes?: string;
+  }): RawMaterial {
+    const material = this.state.rawMaterials.find((m) => m.id === input.id);
+    if (!material) throw new Error('Material no encontrado.');
+    const nextQty = material.quantity + input.quantityDelta;
+    if (nextQty < 0) throw new Error('No puedes dejar el inventario en negativo.');
+    material.quantity = round3(nextQty);
+    if (typeof input.unitCostCOP === 'number' && input.unitCostCOP > 0) {
+      material.unitCostCOP = input.unitCostCOP;
+    }
+    material.updatedAt = new Date().toISOString();
+    this.addAudit(
+      'AJUSTE_MATERIA_PRIMA',
+      'Materia Prima',
+      `Ajuste de ${material.name}: ${input.quantityDelta > 0 ? '+' : ''}${input.quantityDelta}${material.unit}. Nuevo saldo: ${material.quantity}${material.unit}.${input.notes ? ` Motivo: ${input.notes}` : ''}`
+    );
+    this.saveState();
+    return material;
   }
 
   // BACKUP & RESTORE

@@ -77,7 +77,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   );
 
   const totalSalesCOP = state.sales.reduce((acc, s) => acc + s.totalCOP, 0);
-  const totalSalesCount = state.sales.length;
+
+  const todayKey = new Date().toISOString().split('T')[0];
+  const todaySales = state.sales.filter(
+    (s) =>
+      s.branchId === activeBranch.id && s.createdAt.startsWith(todayKey)
+  );
+  const todaySalesCOP = todaySales.reduce((acc, s) => acc + s.totalCOP, 0);
+
+  const inventoryMarginCOP = totalInventoryRetail - totalInventoryCost;
+  const inventoryMarginPct =
+    totalInventoryRetail > 0
+      ? (inventoryMarginCOP / totalInventoryRetail) * 100
+      : 0;
 
   const layawaysPendingCOP = state.layaways
     .filter((l) => l.status === 'ACTIVO' || l.status === 'PARCIAL')
@@ -104,7 +116,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               Acciones operativas directas con un solo clic
             </p>
           </div>
-          <span className="text-xs font-semibold text-[#7F581A] bg-[#9B7028]/10 px-2.5 py-1 rounded-lg self-start sm:self-auto">
+          <span className="text-xs font-semibold text-[#059669] bg-[#10B981]/10 px-2.5 py-1 rounded-lg self-start sm:self-auto">
             Sede: {activeBranch.city}
           </span>
         </div>
@@ -117,9 +129,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           {/* Action 1: Venta POS */}
           <button
             onClick={onOpenSale}
-            className="p-3 sm:p-4 rounded-xl border border-[#9B7028]/30 bg-[#9B7028]/5 hover:bg-[#9B7028]/15 active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="p-3 sm:p-4 rounded-xl border border-[#10B981]/30 bg-[#10B981]/5 hover:bg-[#10B981]/15 active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#9B7028] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-lg bg-[#10B981] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
               <ShoppingBag className="w-4 h-4" />
             </div>
             <div className="mt-2">
@@ -131,9 +143,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           {/* Action 2: Nueva Joya */}
           <button
             onClick={onOpenProduct}
-            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#9B7028] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#10B981] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#9B7028]/10 group-hover:text-[#7F581A]">
+            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#10B981]/10 group-hover:text-[#059669]">
               <Package className="w-4 h-4" />
             </div>
             <div className="mt-2">
@@ -145,9 +157,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           {/* Action 3: Recibir en Taller */}
           <button
             onClick={onOpenRepair}
-            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#9B7028] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#10B981] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#9B7028]/10 group-hover:text-[#7F581A]">
+            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#10B981]/10 group-hover:text-[#059669]">
               <Wrench className="w-4 h-4" />
             </div>
             <div className="mt-2">
@@ -159,9 +171,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           {/* Action 4: Separados */}
           <button
             onClick={() => onNavigate('layaways')}
-            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#9B7028] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
+            className="p-3 sm:p-4 rounded-xl border border-[#EAECEF] bg-white hover:border-[#10B981] hover:bg-[#F8F9FA] active:scale-98 transition-all text-left flex flex-col justify-between group min-h-[90px]"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#9B7028]/10 group-hover:text-[#7F581A]">
+            <div className="w-8 h-8 rounded-lg bg-[#F4F5F7] text-[#20242B] flex items-center justify-center border border-[#EAECEF] group-hover:bg-[#10B981]/10 group-hover:text-[#059669]">
               <BookmarkCheck className="w-4 h-4" />
             </div>
             <div className="mt-2">
@@ -178,20 +190,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EAECEF] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-xs text-[#727985]">
-              <span className="font-semibold uppercase tracking-wider text-[11px]">Ventas Facturadas</span>
+              <span className="font-semibold uppercase tracking-wider text-[11px]">Ventas de Hoy</span>
               <div className="w-7 h-7 rounded-lg bg-[#21865B]/10 text-[#21865B] flex items-center justify-center">
                 <TrendingUp className="w-3.5 h-3.5" />
               </div>
             </div>
             <p className="text-xl sm:text-2xl font-bold text-[#20242B] font-mono mt-2 tabular-nums">
-              {formatCOP(totalSalesCOP)}
+              {formatCOP(todaySalesCOP)}
             </p>
           </div>
           <div className="mt-3 pt-2.5 border-t border-[#EAECEF] flex items-center justify-between text-xs text-[#727985]">
-            <span>{totalSalesCount} facturas emitidas</span>
+            <span>{todaySales.length} facturas hoy · Hist. {formatCOP(totalSalesCOP)}</span>
             <button
               onClick={() => onNavigate('sales')}
-              className="text-[#9B7028] font-semibold hover:underline flex items-center gap-0.5"
+              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
             >
               Ver <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -203,7 +215,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div>
             <div className="flex items-center justify-between text-xs text-[#727985]">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Stock Comercial</span>
-              <div className="w-7 h-7 rounded-lg bg-[#9B7028]/15 text-[#7F581A] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#10B981]/15 text-[#059669] flex items-center justify-center">
                 <Package className="w-3.5 h-3.5" />
               </div>
             </div>
@@ -212,10 +224,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </p>
           </div>
           <div className="mt-3 pt-2.5 border-t border-[#EAECEF] flex items-center justify-between text-xs text-[#727985]">
-            <span>Costo: {formatCOP(totalInventoryCost)}</span>
+            <span>Margen: {formatCOP(inventoryMarginCOP)} ({inventoryMarginPct.toFixed(1)}%)</span>
             <button
               onClick={() => onNavigate('products')}
-              className="text-[#9B7028] font-semibold hover:underline flex items-center gap-0.5"
+              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
             >
               Catálogo <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -227,11 +239,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div>
             <div className="flex items-center justify-between text-xs text-[#727985]">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Oro Fino (24K)</span>
-              <div className="w-7 h-7 rounded-lg bg-[#D99032]/10 text-[#D99032] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#DC2626]/10 text-[#DC2626] flex items-center justify-center">
                 <Coins className="w-3.5 h-3.5" />
               </div>
             </div>
-            <p className="text-xl sm:text-2xl font-bold text-[#7F581A] font-mono mt-2 tabular-nums">
+            <p className="text-xl sm:text-2xl font-bold text-[#059669] font-mono mt-2 tabular-nums">
               {formatGrams(totalFineGoldGrams)}
             </p>
           </div>
@@ -239,7 +251,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span>Gemas: {formatCarats(totalGemCarats)}</span>
             <button
               onClick={() => onNavigate('metals')}
-              className="text-[#9B7028] font-semibold hover:underline flex items-center gap-0.5"
+              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
             >
               Cotización <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -260,10 +272,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </p>
           </div>
           <div className="mt-3 pt-2.5 border-t border-[#EAECEF] flex items-center justify-between text-xs text-[#727985]">
-            <span className="text-[#21865B] font-semibold">Turno Abierto</span>
+            <span
+              className={`font-semibold ${
+                state.currentCashShift?.status === 'ABIERTA'
+                  ? 'text-[#21865B]'
+                  : 'text-[#D64545]'
+              }`}
+            >
+              {state.currentCashShift?.status === 'ABIERTA'
+                ? 'Turno abierto'
+                : 'Sin turno abierto'}
+            </span>
             <button
               onClick={() => onNavigate('cash')}
-              className="text-[#9B7028] font-semibold hover:underline flex items-center gap-0.5"
+              className="text-[#10B981] font-semibold hover:underline flex items-center gap-0.5"
             >
               Arqueo <ArrowUpRight className="w-3 h-3" />
             </button>
@@ -311,7 +333,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigate('metals')}
-              className="text-xs font-semibold text-[#9B7028] hover:underline"
+              className="text-xs font-semibold text-[#10B981] hover:underline"
             >
               Calculadora & Pizarra
             </button>
@@ -335,8 +357,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-[#7F581A] block font-semibold">Venta Base</span>
-                    <span className="font-mono font-bold text-[#7F581A] tabular-nums">
+                    <span className="text-[10px] text-[#059669] block font-semibold">Venta Base</span>
+                    <span className="font-mono font-bold text-[#059669] tabular-nums">
                       {formatCOP(m.sellPriceGramCOP)}
                     </span>
                   </div>
@@ -357,7 +379,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
             <button
               onClick={() => onNavigate('sales')}
-              className="text-xs font-semibold text-[#9B7028] hover:underline"
+              className="text-xs font-semibold text-[#10B981] hover:underline"
             >
               Ver Todas
             </button>
@@ -376,7 +398,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     />
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5 min-w-0">
-                        <span className="font-mono font-bold text-[#7F581A] shrink-0">{sale.invoiceNumber}</span>
+                        <span className="font-mono font-bold text-[#059669] shrink-0">{sale.invoiceNumber}</span>
                         <span className="text-[#727985] shrink-0">·</span>
                         <span className="font-medium text-[#20242B] truncate">{sale.customerName}</span>
                       </div>

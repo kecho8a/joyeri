@@ -125,20 +125,35 @@ export const SalesView: React.FC = () => {
     }
   };
 
+  const selectedSaleCost = selectedSale
+    ? selectedSale.items.reduce((acc, item) => {
+        const product = state.products.find((p) => p.id === item.productId);
+        return acc + (product ? product.totalCostCOP * item.quantity : 0);
+      }, 0)
+    : 0;
+  const selectedSaleCostsKnown = selectedSale
+    ? selectedSale.items.every((item) =>
+        state.products.some((p) => p.id === item.productId)
+      )
+    : false;
+  const selectedSaleMargin = selectedSale
+    ? selectedSale.subtotalCOP - selectedSaleCost
+    : 0;
+
   return (
     <div className="space-y-4">
       {/* Top Header */}
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-[#20242B]">
-            Historial de Ventas & Facturación Electrónica
+            Historial de Ventas & Comprobantes Internos
           </h1>
           <p className="text-xs text-[#727985]">
-            Registro correlativo de ventas, comprobantes DIAN, cuentas afectadas y garantías
+            Registro correlativo de ventas, comprobantes internos, cuentas afectadas y garantías
           </p>
         </div>
         <div className="text-xs bg-[#F4F5F7] px-3 py-1.5 rounded-lg border border-[#E5E7EB] font-medium text-[#20242B]">
-          Total Facturado: <strong className="font-mono text-[#7F581A]">{formatCOP(state.sales.filter((s) => s.status !== 'ANULADA').reduce((acc, s) => acc + s.totalCOP, 0))}</strong>
+          Total Facturado: <strong className="font-mono text-[#059669]">{formatCOP(state.sales.filter((s) => s.status !== 'ANULADA').reduce((acc, s) => acc + s.totalCOP, 0))}</strong>
         </div>
       </div>
 
@@ -151,7 +166,7 @@ export const SalesView: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar por número de factura, cliente o cédula..."
-            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#9B7028] focus:bg-white"
+            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#10B981] focus:bg-white"
           />
         </div>
       </div>
@@ -184,7 +199,7 @@ export const SalesView: React.FC = () => {
                         className={`ml-1.5 text-[10px] font-sans font-semibold px-1.5 py-0.5 rounded ${
                           s.status === 'ANULADA' || s.status === 'DEVUELTA_TOTAL'
                             ? 'bg-[#D64545]/10 text-[#D64545]'
-                            : 'bg-[#9B7028]/10 text-[#7F581A]'
+                            : 'bg-[#10B981]/10 text-[#059669]'
                         }`}
                       >
                         {s.status === 'DEVUELTA_PARCIAL'
@@ -245,7 +260,7 @@ export const SalesView: React.FC = () => {
                       )}
                       <button
                         onClick={() => setSelectedSale(s)}
-                        className="px-2.5 py-1 rounded bg-[#9B7028]/10 text-[#7F581A] hover:bg-[#9B7028] hover:text-white transition-colors font-semibold text-xs"
+                        className="px-2.5 py-1 rounded bg-[#10B981]/10 text-[#059669] hover:bg-[#10B981] hover:text-white transition-colors font-semibold text-xs"
                       >
                         Ver Factura
                       </button>
@@ -271,7 +286,7 @@ export const SalesView: React.FC = () => {
           <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-2xl w-full max-w-lg p-6 space-y-4">
             <div className="flex justify-between items-start pb-3 border-b border-[#E5E7EB]">
               <div>
-                <span className="font-mono text-xs font-bold text-[#7F581A]">
+                <span className="font-mono text-xs font-bold text-[#059669]">
                   FACTURA: {selectedSale.invoiceNumber}
                 </span>
                 <h3 className="font-bold text-[#20242B] text-base mt-0.5">
@@ -279,6 +294,10 @@ export const SalesView: React.FC = () => {
                 </h3>
                 <p className="text-xs text-[#727985]">
                   Fecha: {formatDateTime(selectedSale.createdAt)}
+                </p>
+                <p className="text-[10px] text-[#727985] mt-1">
+                  Comprobante interno de control. No constituye factura
+                  electrónica DIAN.
                 </p>
               </div>
               <button
@@ -328,12 +347,37 @@ export const SalesView: React.FC = () => {
               </div>
               <div className="flex justify-between font-bold text-sm text-[#20242B] pt-1 border-t border-[#E5E7EB]">
                 <span>TOTAL PAGADO:</span>
-                <span className="text-[#7F581A]">{formatCOP(selectedSale.totalCOP)}</span>
+                <span className="text-[#059669]">{formatCOP(selectedSale.totalCOP)}</span>
               </div>
               {(selectedSale.returnedTotalCOP || 0) > 0 && (
                 <div className="flex justify-between text-[#D64545] pt-1 border-t border-[#E5E7EB]">
                   <span>Devuelto (Notas Crédito):</span>
                   <span>-{formatCOP(selectedSale.returnedTotalCOP || 0)}</span>
+                </div>
+              )}
+              {selectedSaleCostsKnown ? (
+                <div
+                  className={`flex justify-between pt-1 border-t border-[#E5E7EB] font-semibold ${
+                    selectedSaleMargin >= 0
+                      ? 'text-[#21865B]'
+                      : 'text-[#D64545]'
+                  }`}
+                >
+                  <span>Utilidad estimada (sin IVA):</span>
+                  <span>
+                    {formatCOP(selectedSaleMargin)}
+                    {selectedSale.subtotalCOP > 0
+                      ? ` (${(
+                          (selectedSaleMargin / selectedSale.subtotalCOP) *
+                          100
+                        ).toFixed(0)}%)`
+                      : ''}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex justify-between pt-1 border-t border-[#E5E7EB] text-[#727985]">
+                  <span>Utilidad estimada:</span>
+                  <span>No disponible (costo histórico)</span>
                 </div>
               )}
             </div>

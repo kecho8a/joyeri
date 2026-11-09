@@ -43,15 +43,15 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             onClick={() => onSelectModule(item.id)}
             className={`flex flex-col items-center justify-center py-1 px-2 rounded-lg transition-colors min-w-[54px] min-h-[44px] ${
               isActive
-                ? 'text-[#9B7028] font-bold'
+                ? 'text-[#10B981] font-bold'
                 : item.isPrimary
-                ? 'text-[#7F581A] font-semibold'
+                ? 'text-[#059669] font-semibold'
                 : 'text-[#727985] hover:text-[#20242B]'
             }`}
           >
             <div
               className={`p-1 rounded-md ${
-                item.isPrimary && !isActive ? 'bg-[#9B7028]/10' : ''
+                item.isPrimary && !isActive ? 'bg-[#10B981]/10' : ''
               }`}
             >
               <Icon className="w-4 h-4" />

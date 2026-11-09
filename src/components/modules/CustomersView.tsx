@@ -96,7 +96,7 @@ export const CustomersView: React.FC = () => {
 
         <button
           onClick={() => setIsNewModalOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#9B7028] hover:bg-[#7F581A] text-white text-xs font-semibold shadow-sm transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#10B981] hover:bg-[#059669] text-white text-xs font-semibold shadow-sm transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nuevo Cliente
@@ -112,7 +112,7 @@ export const CustomersView: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar cliente por nombre, documento, teléfono..."
-            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#9B7028] focus:bg-white"
+            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#10B981] focus:bg-white"
           />
         </div>
 
@@ -133,7 +133,7 @@ export const CustomersView: React.FC = () => {
         {filteredCustomers.map((c) => (
           <div
             key={c.id}
-            className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm hover:border-[#9B7028] transition-all flex flex-col justify-between space-y-3"
+            className="bg-white rounded-xl border border-[#E5E7EB] p-4 shadow-sm hover:border-[#10B981] transition-all flex flex-col justify-between space-y-3"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -143,7 +143,7 @@ export const CustomersView: React.FC = () => {
                 <span
                   className={`text-[10px] font-semibold px-2 py-0.5 rounded ${
                     c.segment === 'VIP'
-                      ? 'bg-[#9B7028]/15 text-[#7F581A] font-bold'
+                      ? 'bg-[#10B981]/15 text-[#059669] font-bold'
                       : 'bg-[#F4F5F7] text-[#727985]'
                   }`}
                 >
@@ -166,7 +166,7 @@ export const CustomersView: React.FC = () => {
                   </p>
                 )}
                 {c.anniversaryDate && (
-                  <p className="text-[#7F581A] flex items-center gap-1 font-medium">
+                  <p className="text-[#059669] flex items-center gap-1 font-medium">
                     <Calendar className="w-3 h-3" /> Aniversario: {formatDate(c.anniversaryDate)}
                   </p>
                 )}
@@ -305,7 +305,7 @@ export const CustomersView: React.FC = () => {
                 <button type="button" onClick={() => setIsNewModalOpen(false)} className="px-4 py-2 text-[#727985]">
                   Cancelar
                 </button>
-                <button type="submit" className="px-4 py-2 bg-[#9B7028] hover:bg-[#7F581A] text-white rounded-lg font-semibold">
+                <button type="submit" className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg font-semibold">
                   Guardar Cliente
                 </button>
               </div>
@@ -320,7 +320,7 @@ export const CustomersView: React.FC = () => {
           <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-xl w-full max-w-lg p-6 space-y-4 text-xs">
             <div className="flex justify-between items-start pb-3 border-b border-[#E5E7EB]">
               <div>
-                <span className="font-mono text-xs font-bold text-[#7F581A] bg-[#9B7028]/10 px-2 py-0.5 rounded">
+                <span className="font-mono text-xs font-bold text-[#059669] bg-[#10B981]/10 px-2 py-0.5 rounded">
                   {selectedCustomer.segment}
                 </span>
                 <h3 className="font-bold text-base text-[#20242B] mt-1">{selectedCustomer.name}</h3>

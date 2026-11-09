@@ -71,6 +71,34 @@
   }
 }
 
+/* Modo letra grande para administradores en móvil o baja visión.
+   Escala los tamaños pequeños usados en las cards sin romper el layout. */
+.large-text [class*="text-[9px]"] {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+.large-text [class*="text-[10px]"] {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+}
+.large-text [class*="text-[11px]"] {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+.large-text [class*="text-[12px]"],
+.large-text [class*="text-xs"] {
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+}
+.large-text [class*="text-sm"] {
+  font-size: 16px !important;
+}
+.large-text input,
+.large-text select,
+.large-text textarea {
+  font-size: 15px !important;
+}
+
 @media print {
   .no-print {
     display: none !important;

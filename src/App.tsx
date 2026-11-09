@@ -22,6 +22,7 @@ import { DailyReconciliationView } from './components/modules/DailyReconciliatio
 import { AccountingView } from './components/modules/AccountingView';
 import { CustomersView } from './components/modules/CustomersView';
 import { SuppliersView } from './components/modules/SuppliersView';
+import { PurchasesView } from './components/modules/PurchasesView';
 import { ExpensesView } from './components/modules/ExpensesView';
 import { WarrantiesView } from './components/modules/WarrantiesView';
 import { EmployeesView } from './components/modules/EmployeesView';
@@ -37,7 +38,7 @@ export default function App() {
   const [quickRepairModal, setQuickRepairModal] = useState(false);
 
   // Subscribe to reactive database changes
-  useSyncExternalStore(
+  const state = useSyncExternalStore(
     (onStoreChange) => erpDb.subscribe(onStoreChange),
     () => erpDb.getState()
   );
@@ -49,7 +50,11 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#F8F9FA] text-[#20242B]">
+    <div
+      className={`flex h-screen w-screen overflow-hidden bg-[#F8F9FA] text-[#20242B] ${
+        state.largeText ? 'large-text' : ''
+      }`}
+    >
       {/* Sidebar Navigation (Desktop Fixed + Mobile Slide Drawer) */}
       <Sidebar
         currentModule={currentModule}
@@ -131,6 +136,8 @@ export default function App() {
             {currentModule === 'customers' && <CustomersView />}
 
             {currentModule === 'suppliers' && <SuppliersView />}
+
+            {currentModule === 'purchases' && <PurchasesView />}
 
             {currentModule === 'expenses' && <ExpensesView />}
 

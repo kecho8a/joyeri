@@ -46,7 +46,7 @@ export const MovementsView: React.FC = () => {
           </p>
         </div>
         <div className="text-xs bg-[#F4F5F7] px-3 py-1.5 rounded-lg border border-[#E5E7EB] font-medium text-[#20242B]">
-          Total Movimientos: <strong className="font-mono text-[#7F581A]">{state.stockMovements.length}</strong>
+          Total Movimientos: <strong className="font-mono text-[#059669]">{state.stockMovements.length}</strong>
         </div>
       </div>
 
@@ -59,7 +59,7 @@ export const MovementsView: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Buscar por SKU, joya o motivo..."
-            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#9B7028] focus:bg-white"
+            className="w-full bg-[#F4F5F7] border border-[#E5E7EB] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#20242B] focus:outline-none focus:border-[#10B981] focus:bg-white"
           />
         </div>
 
@@ -106,8 +106,8 @@ export const MovementsView: React.FC = () => {
                           : m.type === 'VENTA'
                           ? 'bg-[#3478C6]/10 text-[#3478C6]'
                           : m.type === 'TRASLADO'
-                          ? 'bg-[#9B7028]/15 text-[#7F581A]'
-                          : 'bg-[#D99032]/10 text-[#D99032]'
+                          ? 'bg-[#10B981]/15 text-[#059669]'
+                          : 'bg-[#DC2626]/10 text-[#DC2626]'
                       }`}
                     >
                       {m.type}

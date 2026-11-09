@@ -32,44 +32,44 @@ export const JewelLogo: React.FC<JewelLogoProps> = ({
   // Modern Eye-Catching Faceted Diamond & Golden Crown Emblem
   const iconSvg = (
     <div
-      className={`relative flex items-center justify-center shrink-0 rounded-xl bg-gradient-to-br from-[#FAF5EB] via-white to-[#F3E7CF] p-1 border border-[#E8D4B0] shadow-[0_2px_8px_rgba(155,112,40,0.12)] group-hover:shadow-[0_4px_14px_rgba(155,112,40,0.22)] group-hover:border-[#9B7028] transition-all duration-300 ${className}`}
+      className={`relative flex items-center justify-center shrink-0 rounded-xl bg-gradient-to-br from-[#F0FDF4] via-white to-[#D1FAE5] p-1 border border-[#A7F3D0] shadow-[0_2px_8px_rgba(16,185,129,0.12)] group-hover:shadow-[0_4px_14px_rgba(16,185,129,0.22)] group-hover:border-[#10B981] transition-all duration-300 ${className}`}
       style={{ width: dim.icon, height: dim.icon }}
     >
       <svg
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full drop-shadow-[0_1px_1px_rgba(127,88,26,0.3)]"
+        className="w-full h-full drop-shadow-[0_1px_1px_rgba(5,150,105,0.3)]"
       >
         <defs>
           {/* Main Gold Facet Gradients */}
           <linearGradient id="facetGold1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#DFB664" />
-            <stop offset="50%" stopColor="#B38634" />
-            <stop offset="100%" stopColor="#825C1D" />
+            <stop offset="0%" stopColor="#34D399" />
+            <stop offset="50%" stopColor="#10B981" />
+            <stop offset="100%" stopColor="#047857" />
           </linearGradient>
 
           <linearGradient id="facetGold2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#FFF2D1" />
-            <stop offset="40%" stopColor="#CF9F47" />
-            <stop offset="100%" stopColor="#966C24" />
+            <stop offset="0%" stopColor="#ECFDF5" />
+            <stop offset="40%" stopColor="#34D399" />
+            <stop offset="100%" stopColor="#059669" />
           </linearGradient>
 
           <linearGradient id="facetGoldCenter" x1="50%" y1="0%" x2="50%" y2="100%">
-            <stop offset="0%" stopColor="#FFF9E8" />
-            <stop offset="60%" stopColor="#E2B762" />
-            <stop offset="100%" stopColor="#A87B2B" />
+            <stop offset="0%" stopColor="#F0FDF4" />
+            <stop offset="60%" stopColor="#6EE7B7" />
+            <stop offset="100%" stopColor="#059669" />
           </linearGradient>
 
           <linearGradient id="pavilionGold" x1="50%" y1="0%" x2="50%" y2="100%">
-            <stop offset="0%" stopColor="#C49640" />
-            <stop offset="100%" stopColor="#6C4914" />
+            <stop offset="0%" stopColor="#10B981" />
+            <stop offset="100%" stopColor="#047857" />
           </linearGradient>
 
           {/* Sparkle Glow */}
           <linearGradient id="sparkleGlow" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="100%" stopColor="#F5D78E" />
+            <stop offset="100%" stopColor="#A7F3D0" />
           </linearGradient>
         </defs>
 
@@ -139,7 +139,7 @@ export const JewelLogo: React.FC<JewelLogoProps> = ({
         />
 
         {/* Bottom Culet Point Accent */}
-        <circle cx="50" cy="88" r="1.5" fill="#FFF4D4" />
+        <circle cx="50" cy="88" r="1.5" fill="#ECFDF5" />
 
         {/* --- RADIANT CELESTIAL SPARKLE AT APEX --- */}
         <g transform="translate(73, 16) scale(0.65)">
@@ -166,7 +166,7 @@ export const JewelLogo: React.FC<JewelLogoProps> = ({
           <span className={`${dim.text} font-bold tracking-tight text-[#20242B]`}>
             JOYERI
           </span>
-          <span className="text-[10px] font-bold tracking-wider text-[#7F581A] bg-[#9B7028]/10 px-1.5 py-0.5 rounded uppercase">
+          <span className="text-[10px] font-bold tracking-wider text-[#059669] bg-[#10B981]/10 px-1.5 py-0.5 rounded uppercase">
             ERP
           </span>
         </div>
