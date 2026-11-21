@@ -1,24 +1,24 @@
 {
   "fuente": "Banco de la Republica de Colombia",
   "url": "https://www.banrep.gov.co/es/banco/otros-servicios/compra-venta-metales-preciosos",
-  "obtenidoEn": "2026-11-14T18:59:54.985Z",
+  "obtenidoEn": "2026-11-21T20:25:56.313Z",
   "vigencia": {
-    "desde": "2026-11-13",
-    "hasta": "2026-11-16",
-    "texto": "13/11/2026 al 16/11/2026"
+    "desde": "2026-11-20",
+    "hasta": "2026-11-22",
+    "texto": "20/11/2026 al 22/11/2026"
   },
   "metales": {
     "oro": {
-      "compra": 390313.18,
-      "venta": 410855.98
+      "compra": 386930.87,
+      "venta": 407295.65
     },
     "plata": {
-      "compra": 4324.91,
-      "venta": 5406.14
+      "compra": 3954.49,
+      "venta": 4943.11
     },
     "platino": {
-      "compra": 155821.74,
-      "venta": 161573.77
+      "compra": 146280.62,
+      "venta": 151680.44
     }
   }
 }
